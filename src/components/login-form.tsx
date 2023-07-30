@@ -14,7 +14,9 @@ import { toast } from "./ui/use-toast";
 import { Input } from "./ui/input";
 import { Spinner } from "./spinner";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string;
+}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const {

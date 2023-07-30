@@ -46,8 +46,8 @@ export default function FinancialPortalOverview() {
         <span className="ml-1 text-xs"> ({linkedBankAccounts.length})</span>
       </h2>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {linkedBankAccounts.map((link) => (
-          <LinkedAccountCard link={link} />
+        {linkedBankAccounts.map((link, idx) => (
+          <LinkedAccountCard link={link} key={idx} />
         ))}
       </div>
       <div className="flex flex-1 gap-4">
@@ -117,8 +117,8 @@ const BankAccountsOverviewSummary: React.FC<{
         <span className="ml-1 text-xs"> ({allBankAccounts.length})</span>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
-        {allBankAccounts.map((account) => (
-          <BankAccountSummaryCard account={account} />
+        {allBankAccounts.map((account, idx) => (
+          <BankAccountSummaryCard account={account} key={idx} />
         ))}
       </div>
     </div>
@@ -151,21 +151,26 @@ const CreditAccountsOverviewSummary: React.FC<{
         <span className="ml-1 text-xs"> ({creditAccounts.length})</span>
       </h2>
       <div>
-        {Object.keys(creditCardToInstitutionNameMap).map((institutionName) => (
-          <div className="flex flex-col gap-2">
-            {creditCardToInstitutionNameMap[institutionName].length > 0 && (
-              <h3 className="text-lg font-bold">{institutionName}</h3>
-            )}
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
-              {creditCardToInstitutionNameMap[institutionName].map((card) => (
-                <CreditAccountSummaryCard
-                  account={card}
-                  institutionName={institutionName}
-                />
-              ))}
+        {Object.keys(creditCardToInstitutionNameMap).map(
+          (institutionName, idx) => (
+            <div className="flex flex-col gap-2" key={idx}>
+              {creditCardToInstitutionNameMap[institutionName].length > 0 && (
+                <h3 className="text-lg font-bold">{institutionName}</h3>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
+                {creditCardToInstitutionNameMap[institutionName].map(
+                  (card, idx) => (
+                    <CreditAccountSummaryCard
+                      account={card}
+                      institutionName={institutionName}
+                      key={idx}
+                    />
+                  )
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );

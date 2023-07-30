@@ -88,8 +88,8 @@ const BankAccountSummaryCard: React.FC<{
                   {account.pockets.length})
                 </p>
               </DropdownMenuLabel>
-              {account.pockets.map((pocket) => (
-                <DropdownMenuCheckboxItem checked>
+              {account.pockets.map((pocket, idx) => (
+                <DropdownMenuCheckboxItem checked key={idx}>
                   <div className="flex flex-row gap-2 items-center text-black font-bold px-2">
                     {/* <CircleIcon className="mr-1 h-3 w-3 fill-black text-black font-bold" /> */}
                     <div className="text-xs font-bold">

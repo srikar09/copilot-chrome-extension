@@ -33,7 +33,7 @@ export function formatToTwoDecimalPoints(input: number): string {
 
 export function removeUnderScores(input: string): string {
   // Replace all underscores with spaces
-  let formatted = input.replace(/_/g, " ");
+  const formatted = input.replace(/_/g, " ");
 
   return formatted.toLowerCase();
 }
