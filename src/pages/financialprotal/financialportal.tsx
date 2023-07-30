@@ -105,7 +105,7 @@ export default function FinancialPortalOverview() {
             creditCardToInstitutionNameMap={creditCardToInstitutionNameMap}
           />
         )}
-        <Card className="col-span-4">
+        {/* <Card className="col-span-4">
           <CardHeader>
             <CardTitle>Overview</CardTitle>
           </CardHeader>
@@ -121,7 +121,7 @@ export default function FinancialPortalOverview() {
           <CardContent>
             <RecentSales />
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </PortalLayout>
   );
