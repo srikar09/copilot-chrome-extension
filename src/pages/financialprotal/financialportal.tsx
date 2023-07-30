@@ -1,13 +1,9 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { useState } from "react";
 import { BankAccountSummaryCard } from "src/components/bank-account-card";
 import { CreditAccountSummaryCard } from "src/components/credit-account-card";
 import { LinkedAccountCard } from "src/components/linked-account-card";
-import { MainNav } from "src/components/main-nav";
 import { Overview } from "src/components/overview";
 import { RecentSales } from "src/components/recent-sales";
-import { Search } from "src/components/search";
-import TeamSwitcher from "src/components/team-switcher";
 import { Button } from "src/components/ui/button";
 import {
   Card,
@@ -16,7 +12,6 @@ import {
   CardContent,
   CardDescription,
 } from "src/components/ui/card";
-import { Layout } from "src/layouts/layout";
 import { PortalLayout } from "src/layouts/portal-layout";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
