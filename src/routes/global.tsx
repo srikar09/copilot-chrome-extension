@@ -13,6 +13,7 @@ function GlobalRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path={routes.AUTHENTICATION} element={<LoginPage />} />
+        <Route path={"/"} element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path={routes.HOME} element={<ChatPage />} />
           <Route path={routes.FINANCIALPORTAL} element={<FinancialPortal />} />
