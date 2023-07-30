@@ -37,10 +37,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { useAppSelector } from "src/redux/store/hooks";
-import {
-  selectCurrentUserAccount,
-  selectCurrentUserProfile,
-} from "src/redux/slice/authentication/AuthenticationSelector";
+import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger

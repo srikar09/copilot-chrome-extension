@@ -56,7 +56,7 @@ const CreditAccountSummaryCard: React.FC<{
                   fontSize: "8px",
                 }}
               >
-                Overdue: {account.isOverdue == false ? "No" : "Yes"}
+                Overdue: {account.isOverdue === false ? "No" : "Yes"}
               </Badge>
             </div>
           </div>
@@ -157,7 +157,7 @@ const CreditAccountSummaryCard: React.FC<{
                 </div>
               </div>
             </CardTitle>
-            <div className="flex flex-1 flex-wrap space-x-4 text-sm gap-y-1 text-muted-foreground border rounded-lg p-5">
+            <div className="flex flex-row  space-x-4 text-sm gap-y-1 text-muted-foreground border rounded-lg p-5">
               {account.aprs.map((apr) => (
                 <div className="p-2 flex flex-row gap-2 items-center border rounded-lg bg-white text-black border-black px-2">
                   <div

@@ -1,5 +1,4 @@
 import { Chat } from "src/components/chat";
-import { Label } from "src/components/ui/label";
 import { Layout } from "src/layouts/layout";
 
 const ChatPage: React.FC = () => {

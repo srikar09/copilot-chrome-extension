@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { ErrorMessage } from "../types/error/error";
  
 export function cn(...inputs: ClassValue[]) {
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const processErrorIfPresent = (error: ErrorMessage) => {
   if (error !== undefined) {
-    const { http_body, http_status_code } = error;
+    const { http_body } = error;
     throw new Error(JSON.stringify(http_body));
   }
 };

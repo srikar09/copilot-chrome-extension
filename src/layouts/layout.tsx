@@ -1,4 +1,3 @@
-import react from "react";
 import { Nav } from "src/components/nav";
 import { cn } from "src/lib/utils";
 import { selectAuthenticated } from "src/redux/slice/authentication/AuthenticationSelector";
@@ -13,7 +12,10 @@ const Layout: React.FC<{
     <div>
       {isAuthenticated && <Nav />}
       <div
-        className={cn("min-h-full p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10", className)}
+        className={cn(
+          "w-screen min-h-full min-w-full p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10",
+          className
+        )}
       >
         {children}
       </div>

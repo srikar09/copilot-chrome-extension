@@ -1,16 +1,5 @@
-import {
-  ChevronDownIcon,
-  CircleIcon,
-  PlusIcon,
-  StarIcon,
-} from "@radix-ui/react-icons";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "./ui/card";
+import { ChevronDownIcon, PlusIcon } from "@radix-ui/react-icons";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { BankAccount } from "src/types/financials/message";
@@ -18,15 +7,13 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { formatToTwoDecimalPoints, randomIntFromInterval } from "src/lib/utils";
+import { formatToTwoDecimalPoints } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import { DeviceTabletIcon } from "@heroicons/react/24/outline";
 
 const BankAccountSummaryCard: React.FC<{
   account: BankAccount;

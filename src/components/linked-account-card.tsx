@@ -1,4 +1,3 @@
-import react from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { Link } from "src/types/financials/message";
 

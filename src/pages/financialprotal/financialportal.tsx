@@ -2,16 +2,7 @@ import { useState } from "react";
 import { BankAccountSummaryCard } from "src/components/bank-account-card";
 import { CreditAccountSummaryCard } from "src/components/credit-account-card";
 import { LinkedAccountCard } from "src/components/linked-account-card";
-import { Overview } from "src/components/overview";
-import { RecentSales } from "src/components/recent-sales";
 import { Button } from "src/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "src/components/ui/card";
 import { PortalLayout } from "src/layouts/portal-layout";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
@@ -26,13 +17,6 @@ export default function FinancialPortalOverview() {
     useState<SelectedAccountType>(SelectedAccountType.BANK_ACCOUNT);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const linkedBankAccounts = financialProfile.link;
-  // across the linked accounts get all creditAccounts
-  const allCreditAccounts = linkedBankAccounts.reduce<CreditAccount[]>(
-    (acc, link) => {
-      return [...acc, ...link.creditAccounts];
-    },
-    []
-  );
 
   // create a hashmap of credit card to institution name
   const creditCardToInstitutionNameMap = linkedBankAccounts.reduce<{
@@ -92,10 +76,10 @@ export default function FinancialPortalOverview() {
          *  1) Credit Card Summary (In One Place For All Cards) For Each Linked Account
          *  2) Bank Account Summary (In One Place For All Accounts) For Each Linked Account
          */}
-        {selectedAccountType == SelectedAccountType.BANK_ACCOUNT && (
+        {selectedAccountType === SelectedAccountType.BANK_ACCOUNT && (
           <BankAccountsOverviewSummary allBankAccounts={allBankAccounts} />
         )}
-        {selectedAccountType == SelectedAccountType.CREDIT_CARD && (
+        {selectedAccountType === SelectedAccountType.CREDIT_CARD && (
           <CreditAccountsOverviewSummary
             creditCardToInstitutionNameMap={creditCardToInstitutionNameMap}
           />
@@ -132,7 +116,7 @@ const BankAccountsOverviewSummary: React.FC<{
         Bank Accounts{" "}
         <span className="ml-1 text-xs"> ({allBankAccounts.length})</span>
       </h2>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
         {allBankAccounts.map((account) => (
           <BankAccountSummaryCard account={account} />
         ))}
@@ -172,7 +156,7 @@ const CreditAccountsOverviewSummary: React.FC<{
             {creditCardToInstitutionNameMap[institutionName].length > 0 && (
               <h3 className="text-lg font-bold">{institutionName}</h3>
             )}
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
               {creditCardToInstitutionNameMap[institutionName].map((card) => (
                 <CreditAccountSummaryCard
                   account={card}
@@ -186,33 +170,3 @@ const CreditAccountsOverviewSummary: React.FC<{
     </div>
   );
 };
-
-function FinancialPortalActionableInsights() {
-  const financialProfile = useAppSelector(selectUserFinancialProfile);
-  const actionableInsights = financialProfile.actionableInsights;
-
-  return (
-    <PortalLayout option={"ANALYTICS"}>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"></div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Overview</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview />
-          </CardContent>
-        </Card>
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Recent Sales</CardTitle>
-            <CardDescription>You made 265 sales this month.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <RecentSales />
-          </CardContent>
-        </Card>
-      </div>
-    </PortalLayout>
-  );
-}

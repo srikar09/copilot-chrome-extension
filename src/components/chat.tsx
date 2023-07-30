@@ -49,7 +49,7 @@ export function Chat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const profile = useAppSelector(selectCurrentUserProfile);
-  const [userKey, setUserKey] = useState(profile.name);
+  const [userKey] = useState(profile.name);
 
   // send message to API /api/chat endpoint
   const sendMessage = async (message: string) => {
@@ -62,22 +62,12 @@ export function Chat() {
     const last10messages = newMessages.slice(-10); // remember last 10 messages
 
     // TODO: wrap around a try catch block
-    const response = await handler({
+    const data = await handler({
       last10messages: last10messages,
       user: userKey,
     });
 
     console.log("Edge function returned.");
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    // This data is a ReadableStream
-    const data = response.body;
-    if (!data) {
-      return;
-    }
 
     const reader = data.getReader();
     const decoder = new TextDecoder();
