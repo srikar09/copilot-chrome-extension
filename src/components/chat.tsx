@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { Button } from "react-day-picker";
+import { useState } from "react";
 import { ChatGPTMessage, ChatLine, LoadingChatLine } from "./chat-line";
-
-const COOKIE_NAME = "nextjs-example-ai-chat-gpt3";
+import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import { useAppSelector } from "src/redux/store/hooks";
+import { Button } from "./ui/button";
+import { handler } from "src/chat-stream/stream";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
   {
     role: "assistant",
-    content: "Hi! I Melodiy AI. Ask me anything!",
+    content: "Hi! I am Melodiy AI. Ask me anything!",
   },
 ];
 
@@ -39,7 +39,7 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
         setInput("");
       }}
     >
-      Say
+      Ask
     </Button>
   </div>
 );
@@ -48,15 +48,8 @@ export function Chat() {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [cookie, setCookie] = useCookies([COOKIE_NAME]);
-
-  useEffect(() => {
-    if (!cookie[COOKIE_NAME]) {
-      // generate a semi random short id
-      const randomId = Math.random().toString(36).substring(7);
-      setCookie(COOKIE_NAME, randomId);
-    }
-  }, [cookie, setCookie]);
+  const profile = useAppSelector(selectCurrentUserProfile);
+  const [userKey, setUserKey] = useState(profile.name);
 
   // send message to API /api/chat endpoint
   const sendMessage = async (message: string) => {
@@ -68,15 +61,10 @@ export function Chat() {
     setMessages(newMessages);
     const last10messages = newMessages.slice(-10); // remember last 10 messages
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: last10messages,
-        user: cookie[COOKIE_NAME],
-      }),
+    // TODO: wrap around a try catch block
+    const response = await handler({
+      last10messages: last10messages,
+      user: userKey,
     });
 
     console.log("Edge function returned.");
@@ -114,7 +102,7 @@ export function Chat() {
   };
 
   return (
-    <div className="rounded-2xl border-zinc-100  lg:border lg:p-6">
+    <div className="rounded-2xl border-zinc-100  lg:border lg:p-6 w-fit">
       {messages.map(({ content, role }, index) => (
         <ChatLine key={index} role={role} content={content} />
       ))}
