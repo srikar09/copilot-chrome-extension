@@ -90,7 +90,7 @@ export default function InsightsPortal() {
                           Made for You
                         </h2>
                         <p className="text-sm text-muted-foreground">
-                          Your personal playlists. Updated daily.
+                          Your personalized financial insights. Updated daily.
                         </p>
                       </div>
                       <Separator className="my-4" />
