@@ -13,7 +13,6 @@ import { buttonVariants } from "./ui/button";
 import { toast } from "./ui/use-toast";
 import { Input } from "./ui/input";
 import { Spinner } from "./spinner";
-import { useGetFinancialContextQuery } from "src/redux/queries/GetFinancialContext";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
