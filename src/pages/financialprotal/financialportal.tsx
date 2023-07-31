@@ -6,7 +6,10 @@ import { Button } from "src/components/ui/button";
 import { PortalLayout } from "src/layouts/portal-layout";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
-import { BankAccount, CreditAccount } from "src/types/financials/message";
+import {
+  BankAccount,
+  CreditAccount,
+} from "src/types/financials/message_financial_service";
 
 enum SelectedAccountType {
   BANK_ACCOUNT = "BANK_ACCOUNT",

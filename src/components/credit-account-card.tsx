@@ -2,7 +2,6 @@ import { ChevronDownIcon, StarIcon } from "@radix-ui/react-icons";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { CreditAccount } from "src/types/financials/message";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -18,6 +17,7 @@ import {
 } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
+import { CreditAccount } from "src/types/financials/message_financial_service";
 
 const CreditAccountSummaryCard: React.FC<{
   account: CreditAccount;

@@ -1,8 +1,8 @@
 import {
-  ActionableInsight,
-  Link,
   StripeSubscription,
-} from "src/types/financials/message";
+  Link,
+  ActionableInsight,
+} from "../financials/message_financial_service";
 
 class FinancialProfile {
   /** id */

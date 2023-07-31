@@ -17,6 +17,8 @@ export const routes: {
   LANDING_PAGE: string;
   EDITOR: string;
   LANDING: string;
+  INSIGHTS: string;
+  INSIGHTSPORTAL: string;
 } = {
   REGISTRATION: "/registration",
   AUTHENTICATION: "/sign-in",
@@ -37,4 +39,6 @@ export const routes: {
   LANDING_PAGE: "/welcome",
   EDITOR: "/editor",
   LANDING: "/",
+  INSIGHTS: "/insights",
+  INSIGHTSPORTAL: "/insights-portal",
 };

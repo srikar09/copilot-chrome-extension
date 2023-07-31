@@ -2,7 +2,6 @@ import { ChevronDownIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { BankAccount } from "src/types/financials/message";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -14,6 +13,7 @@ import {
 import { formatToTwoDecimalPoints } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
+import { BankAccount } from "src/types/financials/message_financial_service";
 
 const BankAccountSummaryCard: React.FC<{
   account: BankAccount;

@@ -18,7 +18,7 @@ export function MainNav({
         Overview
       </Link>
       <Link
-        to="/examples/dashboard"
+        to={routes.INSIGHTSPORTAL}
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Actionable Insights

@@ -1,5 +1,5 @@
+import { Link } from "src/types/financials/message_financial_service";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
-import { Link } from "src/types/financials/message";
 
 const LinkedAccountCard: React.FC<{
   link: Link;

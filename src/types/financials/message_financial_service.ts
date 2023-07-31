@@ -1,4 +1,6 @@
-/* eslint-disable */export const protobufPackage = "financial_integration_service_api.v1";
+import { Timestamp } from "./timestamp";
+
+export const protobufPackage = "financial_integration_service_api.v1";
 
 export enum BankAccountStatus {
   BANK_ACCOUNT_STATUS_UNSPECIFIED = 0,
@@ -490,7 +492,7 @@ export interface ActionableInsight {
   summarizedAction: string;
   /** the time the insight was generated */
   generatedTime:
-    | Date
+   | string
     | undefined;
   /** associated tags with the generated insights */
   tags: string[];
@@ -979,7 +981,6 @@ function createBaseStripeSubscription(): StripeSubscription {
 }
 
 export const StripeSubscription = {
-
   fromJSON(object: any): StripeSubscription {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -1041,6 +1042,21 @@ function createBaseUserProfile(): UserProfile {
 }
 
 export const UserProfile = {
+  fromJSON(object: any): UserProfile {
+    return {
+      id: isSet(object.id) ? Number(object.id) : 0,
+      userId: isSet(object.userId) ? Number(object.userId) : 0,
+      stripeCustomerId: isSet(object.stripeCustomerId) ? String(object.stripeCustomerId) : "",
+      stripeSubscriptions: isSet(object.stripeSubscriptions)
+        ? StripeSubscription.fromJSON(object.stripeSubscriptions)
+        : undefined,
+      link: Array.isArray(object?.link) ? object.link.map((e: any) => Link.fromJSON(e)) : [],
+      actionableInsights: Array.isArray(object?.actionableInsights)
+        ? object.actionableInsights.map((e: any) => ActionableInsight.fromJSON(e))
+        : [],
+    };
+  },
+
   toJSON(message: UserProfile): unknown {
     const obj: any = {};
     if (message.id !== 0) {
@@ -1087,7 +1103,16 @@ function createBaseActionableInsight(): ActionableInsight {
 }
 
 export const ActionableInsight = {
-  
+  fromJSON(object: any): ActionableInsight {
+    return {
+      id: isSet(object.id) ? Number(object.id) : 0,
+      detailedAction: isSet(object.detailedAction) ? String(object.detailedAction) : "",
+      summarizedAction: isSet(object.summarizedAction) ? String(object.summarizedAction) : "",
+      generatedTime: isSet(object.generatedTime) ? object.generatedTime : undefined,
+      tags: Array.isArray(object?.tags) ? object.tags.map((e: any) => String(e)) : [],
+    };
+  },
+
   toJSON(message: ActionableInsight): unknown {
     const obj: any = {};
     if (message.id !== 0) {
@@ -1100,7 +1125,7 @@ export const ActionableInsight = {
       obj.summarizedAction = message.summarizedAction;
     }
     if (message.generatedTime !== undefined) {
-      obj.generatedTime = message.generatedTime.toISOString();
+      obj.generatedTime = message.generatedTime;
     }
     if (message.tags?.length) {
       obj.tags = message.tags;
@@ -1152,7 +1177,6 @@ function createBaseLink(): Link {
 }
 
 export const Link = {
-  
   fromJSON(object: any): Link {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -1369,7 +1393,6 @@ function createBaseToken(): Token {
 }
 
 export const Token = {
-
   fromJSON(object: any): Token {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -1428,7 +1451,6 @@ function createBasePlaidLink(): PlaidLink {
 }
 
 export const PlaidLink = {
-  
   fromJSON(object: any): PlaidLink {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -1756,7 +1778,6 @@ function createBaseCreditAccount(): CreditAccount {
 }
 
 export const CreditAccount = {
-  
   fromJSON(object: any): CreditAccount {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -1915,7 +1936,6 @@ function createBaseMortgageAccount(): MortgageAccount {
 }
 
 export const MortgageAccount = {
-  
   fromJSON(object: any): MortgageAccount {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -2120,8 +2140,6 @@ function createBaseInvestmentAccount(): InvestmentAccount {
 }
 
 export const InvestmentAccount = {
- 
-
   fromJSON(object: any): InvestmentAccount {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -2223,7 +2241,6 @@ function createBaseBankAccount(): BankAccount {
 }
 
 export const BankAccount = {
- 
   fromJSON(object: any): BankAccount {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
@@ -2241,7 +2258,7 @@ export const BankAccount = {
       status: isSet(object.status) ? bankAccountStatusFromJSON(object.status) : 0,
     };
   },
-  
+
   toJSON(message: BankAccount): unknown {
     const obj: any = {};
     if (message.id !== 0) {
@@ -2969,6 +2986,28 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function toTimestamp(date: Date): Timestamp {
+  const seconds = date.getTime() / 1_000;
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): Date {
+  let millis = (t.seconds || 0) * 1_000;
+  millis += (t.nanos || 0) / 1_000_000;
+  return new Date(millis);
+}
+
+function fromJsonTimestamp(o: any): Date {
+  if (o instanceof Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
+}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
