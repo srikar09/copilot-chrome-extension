@@ -1,17 +1,18 @@
 import { processErrorIfPresent } from "src/lib/utils";
 import { api } from "src/redux/api/api";
 import {
-  GetUserCategoryMonthlyIncomeRequest,
-  GetUserCategoryMonthlyIncomeResponse,
+  GetMonthlyIncomeRequest,
+  GetMonthlyIncomeResponse,
 } from "src/types/financials/request_response_financial_analytics_service";
 
 const GetMonthlyIncome = api.injectEndpoints({
   endpoints: (builder) => ({
     getMonthlyIncome: builder.query({
-      query: (req: GetUserCategoryMonthlyIncomeRequest) => ({
+      query: (req: GetMonthlyIncomeRequest) => ({
         url: getMonthlyIncomeEndpoint(req),
       }),
-      transformResponse: (response: GetUserCategoryMonthlyIncomeResponse) => {
+      transformResponse: (response: GetMonthlyIncomeResponse) => {
+        console.log("response", response);
         processErrorIfPresent(response.error_message);
         return response;
       },
@@ -20,12 +21,8 @@ const GetMonthlyIncome = api.injectEndpoints({
   overrideExisting: false,
 });
 
-const getMonthlyIncomeEndpoint = (req: GetUserCategoryMonthlyIncomeRequest) => {
+const getMonthlyIncomeEndpoint = (req: GetMonthlyIncomeRequest) => {
   let url = `/service/financials/analytics/monthly-income/user/${req.userId}`;
-
-  if (req.personalFinanceCategoryPrimary) {
-    url += `?personalFinanceCategoryPrimary=${req.personalFinanceCategoryPrimary}`;
-  }
 
   if (req.month) {
     if (url.includes("?")) {

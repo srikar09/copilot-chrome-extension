@@ -1721,18 +1721,31 @@ export const GetMonthlyIncomeRequest = {
 };
 
 function createBaseGetMonthlyIncomeResponse(): GetMonthlyIncomeResponse {
-  return { monthlyIncomes: [], nextPageNumber: 0 };
+  return new GetMonthlyIncomeResponse({ monthlyIncomes: [], nextPageNumber: 0 });
 }
 
-export const GetMonthlyIncomeResponse = {
+export class GetMonthlyIncomeResponse extends ErrorResponse {
+  monthlyIncomes: MonthlyIncome[] = [];
+  nextPageNumber: number = 0;
+
+    constructor(data?: Partial<GetMonthlyIncomeResponse>) {
+    super(data);
+    if (data) {
+      Object.assign(this, {
+        ...data,
+        nextPageNumber: data?.nextPageNumber ?? 0
+      });
+    }
+  }
+  
   fromJSON(object: any): GetMonthlyIncomeResponse {
-    return {
+    return new GetMonthlyIncomeResponse({
       monthlyIncomes: Array.isArray(object?.monthlyIncomes)
         ? object.monthlyIncomes.map((e: any) => MonthlyIncome.fromJSON(e))
         : [],
       nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+    });
+  }
 
   toJSON(message: GetMonthlyIncomeResponse): unknown {
     const obj: any = {};
@@ -1743,18 +1756,18 @@ export const GetMonthlyIncomeResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
-
+  }
+  
   create<I extends Exact<DeepPartial<GetMonthlyIncomeResponse>, I>>(base?: I): GetMonthlyIncomeResponse {
-    return GetMonthlyIncomeResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetMonthlyIncomeResponse>, I>>(object: I): GetMonthlyIncomeResponse {
     const message = createBaseGetMonthlyIncomeResponse();
     message.monthlyIncomes = object.monthlyIncomes?.map((e) => MonthlyIncome.fromPartial(e)) || [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetMonthlySavingsRequest(): GetMonthlySavingsRequest {

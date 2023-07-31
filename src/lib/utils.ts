@@ -66,3 +66,19 @@ export function timeAgo(date: Date): string {
 export function roundToTwoDecimalPlaces(num: number): number {
   return Math.round((num + Number.EPSILON) * 100) / 100;
 }
+
+export function convertToMonth(dateString: string): string {
+  const year = dateString.substr(0, 4);
+  const month = dateString.substr(4, 2);
+
+  // Convert the month number to its name
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const monthNumber = parseInt(month, 10) - 1;
+  const monthName = monthNames[monthNumber];
+
+  return `${monthName} ${year}`;
+}
