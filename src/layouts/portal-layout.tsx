@@ -14,11 +14,13 @@ const OPTIONS = {
 
 const PortalLayout: React.FC<{
   children?: React.ReactNode;
-  option: keyof typeof OPTIONS;
 }> = (props) => {
-  const { children, option } = props;
+  const { children } = props;
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const linkedBankAccounts = financialProfile.link;
+  const [currentTrigger, setCurrentTrigger] = React.useState<string>(
+    OPTIONS.OVERVIEW
+  );
 
   return (
     <Layout>
@@ -43,29 +45,11 @@ const PortalLayout: React.FC<{
               </span>
             </h2>
           </div>
-          <Tabs defaultValue={OPTIONS.OVERVIEW} className="space-y-4">
-            <TabsList className="flex flex-1 gap-3">
-              <TabsTrigger
-                value={OPTIONS.OVERVIEW}
-                className="rounded-2xl border px-6 py-2 font-bold"
-              >
-                Summary
-              </TabsTrigger>
-              <TabsTrigger
-                value={OPTIONS.ANALYTICS}
-                className="rounded-2xl border px-6 py-2 font-bold"
-              >
-                Analytics
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value={option} className="space-y-4">
-              {children}
-            </TabsContent>
-          </Tabs>
+          {children}
         </div>
       </div>
     </Layout>
   );
 };
 
-export { PortalLayout };
+export { PortalLayout, OPTIONS };

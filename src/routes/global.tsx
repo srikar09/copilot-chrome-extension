@@ -6,8 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ErrorFallbackPage } from "src/pages/boundary/error-boundary";
 import { Chat } from "src/components/chat";
 import { ChatPage } from "src/pages/chat/chat";
-import FinancialPortal from "src/pages/financialprotal/financialportal";
-import InsightsPortal from "src/pages/financialprotal/insightsportal";
+import InsightsPortal from "src/pages/financialportal/insights-portal";
+import { FinancialAnalyticsPortal } from "src/pages/financialportal/financial-portal";
 
 function GlobalRoutes() {
   return (
@@ -17,7 +17,10 @@ function GlobalRoutes() {
         <Route path={"/"} element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path={routes.HOME} element={<ChatPage />} />
-          <Route path={routes.FINANCIALPORTAL} element={<FinancialPortal />} />
+          <Route
+            path={routes.FINANCIALPORTAL}
+            element={<FinancialAnalyticsPortal />}
+          />
           <Route path={routes.INSIGHTSPORTAL} element={<InsightsPortal />} />
         </Route>
         {/* 

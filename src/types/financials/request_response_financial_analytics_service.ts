@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { ErrorResponse } from "../error/error";
 import {
   AccountBalanceHistory,
   CategoryMonthlyExpenditure,
@@ -37,7 +38,7 @@ export interface GetTransactionAggregatesRequest {
   pageSize: number;
 }
 
-export interface GetTransactionAggregatesResponse {
+export interface GetTransactionAggregatesResponseInterface {
   transactionAggregates: TransactionAggregatesByMonth[];
   nextPageNumber: number;
 }
@@ -64,7 +65,7 @@ export interface GetAccountBalanceHistoryRequest {
   pageSize: number;
 }
 
-export interface GetAccountBalanceHistoryResponse {
+export interface GetAccountBalanceHistoryResponseInterface {
   /** List of account balance history records for specific account */
   accountBalanceHistory: AccountBalanceHistory[];
 }
@@ -82,7 +83,7 @@ export interface GetUserCategoryMonthlyExpenditureRequest {
   pageSize: number;
 }
 
-export interface GetUserCategoryMonthlyExpenditureResponse {
+interface GetUserCategoryMonthlyExpenditureResponseInterface {
   /** List of CategoryMonthlyExpenditure records for the user */
   categoryMonthlyExpenditure: CategoryMonthlyExpenditure[];
   nextPageNumber: number;
@@ -97,7 +98,7 @@ export interface GetUserCategoryMonthlyIncomeRequest {
   pageSize: number;
 }
 
-export interface GetUserCategoryMonthlyIncomeResponse {
+interface GetUserCategoryMonthlyIncomeResponseInterface {
   categoryMonthlyIncome: CategoryMonthlyIncome[];
   nextPageNumber: number;
 }
@@ -114,7 +115,7 @@ export interface GetCategoryMonthlyTransactionCountRequest {
   pageSize: number;
 }
 
-export interface GetCategoryMonthlyTransactionCountResponse {
+export interface GetCategoryMonthlyTransactionCountResponseInterface {
   categoryMonthlyTransactionCount: CategoryMonthlyTransactionCount[];
   nextPageNumber: number;
 }
@@ -294,7 +295,7 @@ export interface GetMonthlyTransactionCountRequest {
   pageSize: number;
 }
 
-export interface GetMonthlyTransactionCountResponse {
+export interface GetMonthlyTransactionCountResponseInterface  {
   monthlyTransactionCounts: MonthlyTransactionCount[];
   nextPageNumber: number;
 }
@@ -415,18 +416,30 @@ export const GetTransactionAggregatesRequest = {
 };
 
 function createBaseGetTransactionAggregatesResponse(): GetTransactionAggregatesResponse {
-  return { transactionAggregates: [], nextPageNumber: 0 };
+  return new GetTransactionAggregatesResponse({ transactionAggregates: [], nextPageNumber: 0 });
 }
 
-export const GetTransactionAggregatesResponse = {
+export class GetTransactionAggregatesResponse extends ErrorResponse {
+  transactionAggregates: TransactionAggregatesByMonth[] = [];
+  nextPageNumber: number = 0;
+
+  constructor(data?: Partial<GetTransactionAggregatesResponse>) {
+    super();
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
   fromJSON(object: any): GetTransactionAggregatesResponse {
-    return {
+    return new GetTransactionAggregatesResponse({
       transactionAggregates: Array.isArray(object?.transactionAggregates)
         ? object.transactionAggregates.map((e: any) => TransactionAggregatesByMonth.fromJSON(e))
         : [],
       nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+    });
+  }
 
   toJSON(message: GetTransactionAggregatesResponse): unknown {
     const obj: any = {};
@@ -437,13 +450,13 @@ export const GetTransactionAggregatesResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetTransactionAggregatesResponse>, I>>(
     base?: I,
   ): GetTransactionAggregatesResponse {
-    return GetTransactionAggregatesResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetTransactionAggregatesResponse>, I>>(
     object: I,
@@ -453,7 +466,7 @@ export const GetTransactionAggregatesResponse = {
       object.transactionAggregates?.map((e) => TransactionAggregatesByMonth.fromPartial(e)) || [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetUserAccountBalanceHistoryRequest(): GetUserAccountBalanceHistoryRequest {
@@ -580,23 +593,35 @@ export const GetAccountBalanceHistoryRequest = {
 };
 
 function createBaseGetAccountBalanceHistoryResponse(): GetAccountBalanceHistoryResponse {
-  return { accountBalanceHistory: [] };
+  return new GetAccountBalanceHistoryResponse({});
 }
 
-export const GetAccountBalanceHistoryResponse = {
+export class GetAccountBalanceHistoryResponse extends ErrorResponse {
+  accountBalanceHistory: AccountBalanceHistory[] = [];
+
+  constructor(data: Partial<GetAccountBalanceHistoryResponse>) {
+    super();
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
+
   toJSON(message: GetAccountBalanceHistoryResponse): unknown {
     const obj: any = {};
     if (message.accountBalanceHistory?.length) {
       obj.accountBalanceHistory = message.accountBalanceHistory.map((e) => AccountBalanceHistory.toJSON(e));
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetAccountBalanceHistoryResponse>, I>>(
     base?: I,
   ): GetAccountBalanceHistoryResponse {
-    return GetAccountBalanceHistoryResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetAccountBalanceHistoryResponse>, I>>(
     object: I,
@@ -605,7 +630,7 @@ export const GetAccountBalanceHistoryResponse = {
     message.accountBalanceHistory = object.accountBalanceHistory?.map((e) => AccountBalanceHistory.fromPartial(e)) ||
       [];
     return message;
-  },
+  }
 };
 
 function createBaseGetUserCategoryMonthlyExpenditureRequest(): GetUserCategoryMonthlyExpenditureRequest {
@@ -665,18 +690,30 @@ export const GetUserCategoryMonthlyExpenditureRequest = {
 };
 
 function createBaseGetUserCategoryMonthlyExpenditureResponse(): GetUserCategoryMonthlyExpenditureResponse {
-  return { categoryMonthlyExpenditure: [], nextPageNumber: 0 };
+  return new GetUserCategoryMonthlyExpenditureResponse({ categoryMonthlyExpenditure: [], nextPageNumber: 0 });
 }
 
-export const GetUserCategoryMonthlyExpenditureResponse = {
+export class GetUserCategoryMonthlyExpenditureResponse extends ErrorResponse {
+  categoryMonthlyExpenditure: CategoryMonthlyExpenditure[] = [];
+  nextPageNumber: number = 0;
+
+  constructor(data?: Partial<GetUserCategoryMonthlyExpenditureResponse>) {
+    super();
+    if (data) {
+       Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
   fromJSON(object: any): GetUserCategoryMonthlyExpenditureResponse {
-    return {
+    return new GetUserCategoryMonthlyExpenditureResponse({
       categoryMonthlyExpenditure: Array.isArray(object?.categoryMonthlyExpenditure)
         ? object.categoryMonthlyExpenditure.map((e: any) => CategoryMonthlyExpenditure.fromJSON(e))
         : [],
       nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+    });
+  }
 
   toJSON(message: GetUserCategoryMonthlyExpenditureResponse): unknown {
     const obj: any = {};
@@ -689,13 +726,13 @@ export const GetUserCategoryMonthlyExpenditureResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetUserCategoryMonthlyExpenditureResponse>, I>>(
     base?: I,
   ): GetUserCategoryMonthlyExpenditureResponse {
-    return GetUserCategoryMonthlyExpenditureResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetUserCategoryMonthlyExpenditureResponse>, I>>(
     object: I,
@@ -705,7 +742,7 @@ export const GetUserCategoryMonthlyExpenditureResponse = {
       object.categoryMonthlyExpenditure?.map((e) => CategoryMonthlyExpenditure.fromPartial(e)) || [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetUserCategoryMonthlyIncomeRequest(): GetUserCategoryMonthlyIncomeRequest {
@@ -765,18 +802,30 @@ export const GetUserCategoryMonthlyIncomeRequest = {
 };
 
 function createBaseGetUserCategoryMonthlyIncomeResponse(): GetUserCategoryMonthlyIncomeResponse {
-  return { categoryMonthlyIncome: [], nextPageNumber: 0 };
+  return new GetUserCategoryMonthlyIncomeResponse({ categoryMonthlyIncome: [], nextPageNumber: 0 })
 }
 
-export const GetUserCategoryMonthlyIncomeResponse = {
+export class GetUserCategoryMonthlyIncomeResponse extends ErrorResponse {
+  categoryMonthlyIncome: CategoryMonthlyIncome[] = [];
+  nextPageNumber: number = 0;
+
+  constructor(data?: Partial<GetUserCategoryMonthlyIncomeResponse>) {
+    super();
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
   fromJSON(object: any): GetUserCategoryMonthlyIncomeResponse {
-    return {
+    return new GetUserCategoryMonthlyIncomeResponse({
       categoryMonthlyIncome: Array.isArray(object?.categoryMonthlyIncome)
         ? object.categoryMonthlyIncome.map((e: any) => CategoryMonthlyIncome.fromJSON(e))
         : [],
       nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+    });
+  }
 
   toJSON(message: GetUserCategoryMonthlyIncomeResponse): unknown {
     const obj: any = {};
@@ -787,13 +836,13 @@ export const GetUserCategoryMonthlyIncomeResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetUserCategoryMonthlyIncomeResponse>, I>>(
     base?: I,
   ): GetUserCategoryMonthlyIncomeResponse {
-    return GetUserCategoryMonthlyIncomeResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetUserCategoryMonthlyIncomeResponse>, I>>(
     object: I,
@@ -803,16 +852,31 @@ export const GetUserCategoryMonthlyIncomeResponse = {
       [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
-};
-
-function createBaseGetCategoryMonthlyTransactionCountRequest(): GetCategoryMonthlyTransactionCountRequest {
-  return { userId: 0, month: 0, personalFinanceCategoryPrimary: "", pageNumber: 0, pageSize: 0 };
+  }
 }
 
-export const GetCategoryMonthlyTransactionCountRequest = {
+function createBaseGetCategoryMonthlyTransactionCountRequest(): GetCategoryMonthlyTransactionCountRequest {
+  return new GetCategoryMonthlyTransactionCountRequest({ userId: 0, month: 0, personalFinanceCategoryPrimary: "", pageNumber: 0, pageSize: 0 });
+}
+
+export class GetCategoryMonthlyTransactionCountRequest extends ErrorResponse {
+  userId: number = 0;
+  month: number = 0;
+  personalFinanceCategoryPrimary: string = "";
+  pageNumber: number = 0;
+  pageSize: number = 0;
+
+  constructor(data?: Partial<GetCategoryMonthlyTransactionCountRequest>) {
+    super();
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
   fromJSON(object: any): GetCategoryMonthlyTransactionCountRequest {
-    return {
+    return new GetCategoryMonthlyTransactionCountRequest({
       userId: isSet(object.userId) ? Number(object.userId) : 0,
       month: isSet(object.month) ? Number(object.month) : 0,
       personalFinanceCategoryPrimary: isSet(object.personalFinanceCategoryPrimary)
@@ -820,8 +884,8 @@ export const GetCategoryMonthlyTransactionCountRequest = {
         : "",
       pageNumber: isSet(object.pageNumber) ? Number(object.pageNumber) : 0,
       pageSize: isSet(object.pageSize) ? Number(object.pageSize) : 0,
-    };
-  },
+    });
+  }
 
   toJSON(message: GetCategoryMonthlyTransactionCountRequest): unknown {
     const obj: any = {};
@@ -841,13 +905,13 @@ export const GetCategoryMonthlyTransactionCountRequest = {
       obj.pageSize = Math.round(message.pageSize);
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetCategoryMonthlyTransactionCountRequest>, I>>(
     base?: I,
   ): GetCategoryMonthlyTransactionCountRequest {
-    return GetCategoryMonthlyTransactionCountRequest.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetCategoryMonthlyTransactionCountRequest>, I>>(
     object: I,
@@ -859,22 +923,36 @@ export const GetCategoryMonthlyTransactionCountRequest = {
     message.pageNumber = object.pageNumber ?? 0;
     message.pageSize = object.pageSize ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetCategoryMonthlyTransactionCountResponse(): GetCategoryMonthlyTransactionCountResponse {
-  return { categoryMonthlyTransactionCount: [], nextPageNumber: 0 };
+  return new GetCategoryMonthlyTransactionCountResponse({ categoryMonthlyTransactionCount: [], nextPageNumber: 0 });
 }
 
-export const GetCategoryMonthlyTransactionCountResponse = {
+export class GetCategoryMonthlyTransactionCountResponse extends ErrorResponse {
+  categoryMonthlyTransactionCount: CategoryMonthlyTransactionCount[] = [];
+  nextPageNumber: number = 0;
+
+  constructor(data?: Partial<GetCategoryMonthlyTransactionCountResponse>) {
+    super();
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
   fromJSON(object: any): GetCategoryMonthlyTransactionCountResponse {
-    return {
-      categoryMonthlyTransactionCount: Array.isArray(object?.categoryMonthlyTransactionCount)
+    const details = Array.isArray(object?.categoryMonthlyTransactionCount)
         ? object.categoryMonthlyTransactionCount.map((e: any) => CategoryMonthlyTransactionCount.fromJSON(e))
-        : [],
-      nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+        : []
+    const  nextPageNumber = isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0
+    return new GetCategoryMonthlyTransactionCountResponse({
+      categoryMonthlyTransactionCount: details,
+      nextPageNumber: nextPageNumber,
+    });
+  }
 
   toJSON(message: GetCategoryMonthlyTransactionCountResponse): unknown {
     const obj: any = {};
@@ -887,13 +965,13 @@ export const GetCategoryMonthlyTransactionCountResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetCategoryMonthlyTransactionCountResponse>, I>>(
     base?: I,
   ): GetCategoryMonthlyTransactionCountResponse {
-    return GetCategoryMonthlyTransactionCountResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetCategoryMonthlyTransactionCountResponse>, I>>(
     object: I,
@@ -903,7 +981,7 @@ export const GetCategoryMonthlyTransactionCountResponse = {
       object.categoryMonthlyTransactionCount?.map((e) => CategoryMonthlyTransactionCount.fromPartial(e)) || [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetDebtToIncomeRatioRequest(): GetDebtToIncomeRatioRequest {
@@ -1643,18 +1721,31 @@ export const GetMonthlyIncomeRequest = {
 };
 
 function createBaseGetMonthlyIncomeResponse(): GetMonthlyIncomeResponse {
-  return { monthlyIncomes: [], nextPageNumber: 0 };
+  return new GetMonthlyIncomeResponse({ monthlyIncomes: [], nextPageNumber: 0 });
 }
 
-export const GetMonthlyIncomeResponse = {
+export class GetMonthlyIncomeResponse extends ErrorResponse {
+  monthlyIncomes: MonthlyIncome[] = [];
+  nextPageNumber: number = 0;
+
+    constructor(data?: Partial<GetMonthlyIncomeResponse>) {
+    super(data);
+    if (data) {
+      Object.assign(this, {
+        ...data,
+        nextPageNumber: data?.nextPageNumber ?? 0
+      });
+    }
+  }
+  
   fromJSON(object: any): GetMonthlyIncomeResponse {
-    return {
+    return new GetMonthlyIncomeResponse({
       monthlyIncomes: Array.isArray(object?.monthlyIncomes)
         ? object.monthlyIncomes.map((e: any) => MonthlyIncome.fromJSON(e))
         : [],
       nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+    });
+  }
 
   toJSON(message: GetMonthlyIncomeResponse): unknown {
     const obj: any = {};
@@ -1665,18 +1756,18 @@ export const GetMonthlyIncomeResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
-
+  }
+  
   create<I extends Exact<DeepPartial<GetMonthlyIncomeResponse>, I>>(base?: I): GetMonthlyIncomeResponse {
-    return GetMonthlyIncomeResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetMonthlyIncomeResponse>, I>>(object: I): GetMonthlyIncomeResponse {
     const message = createBaseGetMonthlyIncomeResponse();
     message.monthlyIncomes = object.monthlyIncomes?.map((e) => MonthlyIncome.fromPartial(e)) || [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetMonthlySavingsRequest(): GetMonthlySavingsRequest {
@@ -1912,18 +2003,33 @@ export const GetMonthlyTransactionCountRequest = {
 };
 
 function createBaseGetMonthlyTransactionCountResponse(): GetMonthlyTransactionCountResponse {
-  return { monthlyTransactionCounts: [], nextPageNumber: 0 };
+  return new GetMonthlyTransactionCountResponse({ monthlyTransactionCounts: [], nextPageNumber: 0 });
 }
 
-export const GetMonthlyTransactionCountResponse = {
+export class GetMonthlyTransactionCountResponse extends ErrorResponse {
+  monthlyTransactionCounts: MonthlyTransactionCount[] = [];
+  nextPageNumber: number = 0;
+
+  constructor(data?: Partial<GetMonthlyTransactionCountResponse>) {
+    super(data);
+    if (data) {
+      Object.assign(this, {
+        ...data,
+        monthlyTransactionCounts: data?.monthlyTransactionCounts?.map((e) => MonthlyTransactionCount.fromJSON(e)) ?? [],
+        nextPageNumber: data?.nextPageNumber ?? 0
+      });
+    }
+  }
+  
   fromJSON(object: any): GetMonthlyTransactionCountResponse {
-    return {
-      monthlyTransactionCounts: Array.isArray(object?.monthlyTransactionCounts)
-        ? object.monthlyTransactionCounts.map((e: any) => MonthlyTransactionCount.fromJSON(e))
-        : [],
-      nextPageNumber: isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0,
-    };
-  },
+    const tx  = Array.isArray(object?.monthlyTransactionCounts)
+        ? object.monthlyTransactionCounts.map((e: MonthlyTransactionCount) => MonthlyTransactionCount.fromJSON(e))
+        : []
+    const nextPageNumber = isSet(object.nextPageNumber) ? Number(object.nextPageNumber) : 0
+    return new GetMonthlyTransactionCountResponse(
+      { monthlyTransactionCounts: tx, nextPageNumber: nextPageNumber }
+    )
+  }
 
   toJSON(message: GetMonthlyTransactionCountResponse): unknown {
     const obj: any = {};
@@ -1934,13 +2040,13 @@ export const GetMonthlyTransactionCountResponse = {
       obj.nextPageNumber = Math.round(message.nextPageNumber);
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetMonthlyTransactionCountResponse>, I>>(
     base?: I,
   ): GetMonthlyTransactionCountResponse {
-    return GetMonthlyTransactionCountResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetMonthlyTransactionCountResponse>, I>>(
     object: I,
@@ -1950,7 +2056,7 @@ export const GetMonthlyTransactionCountResponse = {
       object.monthlyTransactionCounts?.map((e) => MonthlyTransactionCount.fromPartial(e)) || [];
     message.nextPageNumber = object.nextPageNumber ?? 0;
     return message;
-  },
+  }
 };
 
 function createBaseGetPaymentChannelMonthlyExpenditureRequest(): GetPaymentChannelMonthlyExpenditureRequest {
