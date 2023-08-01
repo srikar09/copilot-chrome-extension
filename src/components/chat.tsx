@@ -74,7 +74,7 @@ export const Chat: React.FC<{
 
     setMessages(newMessages);
     const last10messages = [
-      ...newMessages.slice(-10),
+      ...newMessages.slice(-2),
       { role: "user", content: contextDrivenQuestion } as ChatGPTMessage,
     ]; // remember last 10 messages
 

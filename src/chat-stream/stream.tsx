@@ -23,6 +23,8 @@ const handler = async (req: {
     },
   ];
 
+  // only push the latest message from the user
+
   messages.push(...last10messages);
 
   const payload: OpenAIStreamPayload = {
