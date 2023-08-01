@@ -76,7 +76,7 @@ export const Chat: React.FC<{
     const last10messages = [
       ...newMessages.slice(-2),
       { role: "user", content: contextDrivenQuestion } as ChatGPTMessage,
-    ]; // remember last 10 messages
+    ]; // remember last 2 messages
 
     // TODO: wrap around a try catch block
     const data = await handler({
