@@ -98,12 +98,6 @@ const MonthlyIncomeMetricsCard = () => {
       {monthlyIncome.length > 0 && (
         <>
           <MonthlyIncomeMetricsSummaryCard monthlyIncome={monthlyIncome} />
-          <CardinalAreaChart
-            data={monthlyIncome}
-            xAxisDataKey="month"
-            yAxisDataKey="totalIncome"
-            title="Monthly Income"
-          />
           <MonthlyIncomeMetricSeriesSummaryCard monthlyIncome={monthlyIncome} />
         </>
       )}
@@ -242,10 +236,36 @@ const MonthlyIncomeMetricSeriesSummaryCard: React.FC<{
 
   return (
     <Tabs defaultValue="account" className="py-5 w-full">
-      <TabsList className="grid w-full grid-cols-2 rounded-xl border my-2 p-3 font-bold">
+      <TabsList className="grid w-full grid-cols-3 rounded-xl border my-2 p-3 font-bold">
+        <TabsTrigger value="monthly-income">Monthly Income</TabsTrigger>
         <TabsTrigger value="account">Moving Average</TabsTrigger>
         <TabsTrigger value="password">Growth Rate</TabsTrigger>
       </TabsList>
+      <TabsContent value="monthly-income">
+        <Card>
+          <CardHeader>
+            <CardTitle>Monthly Income</CardTitle>
+            <CardDescription>
+              Make changes to your account here. Click save when youre done.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <CardinalAreaChart
+              data={monthlyIncome}
+              xAxisDataKey="month"
+              yAxisDataKey="totalIncome"
+              title="Monthly Income"
+            />
+          </CardContent>
+          <CardFooter>
+            <p>
+              {" "}
+              Note: these metrics are computed directly from your financial
+              transactions
+            </p>
+          </CardFooter>
+        </Card>
+      </TabsContent>
       <TabsContent value="account">
         <Card>
           <CardHeader>
