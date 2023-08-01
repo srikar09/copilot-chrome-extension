@@ -1,9 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ChatGPTMessage, ChatLine, LoadingChatLine } from "./chat-line";
-import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import {
+  selectCurrentUserID,
+  selectCurrentUserProfile,
+} from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { Button } from "./ui/button";
 import { handler } from "src/chat-stream/stream";
+import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-context";
+import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
+import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -44,27 +50,39 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
   </div>
 );
 
-export function Chat() {
+export const Chat: React.FC<{
+  financialContext: MelodyFinancialContext;
+}> = (props) => {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const profile = useAppSelector(selectCurrentUserProfile);
   const [userKey] = useState(profile.name);
+  const { financialContext } = props;
 
   // send message to API /api/chat endpoint
   const sendMessage = async (message: string) => {
     setLoading(true);
+    const contextDrivenQuestion = `Given this financial context ${JSON.stringify(
+      financialContext
+    )}, act as a smart financial copilot with personality: ${message}`;
+
     const newMessages = [
       ...messages,
       { role: "user", content: message } as ChatGPTMessage,
     ];
+
     setMessages(newMessages);
-    const last10messages = newMessages.slice(-10); // remember last 10 messages
+    const last10messages = [
+      ...newMessages.slice(-10),
+      { role: "user", content: contextDrivenQuestion } as ChatGPTMessage,
+    ]; // remember last 10 messages
 
     // TODO: wrap around a try catch block
     const data = await handler({
       last10messages: last10messages,
       user: userKey,
+      financialContext: financialContext,
     });
 
     console.log("Edge function returned.");
@@ -92,7 +110,7 @@ export function Chat() {
   };
 
   return (
-    <div className="rounded-2xl border-zinc-100  lg:border lg:p-6 w-fit">
+    <div className="rounded-2xl border-zinc-100  lg:border lg:p-6 w-fit  min-w-md max-w-xl">
       {messages.map(({ content, role }, index) => (
         <ChatLine key={index} role={role} content={content} />
       ))}
@@ -111,4 +129,4 @@ export function Chat() {
       />
     </div>
   );
-}
+};

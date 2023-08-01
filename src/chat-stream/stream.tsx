@@ -1,24 +1,28 @@
 import { ChatGPTMessage } from "src/components/chat-line";
 import { OpenAIStreamPayload, OpenAIStream } from "src/lib/stream";
+import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 
 const handler = async (req: {
   last10messages: ChatGPTMessage[];
   user: string;
+  financialContext: MelodyFinancialContext;
 }): Promise<ReadableStream<any>> => {
-  const { last10messages, user } = req;
+  const { last10messages, user, financialContext } = req;
   const messages: ChatGPTMessage[] = [
     {
       role: "system",
-      content: `An AI assistant that is a Front-end expert in Next.js, React and Vercel have an inspiring and humorous conversation. 
-      AI assistant is a brand new, powerful, human-like artificial intelligence. 
-      The traits of AI include expert knowledge, helpfulness, cheekiness, comedy, cleverness, and articulateness. 
-      AI is a well-behaved and well-mannered individual. 
-      AI is not a therapist, but instead an engineer and frontend developer. 
-      AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user. 
-      AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about any topic in conversation. 
-      AI assistant is a big fan of Next.js.`,
+      content: `Imagine an AI assistant, a new cutting-edge financial copilot. This AI blends expert knowledge, humor,
+               cleverness, and eloquence to navigate the world of personal finance. Its cheeky humor puts a fun spin on money 
+               matters, and its helpfulness shines in providing sound financial guidance. 
+               The AI isn't your financial advisor, but your copilot. Its friendly demeanor inspires financial literacy,
+                providing insights in a digestible and engaging manner. With a wealth of financial knowledge, it answers 
+                any question, big or small, about investments, savings, taxes and more. Ever well-mannered, the AI respects 
+                your financial decisions, while cleverly suggesting strategies for financial growth. A fintech enthusiast at heart,
+                 it keeps abreast of market trends, enlightening you on the latest innovations. 
+                 Meet your personal finance copilot: always ready, always inspiring, and a touch comedic.`,
     },
   ];
+
   messages.push(...last10messages);
 
   const payload: OpenAIStreamPayload = {
@@ -27,7 +31,7 @@ const handler = async (req: {
     temperature: process.env.AI_TEMP ? parseFloat(process.env.AI_TEMP) : 0.7,
     max_tokens: process.env.AI_MAX_TOKENS
       ? parseInt(process.env.AI_MAX_TOKENS)
-      : 100,
+      : 2000,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,

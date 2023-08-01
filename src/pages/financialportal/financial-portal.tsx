@@ -16,6 +16,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 enum SelectedAccountType {
   BANK_ACCOUNT = "BANK_ACCOUNT",
   CREDIT_CARD = "CREDIT_CARD",
+  INVESTMENT_ACCOUNT = "INVESTMENT_ACCOUNT",
 }
 
 const FinancialAnalyticsPortal: React.FC = () => {
@@ -52,6 +53,21 @@ const FinancialPortal: React.FC = () => {
     useState<SelectedAccountType>(SelectedAccountType.BANK_ACCOUNT);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const linkedBankAccounts = financialProfile.link;
+  const creditCardToInstitutionNameMap = linkedBankAccounts.reduce<{
+    [key: string]: CreditAccount[];
+  }>((acc, card) => {
+    return {
+      ...acc,
+      [card.institutionName]: card.creditAccounts,
+    };
+  }, {});
+
+  const allBankAccounts = linkedBankAccounts.reduce<BankAccount[]>(
+    (acc, link) => {
+      return [...acc, ...link.bankAccounts];
+    },
+    []
+  );
 
   // across the linked accounts get all bankAccounts
   // compute the sum of all bank accounts under this linked account
@@ -70,88 +86,43 @@ const FinancialPortal: React.FC = () => {
             <LinkedAccountCard link={link} key={idx} />
           ))}
         </div>
-        <div className="flex flex-1 gap-4">
-          <Button
-            variant={"outline"}
-            className="w-full font-bold rounded-full"
-            onClick={() =>
-              setSelectedAccountType(SelectedAccountType.BANK_ACCOUNT)
-            }
+        <Tabs defaultValue={SelectedAccountType.BANK_ACCOUNT}>
+          <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 gap-3 border p-2 rounded-2xl">
+            <TabsTrigger
+              value={SelectedAccountType.BANK_ACCOUNT}
+              className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
+            >
+              Bank Account
+            </TabsTrigger>
+            <TabsTrigger
+              value={SelectedAccountType.CREDIT_CARD}
+              className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
+            >
+              Credit Account
+            </TabsTrigger>
+            <TabsTrigger
+              value={SelectedAccountType.INVESTMENT_ACCOUNT}
+              className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
+            >
+              Investment Account
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent
+            value={SelectedAccountType.BANK_ACCOUNT}
+            className="pt-20 md:pt-15 lg:pt-10"
           >
-            <span className="text-sm">Bank Accounts</span>
-          </Button>
-          <Button
-            variant={"outline"}
-            className="w-full font-bold rounded-full"
-            onClick={() =>
-              setSelectedAccountType(SelectedAccountType.CREDIT_CARD)
-            }
+            <BankAccountsOverviewSummary allBankAccounts={allBankAccounts} />
+          </TabsContent>
+          <TabsContent
+            value={SelectedAccountType.CREDIT_CARD}
+            className="pt-20 md:pt-15 lg:pt-10"
           >
-            <span className="text-sm">Credit Cards</span>
-          </Button>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          {/**
-           * TODO:
-           *  1) Credit Card Summary (In One Place For All Cards) For Each Linked Account
-           *  2) Bank Account Summary (In One Place For All Accounts) For Each Linked Account
-           */}
-          <AccountSelectorSection selectedAccountType={selectedAccountType} />
-          {/* <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Overview</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview />
-          </CardContent>
-        </Card>
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Recent Sales</CardTitle>
-            <CardDescription>You made 265 sales this month.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <RecentSales />
-          </CardContent>
-        </Card> */}
-        </div>
+            <CreditAccountsOverviewSummary
+              creditCardToInstitutionNameMap={creditCardToInstitutionNameMap}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
-    </>
-  );
-};
-
-const AccountSelectorSection: React.FC<{
-  selectedAccountType: SelectedAccountType;
-}> = (props) => {
-  const financialProfile = useAppSelector(selectUserFinancialProfile);
-  const linkedBankAccounts = financialProfile.link;
-  const { selectedAccountType } = props;
-  // create a hashmap of credit card to institution name
-  const creditCardToInstitutionNameMap = linkedBankAccounts.reduce<{
-    [key: string]: CreditAccount[];
-  }>((acc, card) => {
-    return {
-      ...acc,
-      [card.institutionName]: card.creditAccounts,
-    };
-  }, {});
-
-  const allBankAccounts = linkedBankAccounts.reduce<BankAccount[]>(
-    (acc, link) => {
-      return [...acc, ...link.bankAccounts];
-    },
-    []
-  );
-  return (
-    <>
-      {selectedAccountType === SelectedAccountType.BANK_ACCOUNT && (
-        <BankAccountsOverviewSummary allBankAccounts={allBankAccounts} />
-      )}
-      {selectedAccountType === SelectedAccountType.CREDIT_CARD && (
-        <CreditAccountsOverviewSummary
-          creditCardToInstitutionNameMap={creditCardToInstitutionNameMap}
-        />
-      )}
     </>
   );
 };

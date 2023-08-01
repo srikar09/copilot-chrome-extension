@@ -236,10 +236,25 @@ const MonthlyIncomeMetricSeriesSummaryCard: React.FC<{
 
   return (
     <Tabs defaultValue="account" className="py-5 w-full">
-      <TabsList className="grid w-full grid-cols-3 rounded-xl border my-2 p-3 font-bold">
-        <TabsTrigger value="monthly-income">Monthly Income</TabsTrigger>
-        <TabsTrigger value="account">Moving Average</TabsTrigger>
-        <TabsTrigger value="password">Growth Rate</TabsTrigger>
+      <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 gap-3 rounded-xl border my-2 p-3 font-bold">
+        <TabsTrigger
+          value="monthly-income"
+          className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
+        >
+          Monthly Income
+        </TabsTrigger>
+        <TabsTrigger
+          value="account"
+          className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
+        >
+          Moving Average
+        </TabsTrigger>
+        <TabsTrigger
+          value="password"
+          className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
+        >
+          Growth Rate
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="monthly-income">
         <Card>
