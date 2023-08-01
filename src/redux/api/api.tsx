@@ -72,6 +72,7 @@ export const api = createApi({
     "COMMUNITY_DISCOVER",
     "TRANSACTION",
     "MONTHLY_TRANSACTION_METRICS",
+    "RECURRING_TRANSACTION",
   ],
   // global configuration for the api
   keepUnusedDataFor: 60,

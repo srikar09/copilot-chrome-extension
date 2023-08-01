@@ -1,5 +1,5 @@
 import { GetTransactionsRequest } from "src/types/financials/request_response_financial_service";
-import { api } from "../api/api";
+import { api } from "../../api/api";
 import { GetTransactionsResponse } from "src/types/custom/get-transactions-request";
 import { processErrorIfPresent } from "src/lib/utils";
 
