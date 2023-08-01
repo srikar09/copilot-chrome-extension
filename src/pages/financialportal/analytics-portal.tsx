@@ -3,7 +3,6 @@ import { ResponsiveContainer, Pie, PieChart } from "recharts";
 import { CardinalAreaChart } from "src/components/category-monthly-income-card";
 import { Spinner } from "src/components/spinner";
 import { Card, CardHeader, CardTitle } from "src/components/ui/card";
-import { useGetMonthlyIncomeQuery } from "src/redux/queries/category/get-monthly-income";
 import {
   selectCurrentUserID,
   selectUserFinancialProfile,
@@ -13,10 +12,7 @@ import {
   CategoryMonthlyExpenditure,
   MonthlyIncome,
 } from "src/types/financials/clickhouse_financial_service";
-import {
-  GetUserCategoryMonthlyExpenditureRequest,
-  GetUserCategoryMonthlyIncomeRequest,
-} from "src/types/financials/request_response_financial_analytics_service";
+import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/financials/request_response_financial_analytics_service";
 import { useGetMonthlyCategoryExpenditureQuery } from "src/redux/queries/category/get-monthly-category-expenditure";
 import { MonthlyIncomeMetricsCard } from "./income/income-metrics-page";
 
