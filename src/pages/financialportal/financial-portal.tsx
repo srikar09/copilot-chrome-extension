@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { BankAccountsOverviewSummary } from "src/components/bank-accounts-overview-summary";
 import { CreditAccountsOverviewSummary } from "src/components/credit-accounts-overview-summary";
 import { LinkedAccountCard } from "src/components/linked-account-card";
-import { Button } from "src/components/ui/button";
 import { OPTIONS, PortalLayout } from "src/layouts/portal-layout";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
