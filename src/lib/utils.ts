@@ -1,7 +1,14 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ErrorMessage } from "../types/error/error";
- 
+import {
+  PlaidLinkOnSuccessMetadata,
+  PlaidLinkOnExitMetadata,
+  PlaidLinkStableEvent,
+  PlaidLinkOnEventMetadata,
+  PlaidLinkError,
+} from 'react-plaid-link';
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -82,3 +89,44 @@ export function convertToMonth(dateString: string): string {
 
   return `${monthName} ${year}`;
 }
+
+export const logEvent = (
+  eventName: PlaidLinkStableEvent | string,
+  metadata:
+    | PlaidLinkOnEventMetadata
+    | PlaidLinkOnSuccessMetadata
+    | PlaidLinkOnExitMetadata,
+  error?: PlaidLinkError | null
+) => {
+  console.log(`Link Event: ${eventName}`, metadata, error);
+};
+
+export const logSuccess = async (
+  { institution, accounts, link_session_id }: PlaidLinkOnSuccessMetadata,
+  userId: number
+) => {
+  logEvent('onSuccess', {
+    institution,
+    accounts,
+    link_session_id,
+  });
+};
+
+export const logExit = async (
+  error: PlaidLinkError | null,
+  { institution, status, link_session_id, request_id }: PlaidLinkOnExitMetadata,
+  userId: number
+) => {
+  logEvent(
+    'onExit',
+    {
+      institution,
+      status,
+      link_session_id,
+      request_id,
+    },
+    error
+  );
+
+  const eventError = error || {};
+};

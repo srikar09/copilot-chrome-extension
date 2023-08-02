@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "src/redux/store/hooks";
 import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { RocketIcon } from "@radix-ui/react-icons";
+import { LogoutButton } from "./logout-button";
 
 const navigation = [
   { name: "Financial Portal", href: routes.FINANCIALPORTAL },
@@ -115,15 +116,16 @@ const Nav: React.FC<{}> = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={cn(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </a>
+                          // <a
+                          //   href="#"
+                          //   className={cn(
+                          //     active ? "bg-gray-100" : "",
+                          //     "block px-4 py-2 text-sm text-gray-700"
+                          //   )}
+                          // >
+                          //   Sign out
+                          // </a>
+                          <LogoutButton active={active} />
                         )}
                       </Menu.Item>
                     </Menu.Items>

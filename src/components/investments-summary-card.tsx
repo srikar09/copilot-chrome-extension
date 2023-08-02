@@ -11,6 +11,7 @@ import { Badge } from "./ui/badge";
 import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
 import { cn, formatToTwoDecimalPoints } from "src/lib/utils";
 import { HoldingCard } from "./holding-card";
+import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
 
 const InvestmentsSummaryCard: React.FC<{
   accounts: InvestmentAccount[];
@@ -30,10 +31,11 @@ const InvestmentsSummaryCard: React.FC<{
 
   return (
     <div className="gap-2">
-      <h2 className="ml-5 text-3xl font-bold tracking-tight pb-5">
-        Connected Investment Accounts{" "}
-        <span className="ml-1 text-xs"> ({numberOfInvestmentAccounts})</span>
-      </h2>
+      <AccountOverviewSummaryHeader
+        title={"Investment Accounts"}
+        buttonTitle={"Investment Accounts"}
+        count={numberOfInvestmentAccounts}
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
         <LinkedInvestmentAccounts
           investmentAccounts={accounts}

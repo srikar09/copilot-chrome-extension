@@ -1,5 +1,6 @@
 import { CreditAccount } from "src/types/financials/message_financial_service";
 import { CreditAccountSummaryCard } from "./credit-account-card";
+import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
 
 const CreditAccountsOverviewSummary: React.FC<{
   creditCardToInstitutionNameMap: {
@@ -22,10 +23,12 @@ const CreditAccountsOverviewSummary: React.FC<{
   }, []);
   return (
     <div className="col-span-7 gap-2">
-      <h2 className="ml-5 text-xl font-bold tracking-tight pb-5">
-        Credit Accounts{" "}
-        <span className="ml-1 text-xs"> ({creditAccounts.length})</span>
-      </h2>
+      <AccountOverviewSummaryHeader
+        title={"Credit Accounts"}
+        buttonTitle={"Credit Account"}
+        count={creditAccounts.length}
+      />
+
       <div>
         {Object.keys(creditCardToInstitutionNameMap).map(
           (institutionName, idx) => (
