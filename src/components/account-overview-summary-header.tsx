@@ -12,6 +12,7 @@ import { PlusCircle } from "lucide-react";
 import { useAppSelector } from "src/redux/store/hooks";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { Badge } from "./ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 const AccountOverviewSummaryHeader: React.FC<{
   title: string;
@@ -55,11 +56,40 @@ const AccountSheet: React.FC<{
             <p className="text-black text-lg underline">
               Connected Institutions
             </p>
-            <div className="flex flex-row flex-wrap gap-2 py-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-3">
               {link.map((connectedLink, index) => (
-                <Badge key={index}>
-                  <p> {connectedLink.institutionName} </p>
-                </Badge>
+                <Card key={index} className="p-3">
+                  <CardHeader>
+                    <CardTitle>
+                      <p> {connectedLink.institutionName} </p>
+                      <p
+                        style={{
+                          fontSize: "10px",
+                        }}
+                        className="font-bold leading-3"
+                      >
+                        {" "}
+                        {connectedLink.newAccountsAvailable
+                          ? "New Accounts Avalaible"
+                          : "No New Accounts Available"}
+                      </p>
+                    </CardTitle>
+                    {!connectedLink.shouldBeUpdated ? (
+                      <></>
+                    ) : (
+                      <div
+                        style={{
+                          fontSize: "10px",
+                        }}
+                      >
+                        <ConnectPlaidAccountButton
+                          title={`Need To Update Account (${connectedLink.institutionName})`}
+                          linkId={connectedLink.id}
+                        />
+                      </div>
+                    )}
+                  </CardHeader>
+                </Card>
               ))}
             </div>
             You have {numberOfConnectedAccounts} connected accounts on our
