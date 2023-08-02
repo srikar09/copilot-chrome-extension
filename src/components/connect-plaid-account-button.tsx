@@ -9,7 +9,10 @@ import {
   selectCurrentUserID,
   selectCurrentUserAccount,
 } from "src/redux/slice/authentication/AuthenticationSelector";
-import { PlaidExchangeTokenRequest } from "src/types/financials/request_response_financial_service";
+import {
+  PlaidExchangeTokenRequest,
+  PlaidInitiateTokenUpdateRequest,
+} from "src/types/financials/request_response_financial_service";
 import { useNavigate } from "react-router";
 import {
   PlaidLinkOptions,
@@ -24,6 +27,7 @@ import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
 import { usePlaidExchangePublicTokenMutation } from "src/redux/mutations/plaid-exchange-public-token-mutation";
 import { Button } from "./ui/button";
+import { useUpdateLinkTokenMutation } from "src/redux/mutations/update-link-token";
 
 /**
  *  This component enables us to connect a new bank account through plaid
@@ -34,10 +38,10 @@ import { Button } from "./ui/button";
 const ConnectPlaidAccountButton: React.FC<{
   title: string;
   className?: string;
-  itemId?: number | null;
+  linkId?: number | null;
   generatedToken?: string;
 }> = (props) => {
-  const { title, className, itemId, generatedToken } = props;
+  const { title, className, linkId, generatedToken } = props;
   const isOAuthRedirect = window.location.href.includes("?oauth_state_id=");
   const [currentToken, setCurrentToken] = useState<string>("");
   const currentUserId = useAppSelector(selectCurrentUserID);
@@ -47,21 +51,35 @@ const ConnectPlaidAccountButton: React.FC<{
   const [error, setError] = React.useState<string>("");
   const currentAccount = useAppSelector(selectCurrentUserAccount);
   const [getLinkToken] = useLinkTokenMutation();
+  const [updateLinkToken] = useUpdateLinkTokenMutation();
 
   const history = useNavigate();
 
   const createLinkToken = async () => {
-    const req = {
-      userId: Number(currentAccount.userAccountID),
-      fullName: currentAccount.username,
-      email: currentAccount.email,
-      phoneNumber: "",
-    };
+    if (linkId === null || linkId === undefined) {
+      const req = {
+        userId: Number(currentAccount.userAccountID),
+        fullName: currentAccount.username,
+        email: currentAccount.email,
+        phoneNumber: "",
+      };
 
-    const response = await getLinkToken(req).unwrap();
-    setCurrentToken(response.linkToken);
-    // store link_token temporarily in case of OAuth redirect
-    localStorage.setItem("link_token", response.linkToken);
+      const response = await getLinkToken(req).unwrap();
+      setCurrentToken(response.linkToken);
+      // store link_token temporarily in case of OAuth redirect
+      localStorage.setItem("link_token", response.linkToken);
+    } else {
+      // here we are to update the link hence no need to go through token exchange
+      const request: PlaidInitiateTokenUpdateRequest = {
+        userId: Number(currentUserId),
+        linkId: linkId,
+      };
+
+      const response = await updateLinkToken(request).unwrap();
+      setCurrentToken(response.linkToken);
+      // store link_token temporarily in case of OAuth redirect
+      localStorage.setItem("link_token", response.linkToken);
+    }
   };
 
   // generate a link_token when component mounts
@@ -95,10 +113,10 @@ const ConnectPlaidAccountButton: React.FC<{
     // send public_token to your server
     // https://plaid.com/docs/api/tokens/#token-exchange-flow
     logSuccess(metadata, Number(currentUserId));
-    if (itemId != null) {
+    if (linkId != null) {
+      // link token was successfully updated
       // update mode: no need to exchange public token
-      // need to update the link token
-      console.log(itemId);
+      console.log(linkId);
     } else {
       // call to Plaid api endpoint: /item/public_token/exchange in order to obtain access_token which is then stored with the created item
       try {

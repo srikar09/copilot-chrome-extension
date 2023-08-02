@@ -513,7 +513,7 @@ export interface PlaidInitiateTokenUpdateRequest {
   linkId: number;
 }
 
-export interface PlaidInitiateTokenUpdateResponse {
+interface PlaidInitiateTokenUpdateResponseInternal {
   linkToken: string;
   expiration: string;
 }
@@ -2526,16 +2526,28 @@ export const PlaidInitiateTokenUpdateRequest = {
 };
 
 function createBasePlaidInitiateTokenUpdateResponse(): PlaidInitiateTokenUpdateResponse {
-  return { linkToken: "", expiration: "" };
+  return new PlaidInitiateTokenUpdateResponse({ linkToken: "", expiration: "" });
 }
 
-export const PlaidInitiateTokenUpdateResponse = {
+export class PlaidInitiateTokenUpdateResponse extends ErrorResponse {
+  linkToken :string = "";
+  expiration: string = "";
+
+  constructor(data : Partial<PlaidInitiateTokenUpdateResponse>) {
+    super(data);
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  } 
+
   fromJSON(object: any): PlaidInitiateTokenUpdateResponse {
-    return {
+    return new PlaidInitiateTokenUpdateResponse({
       linkToken: isSet(object.linkToken) ? String(object.linkToken) : "",
       expiration: isSet(object.expiration) ? String(object.expiration) : "",
-    };
-  },
+    })
+  }
 
   toJSON(message: PlaidInitiateTokenUpdateResponse): unknown {
     const obj: any = {};
@@ -2546,13 +2558,13 @@ export const PlaidInitiateTokenUpdateResponse = {
       obj.expiration = message.expiration;
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<PlaidInitiateTokenUpdateResponse>, I>>(
     base?: I,
   ): PlaidInitiateTokenUpdateResponse {
-    return PlaidInitiateTokenUpdateResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<PlaidInitiateTokenUpdateResponse>, I>>(
     object: I,
@@ -2561,7 +2573,7 @@ export const PlaidInitiateTokenUpdateResponse = {
     message.linkToken = object.linkToken ?? "";
     message.expiration = object.expiration ?? "";
     return message;
-  },
+  }
 };
 
 function createBasePlaidExchangeTokenRequest(): PlaidExchangeTokenRequest {
