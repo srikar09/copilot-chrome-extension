@@ -19,6 +19,7 @@ import {
   TabsTrigger,
 } from "src/components/ui/tabs";
 import { InvestmentsSummaryCard } from "src/components/investments-summary-card";
+import { TransactionOverview } from "src/components/transaction-overview";
 
 enum SelectedAccountType {
   BANK_ACCOUNT = "BANK_ACCOUNT",
@@ -125,6 +126,12 @@ const FinancialPortal: React.FC = () => {
             className="pt-20 md:pt-15 lg:pt-10"
           >
             <InvestmentsSummaryCard accounts={allInvestmentAccounts} />
+          </TabsContent>
+          <TabsContent
+            value={SelectedAccountType.TRANSACTIONS}
+            className="pt-20 md:pt-15 lg:pt-10"
+          >
+            <TransactionOverview />
           </TabsContent>
         </Tabs>
       </div>
