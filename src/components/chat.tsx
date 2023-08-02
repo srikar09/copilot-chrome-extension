@@ -50,7 +50,62 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
   </div>
 );
 
-export const Chat: React.FC<{
+const SendMessage = async (
+  message: string,
+  previousMessages: ChatGPTMessage[],
+  context: any,
+  userKey: string,
+  setMessagesState: React.Dispatch<React.SetStateAction<ChatGPTMessage[]>>,
+  setLoadingState: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  setLoadingState(true);
+  const contextDrivenQuestion = `Given this financial context ${JSON.stringify(
+    context
+  )}, act as a smart financial copilot with personality: ${message}`;
+
+  const newMessages = [
+    ...previousMessages,
+    { role: "user", content: message } as ChatGPTMessage,
+  ];
+
+  setMessagesState(newMessages);
+  const last10messages = [
+    ...newMessages.slice(-2),
+    { role: "user", content: contextDrivenQuestion } as ChatGPTMessage,
+  ]; // remember last 2 messages
+
+  // TODO: wrap around a try catch block
+  const data = await handler({
+    last10messages: last10messages,
+    user: userKey,
+    financialContext: context,
+  });
+
+  console.log("Edge function returned.");
+
+  const reader = data.getReader();
+  const decoder = new TextDecoder();
+  let done = false;
+
+  let lastMessage = "";
+
+  while (!done) {
+    const { value, done: doneReading } = await reader.read();
+    done = doneReading;
+    const chunkValue = decoder.decode(value);
+
+    lastMessage = lastMessage + chunkValue;
+
+    setMessagesState([
+      ...newMessages,
+      { role: "assistant", content: lastMessage } as ChatGPTMessage,
+    ]);
+
+    setLoadingState(false);
+  }
+};
+
+const Chat: React.FC<{
   financialContext: MelodyFinancialContext;
 }> = (props) => {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
@@ -130,3 +185,5 @@ export const Chat: React.FC<{
     </div>
   );
 };
+
+export { InputMessage, Chat, SendMessage };

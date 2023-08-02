@@ -15,6 +15,23 @@ import {
 import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/financials/request_response_financial_analytics_service";
 import { useGetMonthlyCategoryExpenditureQuery } from "src/redux/queries/category/get-monthly-category-expenditure";
 import { MonthlyIncomeMetricsCard } from "./income/income-metrics-page";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "src/components/ui/tabs";
+import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+
+enum AnalyticType {
+  INCOME = "INCOME",
+  EXPENDITURE = "EXPENDITURE",
+  SAVINGS = "SAVINGS",
+  INVESTMENTS = "INVESTMENTS",
+  CREDIT = "CREDIT",
+  NET_WORTH = "NET_WORTH",
+  DEBT = "DEBT",
+}
 
 const AnalyticsPortal = () => {
   const userId = useAppSelector(selectCurrentUserID);
@@ -27,8 +44,25 @@ const AnalyticsPortal = () => {
 
   return (
     <div>
-      <MonthlyIncomeMetricsCard />
-      <MonthlyCategorizedIncomeMetricsCard />
+      <Tabs defaultValue={AnalyticType.INCOME}>
+        <TabsList className="m-1 bg-black">
+          <TabsTrigger value={AnalyticType.INCOME}>Income</TabsTrigger>
+          <TabsTrigger value={AnalyticType.EXPENDITURE}>Expenses</TabsTrigger>
+          <TabsTrigger value={AnalyticType.SAVINGS}>Savings</TabsTrigger>
+          <TabsTrigger value={AnalyticType.INVESTMENTS}>
+            Investments
+          </TabsTrigger>
+          <TabsTrigger value={AnalyticType.CREDIT}>Credit</TabsTrigger>
+          <TabsTrigger value={AnalyticType.NET_WORTH}>Net Worth</TabsTrigger>
+          <TabsTrigger value={AnalyticType.DEBT}>Debt</TabsTrigger>
+        </TabsList>
+        <TabsContent value={AnalyticType.INCOME}>
+          <MonthlyIncomeMetricsCard />
+        </TabsContent>
+        <TabsContent value={AnalyticType.EXPENDITURE}>
+          <MonthlyCategorizedIncomeMetricsCard />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
@@ -106,7 +140,7 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
   }, [isLoading, isError, response]);
 
   return (
-    <div>
+    <AnalyticAiCardLayout context={categoryMonthlyExpenditure}>
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Monthly Expenditures <span className="ml-1 text-xs"> </span>
@@ -132,7 +166,7 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
           />
         </PieChart>
       </ResponsiveContainer>
-    </div>
+    </AnalyticAiCardLayout>
   );
 };
 

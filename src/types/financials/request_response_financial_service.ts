@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { ErrorResponse } from "../error/error";
 import { Any } from "./any";
 import { MelodyFinancialContext, ReOccuringTransaction, Transaction } from "./clickhouse_financial_service";
 import {
@@ -700,7 +701,7 @@ export interface GetReCurringTransactionsRequest {
   userId: number;
 }
 
-export interface GetReCurringTransactionsResponse {
+interface GetReCurringTransactionsResponseInternal {
   /** The re-occuring transactions */
   reCcuringTransactions: ReOccuringTransaction[];
   participantReCcuringTransactions: GetReCurringTransactionsResponse_ParticipantReCurringTransactions[];
@@ -3190,12 +3191,25 @@ export const GetReCurringTransactionsRequest = {
 };
 
 function createBaseGetReCurringTransactionsResponse(): GetReCurringTransactionsResponse {
-  return { reCcuringTransactions: [], participantReCcuringTransactions: [] };
+  return new GetReCurringTransactionsResponse({ reCcuringTransactions: [], participantReCcuringTransactions: [] });
 }
 
-export const GetReCurringTransactionsResponse = {
+export class GetReCurringTransactionsResponse extends ErrorResponse {
+  reCcuringTransactions: ReOccuringTransaction[] = [];
+  participantReCcuringTransactions : GetReCurringTransactionsResponse_ParticipantReCurringTransactions[] = [];
+
+  constructor(data: Partial<GetReCurringTransactionsResponse>) {
+    super(data);
+    if (data?.reCcuringTransactions) {
+      this.reCcuringTransactions = data.reCcuringTransactions;
+    }
+    if (data?.participantReCcuringTransactions) {
+      this.participantReCcuringTransactions = data.participantReCcuringTransactions;
+    }
+  }
+
   fromJSON(object: any): GetReCurringTransactionsResponse {
-    return {
+    return new GetReCurringTransactionsResponse({
       reCcuringTransactions: Array.isArray(object?.reCcuringTransactions)
         ? object.reCcuringTransactions.map((e: any) => ReOccuringTransaction.fromJSON(e))
         : [],
@@ -3204,8 +3218,8 @@ export const GetReCurringTransactionsResponse = {
           GetReCurringTransactionsResponse_ParticipantReCurringTransactions.fromJSON(e)
         )
         : [],
-    };
-  },
+    });
+  }
 
   toJSON(message: GetReCurringTransactionsResponse): unknown {
     const obj: any = {};
@@ -3218,13 +3232,13 @@ export const GetReCurringTransactionsResponse = {
       );
     }
     return obj;
-  },
+  }
 
   create<I extends Exact<DeepPartial<GetReCurringTransactionsResponse>, I>>(
     base?: I,
   ): GetReCurringTransactionsResponse {
-    return GetReCurringTransactionsResponse.fromPartial(base ?? {});
-  },
+    return this.fromPartial(base ?? {});
+  }
 
   fromPartial<I extends Exact<DeepPartial<GetReCurringTransactionsResponse>, I>>(
     object: I,
@@ -3237,7 +3251,7 @@ export const GetReCurringTransactionsResponse = {
         GetReCurringTransactionsResponse_ParticipantReCurringTransactions.fromPartial(e)
       ) || [];
     return message;
-  },
+  }
 };
 
 function createBaseGetReCurringTransactionsResponse_ParticipantReCurringTransactions(): GetReCurringTransactionsResponse_ParticipantReCurringTransactions {

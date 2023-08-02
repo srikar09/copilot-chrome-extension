@@ -11,7 +11,7 @@ const BankAccountsOverviewSummary: React.FC<{
         Bank Accounts{" "}
         <span className="ml-1 text-xs"> ({allBankAccounts.length})</span>
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-2">
         {allBankAccounts.map((account, idx) => (
           <BankAccountSummaryCard account={account} key={idx} />
         ))}
