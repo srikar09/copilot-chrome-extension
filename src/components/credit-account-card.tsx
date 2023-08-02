@@ -29,7 +29,7 @@ const CreditAccountSummaryCard: React.FC<{
   return (
     <AnalyticAiCardLayout context={account}>
       <Card>
-        <CardHeader className="grid grid-cols-1 md:grid-cols-2  items-start gap-4 space-y-0">
+        <CardHeader className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 space-y-0">
           <div className="space-y-1">
             <CardTitle className="text-xs text-gray-600 font-bold">
               ${formatToTwoDecimalPoints(account.currentFunds)}
@@ -91,7 +91,7 @@ const CreditAccountSummaryCard: React.FC<{
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
+          <div className="flex justify-end items-end space-x-1 rounded-md bg-secondary text-secondary-foreground">
             <Button variant="secondary" className="px-3 shadow-none">
               <StarIcon className="mr-2 h-4 w-4" />
               More
@@ -131,9 +131,9 @@ const CreditAccountSummaryCard: React.FC<{
         <div className="flex flex-1 flex-wrap">
           {account.aprs.length > 0 && (
             <CardContent>
-              <CardTitle className="text-sm font-bold pb-4">
+              <CardTitle className="text-sm font-bold p-5">
                 <div className="grid grid-cols-1 gap-3 divide-y">
-                  <div className="text-xs gap-5 p-2 border shadow-md w-full flex justify-between bg-white text-black">
+                  <div className="text-xs gap-5 p-6 border rounded-3xl shadow-md w-full flex justify-between bg-white text-black">
                     <div className="flex flex-col justify-start items-start">
                       <p className="text-xs"> Last Payed</p>
                       <p> {formatDate(account.lastPaymentDate)} </p>
@@ -143,7 +143,7 @@ const CreditAccountSummaryCard: React.FC<{
                       <p> {formatDate(account.lastStatementIssueDate)} </p>
                     </div>
                   </div>
-                  <div className="text-xs gap-5 p-2 border shadow-md w-full flex justify-between bg-white text-black">
+                  <div className="text-xs gap-5 p-6 border rounded-3xl shadow-md w-full flex justify-between bg-white text-black">
                     <div className="flex flex-col justify-start items-start">
                       <p className="text-xs"> Last Statement Balance</p>
                       <p>
