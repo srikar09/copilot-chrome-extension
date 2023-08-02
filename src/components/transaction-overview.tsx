@@ -38,7 +38,7 @@ const TransactionOverview: React.FC = () => {
 
 const TransactionsComponent: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(100);
+  const [pageSize, setPageSize] = useState<number>(50);
   const userId = useAppSelector(selectCurrentUserID);
   const [spinner, setSpinner] = useState<React.ReactElement | null>(
     <Spinner className={"w-8 h-8 mt-3 ml-3"} />
@@ -114,7 +114,7 @@ const TransactionsComponent: React.FC = () => {
             <TableNav />
           </div>
         </div>
-        <DataTable data={taskSet} columns={columns} />
+        <DataTable data={transactions} columns={columns} />
       </div>
     </AnalyticAiCardLayout>
   );
