@@ -26,6 +26,7 @@ const LogoutButton: React.FC<{
     persistentStorage.wipeLocalStorage();
     // redirect to login page
     navigate(routes.AUTHENTICATION);
+    navigate(0);
   };
 
   return (
