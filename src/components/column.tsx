@@ -1,5 +1,3 @@
-import react from "react";
-
 import { ColumnDef } from "@tanstack/react-table";
 
 import { DataTableColumnHeader } from "./data-table-column-header";
@@ -59,13 +57,17 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: "paymentChannel",
+    accessorKey: "personalFinanceCategoryPrimary",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="PaymentChannel" />
+      <DataTableColumnHeader
+        column={column}
+        title="personalFinanceCategoryPrimary"
+      />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("paymentChannel")
+        (status) =>
+          status.value === row.getValue("personalFinanceCategoryPrimary")
       );
 
       if (!status) {

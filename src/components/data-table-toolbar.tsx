@@ -28,10 +28,10 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("paymentChannel") && (
+        {table.getColumn("personalFinanceCategoryPrimary") && (
           <DataTableFacetedFilter
-            column={table.getColumn("paymentChannel")}
-            title="Payment Channel"
+            column={table.getColumn("personalFinanceCategoryPrimary")}
+            title="Personal Finance Category"
             options={statuses}
           />
         )}

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const taskSchema = z.object({
   id: z.string(),
   name: z.string(),
-  paymentChannel: z.string(),
+  personalFinanceCategoryPrimary: z.string(),
   authorizedDate: z.string(),
   merchantName: z.string(),
 });
