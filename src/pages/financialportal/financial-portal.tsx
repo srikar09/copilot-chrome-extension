@@ -9,33 +9,31 @@ import { useAppSelector } from "src/redux/store/hooks";
 import {
   BankAccount,
   CreditAccount,
+  InvestmentAccount,
 } from "src/types/financials/message_financial_service";
 import { AnalyticsPortal } from "./analytics-portal";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "src/components/ui/tabs";
+import { InvestmentsSummaryCard } from "src/components/investments-summary-card";
 
 enum SelectedAccountType {
   BANK_ACCOUNT = "BANK_ACCOUNT",
   CREDIT_CARD = "CREDIT_CARD",
   INVESTMENT_ACCOUNT = "INVESTMENT_ACCOUNT",
+  TRANSACTIONS = "TRANSACTIONS",
 }
 
 const FinancialAnalyticsPortal: React.FC = () => {
   return (
     <PortalLayout>
       <Tabs defaultValue={OPTIONS.OVERVIEW} className="space-y-4">
-        <TabsList className="flex flex-1 gap-3">
-          <TabsTrigger
-            value={OPTIONS.OVERVIEW}
-            className="rounded-2xl border px-6 py-2 font-bold"
-          >
-            Summary
-          </TabsTrigger>
-          <TabsTrigger
-            value={OPTIONS.ANALYTICS}
-            className="rounded-2xl border px-6 py-2 font-bold"
-          >
-            Analytics
-          </TabsTrigger>
+        <TabsList className="m-1 py-2 bg-black">
+          <TabsTrigger value={OPTIONS.OVERVIEW}>Summary</TabsTrigger>
+          <TabsTrigger value={OPTIONS.ANALYTICS}>Analytics</TabsTrigger>
         </TabsList>
         <TabsContent value={OPTIONS.OVERVIEW} className="space-y-4">
           <FinancialPortal />
@@ -69,6 +67,13 @@ const FinancialPortal: React.FC = () => {
     []
   );
 
+  const allInvestmentAccounts = linkedBankAccounts.reduce<InvestmentAccount[]>(
+    (acc, link) => {
+      return [...acc, ...link.investmentAccounts];
+    },
+    []
+  );
+
   // across the linked accounts get all bankAccounts
   // compute the sum of all bank accounts under this linked account
   // compute the same for all credit cards
@@ -87,24 +92,18 @@ const FinancialPortal: React.FC = () => {
           ))}
         </div>
         <Tabs defaultValue={SelectedAccountType.BANK_ACCOUNT}>
-          <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 gap-3 border p-2 rounded-2xl">
-            <TabsTrigger
-              value={SelectedAccountType.BANK_ACCOUNT}
-              className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
-            >
+          <TabsList className="m-1 bg-black py-2">
+            <TabsTrigger value={SelectedAccountType.BANK_ACCOUNT}>
               Bank Account
             </TabsTrigger>
-            <TabsTrigger
-              value={SelectedAccountType.CREDIT_CARD}
-              className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
-            >
+            <TabsTrigger value={SelectedAccountType.CREDIT_CARD}>
               Credit Account
             </TabsTrigger>
-            <TabsTrigger
-              value={SelectedAccountType.INVESTMENT_ACCOUNT}
-              className="bg-gray-100 rounded-2xl max-w-md p-2 items-center justify-center font-bold"
-            >
+            <TabsTrigger value={SelectedAccountType.INVESTMENT_ACCOUNT}>
               Investment Account
+            </TabsTrigger>
+            <TabsTrigger value={SelectedAccountType.TRANSACTIONS}>
+              Transactions
             </TabsTrigger>
           </TabsList>
           <TabsContent
@@ -120,6 +119,12 @@ const FinancialPortal: React.FC = () => {
             <CreditAccountsOverviewSummary
               creditCardToInstitutionNameMap={creditCardToInstitutionNameMap}
             />
+          </TabsContent>
+          <TabsContent
+            value={SelectedAccountType.INVESTMENT_ACCOUNT}
+            className="pt-20 md:pt-15 lg:pt-10"
+          >
+            <InvestmentsSummaryCard accounts={allInvestmentAccounts} />
           </TabsContent>
         </Tabs>
       </div>

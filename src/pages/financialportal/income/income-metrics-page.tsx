@@ -23,6 +23,7 @@ import {
   CardTitle,
 } from "src/components/ui/card";
 import { Input } from "src/components/ui/input";
+import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
 import { convertToMonth, roundToTwoDecimalPlaces } from "src/lib/utils";
 import { useGetMonthlyIncomeQuery } from "src/redux/queries/category/get-monthly-income";
 import {
@@ -90,7 +91,7 @@ const MonthlyIncomeMetricsCard = () => {
   }, [isLoading, isError, response]);
 
   return (
-    <div>
+    <AnalyticAiCardLayout context={monthlyIncome}>
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Income Metrics <span className="ml-1 text-xs"> </span>
@@ -101,7 +102,7 @@ const MonthlyIncomeMetricsCard = () => {
           <MonthlyIncomeMetricSeriesSummaryCard monthlyIncome={monthlyIncome} />
         </>
       )}
-    </div>
+    </AnalyticAiCardLayout>
   );
 };
 

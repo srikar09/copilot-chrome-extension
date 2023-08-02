@@ -62,8 +62,6 @@ const AnalyticAiCardLayout: React.FC<{
       financialContext: context,
     });
 
-    console.log("Edge function returned.");
-
     const reader = data.getReader();
     const decoder = new TextDecoder();
     let done = false;
@@ -98,7 +96,7 @@ const AnalyticAiCardLayout: React.FC<{
           >
             <SelectValue placeholder="Ask Melodiy" />
           </SelectTrigger>
-          <SelectContent className="p-1 min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl">
+          <SelectContent className="p-1 min-h-[250px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-200 border-black">
             <SelectGroup className="p-2">
               {messages.map(({ content, role }, index) => (
                 <ChatLine key={index} role={role} content={content} />
