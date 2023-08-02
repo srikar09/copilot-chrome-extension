@@ -6,6 +6,7 @@ import {
   ChatLine,
   LoadingChatLine,
 } from "src/components/chat-line";
+import { ScrollArea } from "src/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -98,20 +99,20 @@ const AnalyticAiCardLayout: React.FC<{
           </SelectTrigger>
           <SelectContent className="p-1 min-h-[250px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-200 border-black">
             <SelectGroup className="p-2">
-              {messages.map(({ content, role }, index) => (
-                <ChatLine key={index} role={role} content={content} />
-              ))}
-
-              {loading && <LoadingChatLine />}
-
-              <SelectLabel>
-                {" "}
-                {initialAnalyticMessage.length < 2 && (
-                  <span className="mx-auto flex flex-grow text-gray-600 clear-both">
-                    Type a message to start the conversation
-                  </span>
-                )}
-              </SelectLabel>
+              <ScrollArea>
+                {messages.map(({ content, role }, index) => (
+                  <ChatLine key={index} role={role} content={content} />
+                ))}
+                {loading && <LoadingChatLine />}{" "}
+                <SelectLabel>
+                  {" "}
+                  {initialAnalyticMessage.length < 2 && (
+                    <span className="mx-auto flex flex-grow text-gray-600 clear-both">
+                      Type a message to start the conversation
+                    </span>
+                  )}
+                </SelectLabel>
+              </ScrollArea>
 
               <InputMessage
                 input={input}

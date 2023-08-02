@@ -109,7 +109,7 @@ export function Sidebar({ className, playlists }: SidebarProps) {
                 <circle cx="8" cy="18" r="4" />
                 <path d="M12 18V2l7 4" />
               </svg>
-              Deposit/Bank Accounts
+              Deposit
             </Button>
             <Button variant="ghost" className="w-full justify-start">
               <svg
@@ -125,7 +125,7 @@ export function Sidebar({ className, playlists }: SidebarProps) {
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-              Credit Accounts
+              Credit
             </Button>
             <Button variant="ghost" className="w-full justify-start">
               <svg
@@ -141,7 +141,7 @@ export function Sidebar({ className, playlists }: SidebarProps) {
                 <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
                 <circle cx="17" cy="7" r="5" />
               </svg>
-              Mortgage Accounts
+              Mortgage
             </Button>
             <Button variant="ghost" className="w-full justify-start">
               <svg
@@ -159,7 +159,7 @@ export function Sidebar({ className, playlists }: SidebarProps) {
                 <path d="M8 8v12" />
                 <path d="M4 4v16" />
               </svg>
-              Student Loan Account
+              Student-Loan
             </Button>
           </div>
         </div>
