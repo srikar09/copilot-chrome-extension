@@ -12,6 +12,7 @@ export const constants: {
   REACT_APP_ALGOLIA_API_KEY: string;
   RECOMMENDED_ENTITIES_LIMIT: number;
   USER_FINANCIAL_PROFILE_KEY: string;
+  USER_FINANCIAL_CONTEXT_KEY: string;
 } = {
   JWT_TOKEN_KEY: "jwt",
   DEFAULT_REQUEST_TIMEOUT: 50000,
@@ -27,4 +28,5 @@ export const constants: {
   REACT_APP_ALGOLIA_API_KEY: "86732f2b3e736e1999bb9c2928fba919",
   RECOMMENDED_ENTITIES_LIMIT: 5,
   USER_FINANCIAL_PROFILE_KEY: "userfinancialprofile",
+  USER_FINANCIAL_CONTEXT_KEY: "userfinancialcontext",
 };

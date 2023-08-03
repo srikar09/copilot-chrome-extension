@@ -25,7 +25,9 @@ const authenticationSlice = createSlice({
           state.userID = payload.user_account.userAccountID!;
           state.userAccount = payload.user_account;
           state.userProfile = payload.user_profile;
-          state.userFinancialProfile = payload.user_financial_profile;
+          state.userFinancialProfile = payload.user_financial_profile.profile;
+          state.userFinancialContext =
+            payload.user_financial_profile.financialContext;
 
           // necessary given protected route checks for cached token
           persistentStorage.setItem(constants.JWT_TOKEN_KEY, payload.token);

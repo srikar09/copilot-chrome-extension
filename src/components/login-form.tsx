@@ -45,7 +45,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     });
 
     const record = await authenticateUser(formattedRequest).unwrap();
-    const { user_account } = record;
+    const { user_account, user_financial_profile } = record;
+    const { profile, financialContext } = user_financial_profile;
     // Set the userID and userProfileID in browserCache
     persistentStorage.setItem(constants.JWT_TOKEN_KEY, record.token);
     persistentStorage.setItem(
@@ -58,9 +59,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     );
     persistentStorage.setItem(constants.USER_ACCOUNT_KEY, record.user_account);
     persistentStorage.setItem(constants.USER_PROFILE_KEY, record.user_profile);
+    persistentStorage.setItem(constants.USER_FINANCIAL_PROFILE_KEY, profile);
     persistentStorage.setItem(
-      constants.USER_FINANCIAL_PROFILE_KEY,
-      record.user_financial_profile
+      constants.USER_FINANCIAL_CONTEXT_KEY,
+      financialContext
     );
 
     navigate(routes.HOME);

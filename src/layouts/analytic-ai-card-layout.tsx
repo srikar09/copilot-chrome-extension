@@ -22,6 +22,7 @@ import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-con
 import {
   selectCurrentUserID,
   selectCurrentUserProfile,
+  selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
@@ -49,45 +50,18 @@ const AnalyticAiCardLayout: React.FC<{
   const [userKey] = useState(profile.name);
   const [enableGlobalFinancialContext, setEnableGlobalFinancialContext] =
     useState<boolean>(false);
-  const [financialContext, setFinancialContext] = useState<
-    MelodyFinancialContext | undefined
-  >(undefined);
+
   const userId = useAppSelector(selectCurrentUserID);
+  const financialContext = useAppSelector(selectUserFinancialContext);
 
   // TODO: this needs to be extracted from the financial profile
-  const {
-    data: response,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetFinancialContextQuery(
-    GetMelodyFinancialContextRequest.create({
-      userId: Number(userId),
-    })
-  );
-
-  if (isSuccess && response.melodyFinancialContext) {
-    setFinancialContext(response.melodyFinancialContext);
-  } else if (isError) {
-    toast({
-      title: "An error occured while query financial context!",
-      description: error.toString(),
-    });
-  } else if (isSuccess && response.melodyFinancialContext == undefined) {
-    toast({
-      title: "We are still pulling in your data!",
-      description: "Sit tight and relax. We are still pulling in your data",
-    });
-  }
 
   const sendMessage = async (message: string) => {
     setLoading(true);
     let questionContext: string = JSON.stringify(context).trim();
-    let globalContext: string = "";
+    const globalContext = JSON.stringify(financialContext).trim();
     let contextDrivenQuestion: string = "";
-    if (enableGlobalFinancialContext && financialContext !== undefined) {
-      globalContext = JSON.stringify(globalContext).trim();
+    if (enableGlobalFinancialContext) {
       contextDrivenQuestion = `Given this global context ${globalContext}, and this additional 
                               details ${questionContext} act as a smart financial advisor, answer
                                this question concisely: ${message}`;
