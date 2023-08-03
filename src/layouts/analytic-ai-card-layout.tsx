@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "src/components/ui/select";
+import { Switch } from "src/components/ui/switch";
 import { useToast } from "src/components/ui/use-toast";
 import { cn } from "src/lib/utils";
 import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-context";
@@ -137,7 +138,7 @@ const AnalyticAiCardLayout: React.FC<{
                         Type a message to start the conversation
                       </span>
                       <div className="flex items-center space-x-2 py-3">
-                        <Checkbox
+                        <Switch
                           id="terms"
                           className="rounded-full"
                           onClick={() => {
