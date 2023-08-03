@@ -16,7 +16,6 @@ import {
   TabsTrigger,
 } from "src/components/ui/tabs";
 import { listenNowAlbums, madeForYouAlbums } from "src/data/album";
-import { playlists } from "src/data/playlist";
 import { InsightsPortalLayout } from "src/layouts/insights-layout";
 import {
   selectCurrentUserProfile,
@@ -39,7 +38,7 @@ export default function InsightsPortal() {
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
-              <Sidebar playlists={playlists} className="hidden lg:block" />
+              <Sidebar className="hidden lg:block" />
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
                   <Tabs defaultValue="music" className="h-full space-y-6">
@@ -82,7 +81,7 @@ export default function InsightsPortal() {
                               />
                             ))}
                           </div>
-                          <ScrollBar orientation="horizontal" />
+                          <ScrollBar orientation="vertical" />
                         </ScrollArea>
                       </div>
                       <div className="mt-6 space-y-1">

@@ -101,41 +101,7 @@ const GetRecurringTransactions = api.injectEndpoints({
 
         // compute upcoming recurring transactions based off of the last transaction date and frequency
         const upcomingRecurringTransactions: UpcomingRecurringTransactions[] =
-          response.reCcuringTransactions.map((transaction) => {
-            const lastTransactionDate = new Date(transaction.lastDate);
-            const frequency = transaction.frequency;
-            const nextTransactionDate = new Date(lastTransactionDate);
-            switch (frequency) {
-              case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_WEEKLY:
-                nextTransactionDate.setDate(nextTransactionDate.getDate() + 7);
-                break;
-              case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_BIWEEKLY:
-                nextTransactionDate.setDate(nextTransactionDate.getDate() + 14);
-                break;
-              case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_MONTHLY:
-                nextTransactionDate.setMonth(
-                  nextTransactionDate.getMonth() + 1
-                );
-                break;
-              case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_SEMI_MONTHLY:
-                nextTransactionDate.setMonth(
-                  nextTransactionDate.getMonth() + 2
-                );
-                break;
-
-              case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_ANNUALLY:
-                nextTransactionDate.setFullYear(
-                  nextTransactionDate.getFullYear() + 1
-                );
-                break;
-              default:
-                break;
-            }
-            return {
-              nextTransactionDate: nextTransactionDate.toISOString(),
-              transaction: transaction,
-            };
-          });
+          getUpcomingRecurringTransactions(response.reCcuringTransactions);
 
         // now based off of all the computed next transaction dates, we need to sort them by date
         const sortedUpcomingRecurringTransactions: UpcomingRecurringTransactions[] =
@@ -304,6 +270,74 @@ function mostExpensivePayment(
   });
 
   return mostExpensive;
+}
+
+/**
+ * computes the next transaction date based on the last transaction date and the
+ * frequency of the transaction. This encapsulates the logic for calculating the
+ * next transaction date in a separate function, making it reusable and easier to understand.
+ * @param lastTransactionDate
+ * @param frequency
+ * @returns
+ */
+function calculateNextTransactionDate(
+  lastTransactionDate: Date,
+  frequency: ReOccuringTransactionsFrequency
+): Date {
+  let nextTransactionDate = new Date(lastTransactionDate);
+  switch (frequency) {
+    case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_WEEKLY:
+      nextTransactionDate.setDate(lastTransactionDate.getDate() + 7);
+      break;
+    case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_BIWEEKLY:
+      nextTransactionDate.setDate(lastTransactionDate.getDate() + 14);
+      break;
+    case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_MONTHLY:
+      nextTransactionDate.setMonth(lastTransactionDate.getMonth() + 1);
+      break;
+    case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_SEMI_MONTHLY:
+      nextTransactionDate.setDate(lastTransactionDate.getDate() + 15); // Assuming two transactions per month
+      break;
+    case ReOccuringTransactionsFrequency.RE_OCCURING_TRANSACTIONS_FREQUENCY_ANNUALLY:
+      nextTransactionDate.setFullYear(lastTransactionDate.getFullYear() + 1);
+      break;
+  }
+  return nextTransactionDate;
+}
+
+/*
+ * takes a response object that includes a list of recurring transactions, and it uses
+ * calculateNextTransactionDate to calculate the next transaction date for each transaction,
+ * and then return an array of upcoming transactions.
+ *
+ * @param {{
+ *   reCcuringTransactions: ReOccuringTransaction[];
+ * }} response
+ * @returns {UpcomingRecurringTransactions[]}
+ * */
+function getUpcomingRecurringTransactions(
+  reCcuringTransactions: ReOccuringTransaction[]
+): UpcomingRecurringTransactions[] {
+  const lastDayOfCurrentYear = new Date(new Date().getFullYear(), 12, 31);
+  return reCcuringTransactions
+    .map((transaction) => {
+      const lastTransactionDate = new Date(transaction.lastDate);
+      const nextTransactionDate = calculateNextTransactionDate(
+        lastTransactionDate,
+        transaction.frequency
+      );
+      if (nextTransactionDate > lastDayOfCurrentYear) {
+        return null;
+      }
+      return {
+        nextTransactionDate: nextTransactionDate.toISOString(),
+        transaction: transaction,
+      };
+    })
+    .filter(
+      (transaction): transaction is UpcomingRecurringTransactions =>
+        transaction !== null
+    );
 }
 
 export { GetRecurringTransactions };
