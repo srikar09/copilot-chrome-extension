@@ -19,6 +19,10 @@ function App() {
       constants.USER_FINANCIAL_PROFILE_KEY
     );
 
+    const financialContext = persistentStorage.getItem(
+      constants.USER_FINANCIAL_CONTEXT_KEY
+    );
+
     if (validations.validateJwt(token) && validations.validateStr(userID)) {
       persistentStorage.setItem(constants.JWT_TOKEN_KEY, token);
       const payload = {
@@ -27,6 +31,7 @@ function App() {
         userAccount: userAccount,
         userProfile: userProfile,
         userFinancialProfile: financialProfile,
+        userFinancialContext: financialContext,
       };
       dispatch(authenticationActions.authenticateUser(payload));
     }

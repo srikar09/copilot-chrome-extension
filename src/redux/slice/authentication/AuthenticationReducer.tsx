@@ -19,6 +19,7 @@ export const authenticateUser: CaseReducer<
   state.userAccount = action.payload.userAccount;
   state.userProfile = action.payload.userProfile;
   state.userFinancialProfile = action.payload.userFinancialProfile;
+  state.userFinancialContext = action.payload.userFinancialContext;
   return state;
 };
 

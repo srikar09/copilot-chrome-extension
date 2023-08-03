@@ -1,5 +1,6 @@
 import { AuthenticationState } from "src/redux/slice/authentication/AuthenticationState";
 import { RootState } from "src/redux/store/store";
+import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 import { UserAccount } from "src/types/user/account";
 import { FinancialProfile } from "src/types/user/financialProfile";
 import { Profile } from "src/types/user/profile";
@@ -53,3 +54,7 @@ export const selectAuthenticated = (state: RootState): boolean =>
 export const selectUserFinancialProfile = (
   state: RootState
 ): FinancialProfile => state.authentication.userFinancialProfile;
+
+export const selectUserFinancialContext = (
+  state: RootState
+): MelodyFinancialContext => state.authentication.userFinancialContext;

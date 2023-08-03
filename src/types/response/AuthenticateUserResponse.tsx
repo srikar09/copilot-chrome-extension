@@ -1,7 +1,13 @@
 import { ErrorResponse } from "../error/error";
+import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
 import { UserAccount } from "../user/account";
 import { FinancialProfile } from "../user/financialProfile";
 import { Profile } from "../user/profile";
+
+type FinancialProfileResponse = {
+  profile: FinancialProfile;
+  financialContext: MelodyFinancialContext;
+};
 
 /**
  * @description The response when a user is authenticated
@@ -16,7 +22,10 @@ export class AuthenticationResponse extends ErrorResponse {
   token = "";
   user_account: UserAccount = new UserAccount();
   user_profile: Profile = new Profile();
-  user_financial_profile = new FinancialProfile();
+  user_financial_profile: FinancialProfileResponse = {
+    profile: new FinancialProfile(),
+    financialContext: MelodyFinancialContext.create({}),
+  };
 
   constructor(data?: Partial<AuthenticationResponse>) {
     super();
@@ -25,9 +34,12 @@ export class AuthenticationResponse extends ErrorResponse {
         ...data,
         user_account: new UserAccount(data?.user_account),
         user_profile: new Profile(data?.user_profile),
-        user_financial_profile: new FinancialProfile(
-          data?.user_financial_profile
-        ),
+        user_financial_profile: {
+          profile: new FinancialProfile(data?.user_financial_profile?.profile),
+          financialContext: MelodyFinancialContext.create(
+            data?.user_financial_profile?.financialContext
+          ),
+        },
       });
     }
   }
