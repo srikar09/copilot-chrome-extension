@@ -19,12 +19,14 @@ import {
 } from "src/components/ui/tabs";
 import { InvestmentsSummaryCard } from "src/components/investments-summary-card";
 import { TransactionOverview } from "src/components/transaction-overview";
+import { RecurringTransactionOverview } from "src/components/recurring-transaction-component";
 
 enum SelectedAccountType {
   BANK_ACCOUNT = "BANK_ACCOUNT",
   CREDIT_CARD = "CREDIT_CARD",
   INVESTMENT_ACCOUNT = "INVESTMENT_ACCOUNT",
   TRANSACTIONS = "TRANSACTIONS",
+  SUBSCRIPTIONS = "SUBSCRIPTIONS",
 }
 
 const FinancialAnalyticsPortal: React.FC = () => {
@@ -105,6 +107,9 @@ const FinancialPortal: React.FC = () => {
             <TabsTrigger value={SelectedAccountType.TRANSACTIONS}>
               Transactions
             </TabsTrigger>
+            <TabsTrigger value={SelectedAccountType.SUBSCRIPTIONS}>
+              Subscriptions
+            </TabsTrigger>
           </TabsList>
           <TabsContent
             value={SelectedAccountType.BANK_ACCOUNT}
@@ -131,6 +136,12 @@ const FinancialPortal: React.FC = () => {
             className="pt-20 md:pt-15 lg:pt-10"
           >
             <TransactionOverview />
+          </TabsContent>
+          <TabsContent
+            value={SelectedAccountType.SUBSCRIPTIONS}
+            className="pt-20 md:pt-15 lg:pt-10"
+          >
+            <RecurringTransactionOverview />
           </TabsContent>
         </Tabs>
       </div>
