@@ -120,7 +120,7 @@ const Chat: React.FC<{
     setLoading(true);
     const contextDrivenQuestion = `Given this financial context ${JSON.stringify(
       financialContext
-    )}, act as a smart financial copilot with personality: ${message}`;
+    )}, pretend you are talking to a college student and act as a smart financial advisor: ${message}`;
 
     const newMessages = [
       ...messages,

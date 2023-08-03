@@ -6,6 +6,7 @@ import {
   ChatLine,
   LoadingChatLine,
 } from "src/components/chat-line";
+import { Checkbox } from "src/components/ui/checkbox";
 import { ScrollArea } from "src/components/ui/scroll-area";
 import {
   Select,
@@ -15,9 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "src/components/ui/select";
+import { useToast } from "src/components/ui/use-toast";
 import { cn } from "src/lib/utils";
-import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-context";
+import {
+  selectCurrentUserID,
+  selectCurrentUserProfile,
+} from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
+import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
+import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
 
 const initialAnalyticMessage: ChatGPTMessage[] = [
   {
@@ -34,16 +42,59 @@ const AnalyticAiCardLayout: React.FC<{
   const [messages, setMessages] = useState<ChatGPTMessage[]>(
     initialAnalyticMessage
   );
+  const { toast } = useToast();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const profile = useAppSelector(selectCurrentUserProfile);
   const [userKey] = useState(profile.name);
+  const [enableGlobalFinancialContext, setEnableGlobalFinancialContext] =
+    useState<boolean>(false);
+  const [financialContext, setFinancialContext] = useState<
+    MelodyFinancialContext | undefined
+  >(undefined);
+  const userId = useAppSelector(selectCurrentUserID);
+
+  // TODO: this needs to be extracted from the financial profile
+  const {
+    data: response,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetFinancialContextQuery(
+    GetMelodyFinancialContextRequest.create({
+      userId: Number(userId),
+    })
+  );
+
+  if (isSuccess && response.melodyFinancialContext) {
+    setFinancialContext(response.melodyFinancialContext);
+  } else if (isError) {
+    toast({
+      title: "An error occured while query financial context!",
+      description: error.toString(),
+    });
+  } else if (isSuccess && response.melodyFinancialContext == undefined) {
+    toast({
+      title: "We are still pulling in your data!",
+      description: "Sit tight and relax. We are still pulling in your data",
+    });
+  }
 
   const sendMessage = async (message: string) => {
     setLoading(true);
-    let contextDrivenQuestion = `Given this financial context ${JSON.stringify(
-      context
-    )}, act as a cool smart financial copilot and respond without mentioning context: ${message}`;
+    let questionContext: string = JSON.stringify(context).trim();
+    let globalContext: string = "";
+    let contextDrivenQuestion: string = "";
+    if (enableGlobalFinancialContext && financialContext !== undefined) {
+      globalContext = JSON.stringify(globalContext).trim();
+      contextDrivenQuestion = `Given this global context ${globalContext}, and this additional 
+                              details ${questionContext} act as a smart financial advisor, answer
+                               this question concisely: ${message}`;
+    } else {
+      contextDrivenQuestion = `Given this financial context ${questionContext}, act as a smart 
+                              financial advisor, answer this question concisely: ${message}`;
+    }
 
     const newMessages = [
       ...messages,
@@ -97,7 +148,7 @@ const AnalyticAiCardLayout: React.FC<{
           >
             <SelectValue placeholder="Ask Melodiy" />
           </SelectTrigger>
-          <SelectContent className="p-1 min-h-[250px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-200 border-black">
+          <SelectContent className="p-1 min-h-[250px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-50 border-4 border-gray-300 shadow-md">
             <SelectGroup className="p-2">
               <ScrollArea>
                 {messages.map(({ content, role }, index) => (
@@ -107,9 +158,28 @@ const AnalyticAiCardLayout: React.FC<{
                 <SelectLabel>
                   {" "}
                   {initialAnalyticMessage.length < 2 && (
-                    <span className="mx-auto flex flex-grow text-gray-600 clear-both">
-                      Type a message to start the conversation
-                    </span>
+                    <>
+                      <span className="mx-auto flex flex-grow text-gray-600 clear-both">
+                        Type a message to start the conversation
+                      </span>
+                      <div className="flex items-center space-x-2 py-3">
+                        <Checkbox
+                          id="terms"
+                          className="rounded-full"
+                          onClick={() => {
+                            setEnableGlobalFinancialContext(
+                              !enableGlobalFinancialContext
+                            );
+                          }}
+                        />
+                        <label
+                          htmlFor="terms"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Enable Financial Global Context
+                        </label>
+                      </div>
+                    </>
                   )}
                 </SelectLabel>
               </ScrollArea>
