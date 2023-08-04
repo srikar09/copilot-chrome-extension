@@ -8,12 +8,14 @@ import { Chat } from "src/components/chat";
 import { ChatPage } from "src/pages/chat/chat";
 import InsightsPortal from "src/pages/financialportal/insights-portal";
 import { FinancialAnalyticsPortal } from "src/pages/financialportal/financial-portal";
+import { VerificationPage } from "src/pages/verification/verfication";
 
 function GlobalRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={routes.AUTHENTICATION} element={<LoginPage />} />
+        <Route path="/verification/:userID" element={<VerificationPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path={"/"} element={<FinancialAnalyticsPortal />} />
           <Route path={routes.HOME} element={<ChatPage />} />

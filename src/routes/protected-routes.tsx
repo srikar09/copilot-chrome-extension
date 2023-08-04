@@ -8,7 +8,7 @@ import { routes } from "src/constant/routes";
 const ProtectedRoute: React.FC<{
   redirectPath?: string;
   children?: JSX.Element;
-}> = ({ redirectPath = routes.LANDING, children }) => {
+}> = ({ redirectPath = routes.AUTHENTICATION, children }) => {
   const token = persistentStorage.getItem(constants.JWT_TOKEN_KEY);
   if (!validations.validateJwt(token)) {
     return <Navigate to={redirectPath} replace />;
