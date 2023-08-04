@@ -1,3 +1,5 @@
+import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
+import { MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { handler } from "src/chat-stream/stream";
 import { InputMessage } from "src/components/chat";
@@ -116,10 +118,7 @@ const AnalyticAiCardLayout: React.FC<{
       <div className="flex justify-end pb-2">
         <Select>
           <SelectTrigger
-            className={cn(
-              "w-[130px] border-none font-bold bg-white",
-              className
-            )}
+            className={cn("w-fit rounded-full font-bold bg-white", className)}
           >
             <SelectValue placeholder="Ask Melodiy" />
           </SelectTrigger>

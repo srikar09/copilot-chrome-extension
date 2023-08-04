@@ -66,16 +66,12 @@ const BankAccountSummaryCard: React.FC<{
               </Label>
             </div>
           </div>
-          <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-            <Button variant="secondary" className="px-3 shadow-none">
-              <PlusIcon className="mr-2 h-4 w-4" />
-              More
-            </Button>
-            <Separator orientation="vertical" className="h-[20px]" />
+          <div className="flex flex-shrink items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="px-2 shadow-none">
-                  <ChevronDownIcon className="h-4 w-4 text-secondary-foreground" />
+                <Button variant="secondary" className="px-3 shadow-none">
+                  <PlusIcon className="mr-2 h-4 w-4" />
+                  More
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent

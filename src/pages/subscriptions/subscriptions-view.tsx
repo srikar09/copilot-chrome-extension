@@ -689,7 +689,7 @@ const RecurringTransactionsFlowComponent: React.FC<
         <p className="m-2 text-3xl font-bold">{title}</p>
         <p className="m-6 text-xs font-bold">{description}</p>
       </div>
-      <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-2">
+      <div className="p-1 grid grid-cols-1 md:grid-cols-3 gap-2">
         {recurringTransactions.map((transaction, index) => (
           <RecurrinTransactionCard
             transaction={transaction}
