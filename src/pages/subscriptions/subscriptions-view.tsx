@@ -1,8 +1,5 @@
-import { PieChart } from "lucide-react";
 import React from "react";
-import { ResponsiveContainer, Pie } from "recharts";
-import { BillsDueCard } from "src/components/bill-due-card";
-import { CustomActiveShapePieChart } from "src/components/charts/custom-active-shape-pie-chart";
+import { RecurrinTransactionCard } from "src/components/recurring-transaction-card";
 import { SubscriptionSidebar } from "src/components/recurring-subscriptions-sidebar";
 import { Avatar } from "src/components/ui/avatar";
 import { Calendar } from "src/components/ui/calendar";
@@ -13,12 +10,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "src/components/ui/tabs";
+import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
 import {
   SidebarOption,
   UpcomingRecurringTransactions,
 } from "src/types/custom/recurring-transaction-types";
 import {
-  ReCurringFlow,
   ReOccuringTransaction,
   ReOccuringTransactionsFrequency,
   ReOccuringTransactionsStatus,
@@ -92,8 +89,7 @@ class SubscriptionsView extends React.Component<
 
     // obtain all transactions that are inflows and that occured this year
     const inflow_transactions = recurring_transactions.filter((transaction) => {
-      const transactionYear = transaction.time?.getFullYear();
-
+      const transactionYear = new Date(transaction.lastDate).getFullYear();
       return (
         // plaid transaction amounts are marked as inflow if negative and outflow
         // if positive
@@ -305,6 +301,35 @@ class SubscriptionsView extends React.Component<
                   setSelectedOption={this._selectSidebarOption}
                 />
                 <div className="col-span-3 lg:col-span-4 lg:border-l">
+                  {this.state.selected_sidebar_tab === "INFLOW" && (
+                    <RecurringTransactionsFlowComponent
+                      recurringTransactions={this.computeInflowTransactions()}
+                      title="Inflow"
+                      description={`
+                        An inflow refers to the amount of money that is coming into a person's or a company's account.
+                        This typically includes income such as salaries, wages, bonuses, interest earned, dividends, 
+                        capital gains, proceeds from a sale, loan proceeds, and any other form of income or receipt of money.
+                        
+                        In essence, it represents money that is being earned or received, as opposed to an outflow, which represents 
+                        money that is being spent or paid out. Monitoring inflows and outflows is critical for budgeting and financial
+                         planning, as it provides a clear picture of where money is coming from and where it is being spent.
+                      `}
+                    />
+                  )}
+                  {this.state.selected_sidebar_tab === "OUTFLOW" && (
+                    <RecurringTransactionsFlowComponent
+                      recurringTransactions={this.computeOutflowTransactions()}
+                      title="Outflow"
+                      description={`
+                        An outflow refers to the money
+                        that is going out of a person's or a company's account. This typically includes expenses 
+                        such as bill payments, purchases, salaries, taxes, loan repayments, and any other form of spending or investment.
+                        In essence, it represents money that is being spent, as opposed to an inflow, which represents money that is being 
+                        earned or received. Monitoring inflows and outflows is crucial for budgeting and financial planning, 
+                        as it provides a clear picture of where money is coming from and where it's being spent.
+                      `}
+                    />
+                  )}
                   {/** If sidebar tab upcoming show the upcoming recurring transactions */}
                   {this.state.selected_sidebar_tab === "UPCOMING" && (
                     <UpcomingRecurringTransactionsComponent
@@ -320,6 +345,56 @@ class SubscriptionsView extends React.Component<
     );
   }
 }
+
+/*
+ * IRecurringTransactionsFlowComponent component that
+ * displays inflow/outflow transactions
+ *
+ * @interface IInflowRecurringTransactionsComponeent
+ * */
+interface IRecurringTransactionsFlowComponent {
+  recurringTransactions: ReOccuringTransaction[];
+  title: string;
+  description: string;
+}
+
+/**
+ * RecurringTransactionsFlowComponent component that displays inflow transactions
+ * @param recurringTransactions {ReOccuringTransaction[]}
+ * @returns
+ */
+const RecurringTransactionsFlowComponent: React.FC<
+  IRecurringTransactionsFlowComponent
+> = ({ recurringTransactions, title, description }) => {
+  // compute the top 5 inflow transactions as context
+  const context = recurringTransactions
+    .map((transaction) => {
+      return {
+        transaction: transaction,
+        amount: Math.abs(Number(transaction.lastAmount)),
+        flow:
+          transaction.flow.toString() === "RE_CURRING_FLOW_INFLOW"
+            ? "inflow"
+            : "outflow",
+      };
+    }, [])
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5);
+
+  return (
+    <AnalyticAiCardLayout context={context} className="m-2">
+      <div className="p-4 leading-5 rounded-2xl bg-white border">
+        <p className="m-2 text-3xl font-bold">{title}</p>
+        <p className="m-6 text-xs font-bold">{description}</p>
+      </div>
+      <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-2">
+        {recurringTransactions.map((transaction, index) => (
+          <RecurrinTransactionCard transaction={transaction} key={index} />
+        ))}
+      </div>
+    </AnalyticAiCardLayout>
+  );
+};
 
 /*
  * IUpcomingRecurringTransactionsProps represents the properties of the
@@ -375,60 +450,79 @@ const UpcomingRecurringTransactionsComponent: React.FC<
     }
   );
 
-  const calendarDescription = (
-    <p className="pt-4 text-xs font-bold">Upcoming recurring transactions</p>
-  );
+  // compute the upcoming subscription context
+  // NOTE: this cannot be too large hence, we can only opt to selected the top 5 upcoming transactions
+  // - we only select the ones that are expenses and are the largest
+  const context = upcomingTransactions
+    .map((upcomingTransaction, index) => {
+      const { transaction: recurringTransaction } = upcomingTransaction;
+      const { lastAmount } = recurringTransaction;
+      if (
+        Number(recurringTransaction.lastAmount) > 0 &&
+        recurringTransaction.flow.toString() === "RE_CURRING_FLOW_OUTFLOW"
+      ) {
+        return {
+          name: recurringTransaction.merchantName,
+          value: Number(lastAmount),
+        };
+      }
+
+      return null;
+    })
+    .filter(
+      (transaction): transaction is { name: string; value: number } =>
+        transaction !== null
+    );
 
   return (
-    <Tabs
-      className="h-full px-4 py-6 lg:px-8"
-      defaultValue={UpcomingTransactionOptions.OVERVIEW}
-    >
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value={UpcomingTransactionOptions.OVERVIEW}>
-          Overview
-        </TabsTrigger>
-        <TabsTrigger value={UpcomingTransactionOptions.CALENDAR_VIEW}>
-          Calendar View
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value={UpcomingTransactionOptions.OVERVIEW}>
-        <Card>
-          <CardHeader>
-            <div className="flex flex-row justify-between">
-              <div>
-                <p className="text-xs font-bold">
-                  ({upcomingTransactions.length}) Upcoming Subscriptions $
-                </p>
-                <p className="text-xs font-bold">
-                  ${totalMonthlyExpense.toFixed(2)} Monthly Total
-                </p>
+    <AnalyticAiCardLayout context={context} className="m-2">
+      <Tabs
+        className="h-full px-4 py-6 lg:px-8"
+        defaultValue={UpcomingTransactionOptions.OVERVIEW}
+      >
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value={UpcomingTransactionOptions.OVERVIEW}>
+            Overview
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value={UpcomingTransactionOptions.OVERVIEW}>
+          <Card>
+            <CardHeader>
+              <div className="flex flex-row justify-between">
+                <div>
+                  <p className="text-xl font-bold">Subscription Insights</p>
+                </div>
+                <div>
+                  <Calendar
+                    mode="multiple"
+                    selected={upcomingTransactionNextPaymentDates}
+                    className="rounded-md border shadow w-fit"
+                    footer={
+                      <p className="pt-4 text-xs font-bold">
+                        Upcoming recurring transactions
+                      </p>
+                    }
+                  />
+                </div>
               </div>
-              <div>
-                <Calendar
-                  mode="multiple"
-                  selected={upcomingTransactionNextPaymentDates}
-                  className="rounded-md border shadow w-fit"
-                  footer={calendarDescription}
-                />
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
-        {/** Here we display the various bills that are upcoming */}
-        <div className="p-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-          {upcomingTransactions.map((upcomingTransaction, index) => (
-            <BillsDueCard
-              upcomingTransaction={upcomingTransaction}
-              key={index}
-            />
-          ))}
-        </div>
-      </TabsContent>
-      <TabsContent
-        value={UpcomingTransactionOptions.CALENDAR_VIEW}
-      ></TabsContent>
-    </Tabs>
+            </CardHeader>
+          </Card>
+          {/** Here we display the various bills that are upcoming */}
+          <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-2">
+            {upcomingTransactions.map((upcomingTransaction, index) => (
+              <RecurrinTransactionCard
+                transaction={upcomingTransaction.transaction}
+                nextTransactionDate={upcomingTransaction.nextTransactionDate}
+                key={index}
+              />
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent
+          value={UpcomingTransactionOptions.CALENDAR_VIEW}
+        ></TabsContent>
+      </Tabs>
+    </AnalyticAiCardLayout>
   );
 };
 

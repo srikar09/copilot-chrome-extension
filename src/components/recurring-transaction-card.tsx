@@ -4,7 +4,6 @@ import { selectCurrentUserProfile } from "src/redux/slice/authentication/Authent
 import { useAppSelector } from "src/redux/store/hooks";
 import { UpcomingRecurringTransactions } from "src/types/custom/recurring-transaction-types";
 import { Card, CardHeader, CardContent } from "./ui/card";
-import { Avatar } from "./ui/avatar";
 import { frequencyToString } from "./recurring-transaction-component";
 import { Badge } from "./ui/badge";
 import {
@@ -15,16 +14,15 @@ import {
 } from "./ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import {
-  ReCurringFlow,
   ReOccuringTransaction,
   ReOccuringTransactionsFrequency,
 } from "src/types/financials/clickhouse_financial_service";
 
-const BillsDueCard: React.FC<{
-  upcomingTransaction: UpcomingRecurringTransactions;
+const RecurrinTransactionCard: React.FC<{
+  transaction: ReOccuringTransaction;
+  nextTransactionDate?: string;
 }> = (props) => {
-  const { upcomingTransaction } = props;
-  const { transaction, nextTransactionDate } = upcomingTransaction;
+  const { transaction, nextTransactionDate } = props;
   const user = useAppSelector(selectCurrentUserProfile);
   // if transaction  will occur at a date less than the current date then return null
   if (
@@ -40,11 +38,13 @@ const BillsDueCard: React.FC<{
     <Card className="rounded-3xl">
       <CardHeader>
         <div className="grid grid-flow-row-dense grid-cols-3">
-          <div className="col-span-3">
-            <p className="text-xs font-bold">
-              Next Payment Due On {formatDate(nextTransactionDate)}
-            </p>
-          </div>
+          {nextTransactionDate && (
+            <div className="col-span-3">
+              <p className="text-xs font-bold">
+                Next Payment Due On {formatDate(nextTransactionDate)}
+              </p>
+            </div>
+          )}
           <div className="col-span-3 pt-2">
             <div className="flex flew-row gap-2 justify-between">
               <p className="text-xs font-bold">
@@ -162,4 +162,4 @@ function replaceUnderscoreWithSpace(str: string): string {
   return str.replace(/_/g, " ");
 }
 
-export { BillsDueCard };
+export { RecurrinTransactionCard };
