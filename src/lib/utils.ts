@@ -130,3 +130,7 @@ export const logExit = async (
 
   const eventError = error || {};
 };
+
+export function replaceUnderscoreWithSpace(str: string): string {
+  return str.replace(/_/g, " ");
+}

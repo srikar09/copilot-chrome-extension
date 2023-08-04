@@ -1,7 +1,4 @@
-import { Separator } from "@radix-ui/react-context-menu";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import {
-  ArrowDownNarrowWide,
   ArrowDownToDot,
   ArrowUpFromDot,
   ArrowUpNarrowWide,
@@ -9,42 +6,24 @@ import {
   Rocket,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { ConnectPlaidAccountButton } from "src/components/connect-plaid-account-button";
-import { PodcastEmptyPlaceholder } from "src/components/insights-empty-placeholder";
 
-import { Avatar } from "src/components/ui/avatar";
 import { Button } from "src/components/ui/button";
-import { ScrollBar } from "src/components/ui/scroll-area";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "src/components/ui/tabs";
-import { cn, formatDate } from "src/lib/utils";
+import { cn } from "src/lib/utils";
 import {
   selectCurrentUserProfile,
   selectUserFinancialProfile,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { formatToTwoDecimalPoints } from "src/lib/utils";
-import {
-  RecurringTransactionAggregate,
-  UpcomingRecurringTransactions,
-} from "src/types/custom/recurring-transaction-types";
+import { RecurringTransactionAggregate } from "src/types/custom/recurring-transaction-types";
 import { useAppSelector } from "src/redux/store/hooks";
 import { selectCurrentUserID } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useGetRecurringTransactionsQuery } from "src/redux/queries/transactions/get-recurring-transactions";
 import { GetReCurringTransactionsRequest } from "src/types/financials/request_response_financial_service";
 import { ReOccuringTransaction } from "src/types/financials/clickhouse_financial_service";
 import { Spinner } from "src/components/spinner";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "src/components/ui/card";
+import { Card, CardHeader, CardTitle } from "src/components/ui/card";
 import { Badge } from "./ui/badge";
-import { BillsDueCard } from "./bill-due-card";
+import { SubscriptionsView } from "src/pages/subscriptions/subscriptions-view";
 
 enum SidebarOption {
   INFLOW = "INFLOW",
@@ -116,7 +95,14 @@ const RecurringTransactionOverview: React.FC<{
 
   return (
     <>
-      <div className="md:hidden">
+      {recurringTransactionAggregate && (
+        <SubscriptionsView
+          recurring_transactions={
+            recurringTransactionAggregate?.orderedRecurringTransactions
+          }
+        />
+      )}
+      {/* <div className="md:hidden">
         <Avatar className="block dark:hidden" />
         <Avatar className="hidden dark:block" />
       </div>
@@ -216,7 +202,7 @@ const RecurringTransactionOverview: React.FC<{
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
@@ -346,7 +332,7 @@ const frequencyToString = (frequency: string): string => {
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_BIWEEKLY":
       return "BiWeekly";
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_SEMI_MONTHLY":
-      return "SemiMonthly";
+      return "Semi-Monthly";
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_WEEKLY":
       return "Weekly";
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_UNSPECIFIED":
