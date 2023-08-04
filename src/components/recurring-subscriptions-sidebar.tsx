@@ -4,6 +4,8 @@ import {
   ArrowDownToDot,
   ArrowUpFromDot,
   ArrowUpNarrowWide,
+  BadgeDollarSign,
+  BatteryChargingIcon,
   CandlestickChart,
   Rocket,
 } from "lucide-react";
@@ -55,7 +57,7 @@ const SubscriptionSidebar: React.FC<ISubscriptionSidebarProps> = ({
                 setSelectedOption("INFLOW");
               }}
             >
-              <ArrowDownToDot className="mr-2 h-4 w-4" />
+              <BadgeDollarSign className="mr-2 h-4 w-4" />
               Inflow
             </Button>
             <Button
@@ -65,7 +67,7 @@ const SubscriptionSidebar: React.FC<ISubscriptionSidebarProps> = ({
                 setSelectedOption("OUTFLOW");
               }}
             >
-              <ArrowUpFromDot className="mr-2 h-4 w-4" />
+              <BatteryChargingIcon className="mr-2 h-4 w-4" />
               Outflow
             </Button>
             <Button

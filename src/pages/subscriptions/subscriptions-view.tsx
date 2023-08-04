@@ -1,9 +1,15 @@
 import React from "react";
 import { RecurrinTransactionCard } from "src/components/recurring-transaction-card";
 import { SubscriptionSidebar } from "src/components/recurring-subscriptions-sidebar";
-import { Avatar } from "src/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "src/components/ui/avatar";
 import { Calendar } from "src/components/ui/calendar";
-import { Card, CardHeader } from "src/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "src/components/ui/card";
 import {
   Tabs,
   TabsContent,
@@ -11,6 +17,7 @@ import {
   TabsTrigger,
 } from "src/components/ui/tabs";
 import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { Overview } from "../../components/overview";
 import {
   SidebarOption,
   UpcomingRecurringTransactions,
@@ -20,6 +27,10 @@ import {
   ReOccuringTransactionsFrequency,
   ReOccuringTransactionsStatus,
 } from "src/types/financials/clickhouse_financial_service";
+import { RecentSales } from "src/components/recent-sales";
+import { replaceUnderscoreWithSpace } from "src/lib/utils";
+import { RecurringTransactionDatatable } from "src/components/recurring-transaction-data-table";
+import { Transaction } from "../../types/financials/clickhouse_financial_service";
 
 interface IRecurringTransactionProps {
   recurring_transactions: ReOccuringTransaction[];
@@ -75,6 +86,7 @@ class SubscriptionsView extends React.Component<
       this._calculateNextTransactionDate.bind(this);
 
     this._selectSidebarOption = this._selectSidebarOption.bind(this);
+    this._computeContext = this._computeContext.bind(this);
   }
 
   /*
@@ -229,14 +241,15 @@ class SubscriptionsView extends React.Component<
    *
    * @memberOf SubscriptionsView
    * */
-  computeCategoriesToRecurringTransactionMap(
-    recurringTransactions: ReOccuringTransaction[]
-  ): Map<string, ReOccuringTransaction[]> {
+  computeCategoriesToRecurringTransactionMap(): Map<
+    string,
+    ReOccuringTransaction[]
+  > {
     const categoriesToRecurringTransactions = new Map<
       string,
       ReOccuringTransaction[]
     >();
-    recurringTransactions.forEach((recurringTransaction) => {
+    this.state.recurring_transactions.forEach((recurringTransaction) => {
       const category = recurringTransaction.personalFinanceCategoryPrimary;
       if (categoriesToRecurringTransactions.has(category)) {
         categoriesToRecurringTransactions
@@ -284,6 +297,36 @@ class SubscriptionsView extends React.Component<
     this.setState({ selected_sidebar_tab: option });
   };
 
+  private _computeContext = (): any => {
+    const outflow = this.computeOutflowTransactions();
+    // sort the outflow transactions
+    const sortedOutflow = outflow.sort((a, b) => {
+      return Number(b.lastAmount) - Number(a.lastAmount);
+    });
+
+    // return only the top 8 transactions
+    const topOutflow = sortedOutflow.slice(0, 8);
+    // make sure the transaction id list is empty
+    const result = topOutflow.map((transaction) => {
+      // we dont copy everything over in order to keep the context small
+      const updatedTransaction = ReOccuringTransaction.create({
+        merchantName: transaction.merchantName,
+        personalFinanceCategoryPrimary:
+          transaction.personalFinanceCategoryPrimary,
+        personalFinanceCategoryDetailed:
+          transaction.personalFinanceCategoryDetailed,
+        lastAmount: transaction.lastAmount,
+        lastDate: transaction.lastDate,
+        frequency: transaction.frequency,
+        status: transaction.status,
+        isActive: transaction.isActive,
+      });
+      return updatedTransaction;
+    });
+
+    return result;
+  };
+
   render() {
     return (
       <>
@@ -301,11 +344,29 @@ class SubscriptionsView extends React.Component<
                   setSelectedOption={this._selectSidebarOption}
                 />
                 <div className="col-span-3 lg:col-span-4 lg:border-l">
-                  {this.state.selected_sidebar_tab === "INFLOW" && (
-                    <RecurringTransactionsFlowComponent
-                      recurringTransactions={this.computeInflowTransactions()}
-                      title="Inflow"
-                      description={`
+                  <AnalyticAiCardLayout
+                    context={this._computeContext()}
+                    className="m-2"
+                  >
+                    {this.state.selected_sidebar_tab === "OVERVIEW" && (
+                      <OverviewComponent
+                        inflowTransactions={this.computeInflowTransactions()}
+                        outflowTransactions={this.computeOutflowTransactions()}
+                        allRecursiveTransactions={
+                          this.state.recurring_transactions
+                        }
+                        totalRecurringTransactions={
+                          this.state.total_transactions
+                        }
+                        totalRecurringTransactionCosts={this.state.total_costs}
+                        categoriesToRecurringTransactions={this.computeCategoriesToRecurringTransactionMap()}
+                      />
+                    )}
+                    {this.state.selected_sidebar_tab === "INFLOW" && (
+                      <RecurringTransactionsFlowComponent
+                        recurringTransactions={this.computeInflowTransactions()}
+                        title="Inflow"
+                        description={`
                         An inflow refers to the amount of money that is coming into a person's or a company's account.
                         This typically includes income such as salaries, wages, bonuses, interest earned, dividends, 
                         capital gains, proceeds from a sale, loan proceeds, and any other form of income or receipt of money.
@@ -314,13 +375,13 @@ class SubscriptionsView extends React.Component<
                         money that is being spent or paid out. Monitoring inflows and outflows is critical for budgeting and financial
                          planning, as it provides a clear picture of where money is coming from and where it is being spent.
                       `}
-                    />
-                  )}
-                  {this.state.selected_sidebar_tab === "OUTFLOW" && (
-                    <RecurringTransactionsFlowComponent
-                      recurringTransactions={this.computeOutflowTransactions()}
-                      title="Outflow"
-                      description={`
+                      />
+                    )}
+                    {this.state.selected_sidebar_tab === "OUTFLOW" && (
+                      <RecurringTransactionsFlowComponent
+                        recurringTransactions={this.computeOutflowTransactions()}
+                        title="Outflow"
+                        description={`
                         An outflow refers to the money
                         that is going out of a person's or a company's account. This typically includes expenses 
                         such as bill payments, purchases, salaries, taxes, loan repayments, and any other form of spending or investment.
@@ -328,14 +389,15 @@ class SubscriptionsView extends React.Component<
                         earned or received. Monitoring inflows and outflows is crucial for budgeting and financial planning, 
                         as it provides a clear picture of where money is coming from and where it's being spent.
                       `}
-                    />
-                  )}
-                  {/** If sidebar tab upcoming show the upcoming recurring transactions */}
-                  {this.state.selected_sidebar_tab === "UPCOMING" && (
-                    <UpcomingRecurringTransactionsComponent
-                      upcomingTransactions={this.computeUpcomingTransactions()}
-                    />
-                  )}
+                      />
+                    )}
+                    {/** If sidebar tab upcoming show the upcoming recurring transactions */}
+                    {this.state.selected_sidebar_tab === "UPCOMING" && (
+                      <UpcomingRecurringTransactionsComponent
+                        upcomingTransactions={this.computeUpcomingTransactions()}
+                      />
+                    )}
+                  </AnalyticAiCardLayout>
                 </div>
               </div>
             </div>
@@ -345,6 +407,246 @@ class SubscriptionsView extends React.Component<
     );
   }
 }
+
+interface IOverviewProps {
+  inflowTransactions: ReOccuringTransaction[];
+  outflowTransactions: ReOccuringTransaction[];
+  allRecursiveTransactions: ReOccuringTransaction[];
+  totalRecurringTransactions: number;
+  totalRecurringTransactionCosts: number;
+  categoriesToRecurringTransactions: Map<string, ReOccuringTransaction[]>;
+}
+
+const OverviewComponent: React.FC<IOverviewProps> = (props) => {
+  const {
+    inflowTransactions,
+    outflowTransactions,
+    totalRecurringTransactions,
+    totalRecurringTransactionCosts,
+    categoriesToRecurringTransactions,
+    allRecursiveTransactions,
+  } = props;
+
+  const categories = Array.from(categoriesToRecurringTransactions.keys());
+
+  // sort and get top 5 most expensive transactions
+  const sortedSubscriptions = allRecursiveTransactions
+    .map((transaction) => {
+      return {
+        transaction: transaction,
+        amount: Math.abs(Number(transaction.lastAmount)),
+      };
+    }, [])
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5)
+    .map((transaction) => transaction.transaction);
+  return (
+    <div className="m-2 grid grid-cols-1 gap-y-2">
+      <Card>
+        <CardHeader>
+          <div className="p-4 leading-5">
+            <p className="m-2 text-3xl font-bold">Overview</p>
+            <p className="m-6 text-xs font-bold">
+              A recurring transaction refers to a financial transaction that
+              happens repeatedly over a certain period. It is a transaction that
+              is scheduled to occur on a regular basis, such as daily, weekly,
+              monthly, quarterly, or annually.
+            </p>
+          </div>
+        </CardHeader>
+      </Card>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              +{totalRecurringTransactions}
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Categories</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              +{categoriesToRecurringTransactions.size}
+            </div>
+            <div className="flex flex-1 flex-wrap">
+              {categories
+                .map((category, idx) => (
+                  <p
+                    key={idx}
+                    className="px-2 text-muted-foreground underline"
+                    style={{
+                      fontSize: "10px",
+                    }}
+                  >
+                    {replaceUnderscoreWithSpace(category).toLowerCase()}
+                  </p>
+                ))
+                .slice(0, 10)}
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Expenses</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <rect width="20" height="14" x="2" y="5" rx="2" />
+              <path d="M2 10h20" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              $
+              {outflowTransactions.reduce((acc, transaction) => {
+                return acc + Number(transaction.lastAmount);
+              }, 0)}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {outflowTransactions.length} total subscriptions marked as
+              expenses
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Income</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-4 w-4 text-muted-foreground"
+            >
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              $
+              {Math.abs(
+                inflowTransactions.reduce((acc, transaction) => {
+                  return acc + Number(transaction.lastAmount);
+                }, 0)
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {inflowTransactions.length} total subscriptions marked as income
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Subscription Details</CardTitle>
+          </CardHeader>
+          <CardContent className="pl-2">
+            <Overview data={allRecursiveTransactions} dateKey={"lastAmount"} />
+          </CardContent>
+        </Card>
+        <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle>Top Subscriptions</CardTitle>
+            <CardDescription>
+              You have {allRecursiveTransactions.length} active subscriptions.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <TopSubscriptionsCard recurringTransactions={sortedSubscriptions} />
+          </CardContent>
+        </Card>
+      </div>
+      <div>
+        <RecurringTransactionDatatable data={allRecursiveTransactions} />
+      </div>
+    </div>
+  );
+};
+
+interface ITopSubscriptionsCard {
+  recurringTransactions: ReOccuringTransaction[];
+}
+
+const TopSubscriptionsCard: React.FC<ITopSubscriptionsCard> = ({
+  recurringTransactions,
+}) => {
+  return (
+    <div className="space-y-8">
+      {recurringTransactions.map((recurringTransaction, index) => (
+        <div className="flex items-center" key={index}>
+          <Avatar className="h-9 w-9 bg-gray-400">
+            <AvatarImage alt="Avatar" />
+            <AvatarFallback>
+              {recurringTransaction.merchantName.length > 2
+                ? recurringTransaction.merchantName
+                    .substring(0, 2)
+                    .toUpperCase()
+                : recurringTransaction.merchantName.toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div className="ml-4 space-y-1">
+            <p className="text-sm font-medium leading-none">
+              {recurringTransaction.merchantName}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {replaceUnderscoreWithSpace(
+                recurringTransaction.personalFinanceCategoryPrimary
+              ).toLocaleLowerCase()}
+            </p>
+          </div>
+          <div className="ml-auto font-medium">
+            ${Math.abs(Number(recurringTransaction.lastAmount)).toFixed(2)}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 /*
  * IRecurringTransactionsFlowComponent component that
@@ -389,7 +691,11 @@ const RecurringTransactionsFlowComponent: React.FC<
       </div>
       <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-2">
         {recurringTransactions.map((transaction, index) => (
-          <RecurrinTransactionCard transaction={transaction} key={index} />
+          <RecurrinTransactionCard
+            transaction={transaction}
+            key={index}
+            enableDetailedDisplay={true}
+          />
         ))}
       </div>
     </AnalyticAiCardLayout>
