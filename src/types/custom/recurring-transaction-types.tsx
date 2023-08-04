@@ -19,4 +19,15 @@ type RecurringTransactionAggregate = {
   mostExpensiveMerchant: string;
 };
 
-export type { RecurringTransactionAggregate, UpcomingRecurringTransactions };
+type SidebarOption =
+  | "INFLOW"
+  | "OUTFLOW"
+  | "UPCOMING"
+  | "DRILLDOWN"
+  | "OVERVIEW";
+
+export type {
+  RecurringTransactionAggregate,
+  UpcomingRecurringTransactions,
+  SidebarOption,
+};

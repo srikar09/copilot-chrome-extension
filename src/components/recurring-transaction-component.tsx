@@ -45,6 +45,7 @@ import {
 } from "src/components/ui/card";
 import { Badge } from "./ui/badge";
 import { BillsDueCard } from "./bill-due-card";
+import { SubscriptionsView } from "src/pages/subscriptions/subscriptions-view";
 
 enum SidebarOption {
   INFLOW = "INFLOW",
@@ -116,7 +117,14 @@ const RecurringTransactionOverview: React.FC<{
 
   return (
     <>
-      <div className="md:hidden">
+      {recurringTransactionAggregate && (
+        <SubscriptionsView
+          recurring_transactions={
+            recurringTransactionAggregate?.orderedRecurringTransactions
+          }
+        />
+      )}
+      {/* <div className="md:hidden">
         <Avatar className="block dark:hidden" />
         <Avatar className="hidden dark:block" />
       </div>
@@ -216,7 +224,7 @@ const RecurringTransactionOverview: React.FC<{
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
@@ -346,7 +354,7 @@ const frequencyToString = (frequency: string): string => {
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_BIWEEKLY":
       return "BiWeekly";
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_SEMI_MONTHLY":
-      return "SemiMonthly";
+      return "Semi-Monthly";
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_WEEKLY":
       return "Weekly";
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_UNSPECIFIED":
