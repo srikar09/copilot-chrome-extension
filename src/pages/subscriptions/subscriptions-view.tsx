@@ -344,11 +344,11 @@ class SubscriptionsView extends React.Component<
                   setSelectedOption={this._selectSidebarOption}
                 />
                 <div className="col-span-3 lg:col-span-4 lg:border-l">
-                  <AnalyticAiCardLayout
-                    context={this._computeContext()}
-                    className="m-2"
-                  >
-                    {this.state.selected_sidebar_tab === "OVERVIEW" && (
+                  {this.state.selected_sidebar_tab === "OVERVIEW" && (
+                    <AnalyticAiCardLayout
+                      context={this._computeContext()}
+                      className="m-2"
+                    >
                       <OverviewComponent
                         inflowTransactions={this.computeInflowTransactions()}
                         outflowTransactions={this.computeOutflowTransactions()}
@@ -361,12 +361,13 @@ class SubscriptionsView extends React.Component<
                         totalRecurringTransactionCosts={this.state.total_costs}
                         categoriesToRecurringTransactions={this.computeCategoriesToRecurringTransactionMap()}
                       />
-                    )}
-                    {this.state.selected_sidebar_tab === "INFLOW" && (
-                      <RecurringTransactionsFlowComponent
-                        recurringTransactions={this.computeInflowTransactions()}
-                        title="Inflow"
-                        description={`
+                    </AnalyticAiCardLayout>
+                  )}
+                  {this.state.selected_sidebar_tab === "INFLOW" && (
+                    <RecurringTransactionsFlowComponent
+                      recurringTransactions={this.computeInflowTransactions()}
+                      title="Inflow"
+                      description={`
                         An inflow refers to the amount of money that is coming into a person's or a company's account.
                         This typically includes income such as salaries, wages, bonuses, interest earned, dividends, 
                         capital gains, proceeds from a sale, loan proceeds, and any other form of income or receipt of money.
@@ -375,13 +376,13 @@ class SubscriptionsView extends React.Component<
                         money that is being spent or paid out. Monitoring inflows and outflows is critical for budgeting and financial
                          planning, as it provides a clear picture of where money is coming from and where it is being spent.
                       `}
-                      />
-                    )}
-                    {this.state.selected_sidebar_tab === "OUTFLOW" && (
-                      <RecurringTransactionsFlowComponent
-                        recurringTransactions={this.computeOutflowTransactions()}
-                        title="Outflow"
-                        description={`
+                    />
+                  )}
+                  {this.state.selected_sidebar_tab === "OUTFLOW" && (
+                    <RecurringTransactionsFlowComponent
+                      recurringTransactions={this.computeOutflowTransactions()}
+                      title="Outflow"
+                      description={`
                         An outflow refers to the money
                         that is going out of a person's or a company's account. This typically includes expenses 
                         such as bill payments, purchases, salaries, taxes, loan repayments, and any other form of spending or investment.
@@ -389,15 +390,14 @@ class SubscriptionsView extends React.Component<
                         earned or received. Monitoring inflows and outflows is crucial for budgeting and financial planning, 
                         as it provides a clear picture of where money is coming from and where it's being spent.
                       `}
-                      />
-                    )}
-                    {/** If sidebar tab upcoming show the upcoming recurring transactions */}
-                    {this.state.selected_sidebar_tab === "UPCOMING" && (
-                      <UpcomingRecurringTransactionsComponent
-                        upcomingTransactions={this.computeUpcomingTransactions()}
-                      />
-                    )}
-                  </AnalyticAiCardLayout>
+                    />
+                  )}
+                  {/** If sidebar tab upcoming show the upcoming recurring transactions */}
+                  {this.state.selected_sidebar_tab === "UPCOMING" && (
+                    <UpcomingRecurringTransactionsComponent
+                      upcomingTransactions={this.computeUpcomingTransactions()}
+                    />
+                  )}
                 </div>
               </div>
             </div>
