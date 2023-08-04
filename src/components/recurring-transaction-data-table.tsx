@@ -234,9 +234,11 @@ export const RecurringTransactionDatatable: React.FC<{
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter subscriptions..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("merchantName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("merchantName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
