@@ -10,10 +10,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { useAppSelector } from "src/redux/store/hooks";
-import {
-  selectCurrentUserAccount,
-  selectCurrentUserProfile,
-} from "src/redux/slice/authentication/AuthenticationSelector";
+import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function TableNav() {

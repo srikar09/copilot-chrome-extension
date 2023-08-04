@@ -30,11 +30,15 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "accountId",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Transactions" />
+      <DataTableColumnHeader column={column} title="Account Id" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    cell: ({ row }) => (
+      <div className="w-[80px]">
+        {(row.getValue("accountId") as String).slice(0, 8)}
+      </div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
@@ -57,17 +61,85 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: "personalFinanceCategoryPrimary",
+    accessorKey: "authorizedDate",
     header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="personalFinanceCategoryPrimary"
-      />
+      <DataTableColumnHeader column={column} title="Authorized" />
+    ),
+    cell: ({ row }) => {
+      const label = labels.find((label) => label.value === row.original.name);
+
+      return (
+        <div className="flex space-x-2">
+          {label && <Badge variant="outline">{label.label}</Badge>}
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("authorizedDate")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "amount",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Amount" />
+    ),
+    cell: ({ row }) => {
+      const label = labels.find((label) => label.value === row.original.name);
+
+      return (
+        <div className="flex space-x-2">
+          {label && <Badge variant="outline">{label.label}</Badge>}
+          <span className="max-w-[500px] truncate font-medium">
+            ${Math.abs(Number(row.getValue("amount"))).toFixed(2)}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "locationCity",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="City" />
+    ),
+    cell: ({ row }) => {
+      const label = labels.find((label) => label.value === row.original.name);
+
+      return (
+        <div className="flex space-x-2">
+          {label && <Badge variant="outline">{label.label}</Badge>}
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("locationCity")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "locationAddress",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Address" />
+    ),
+    cell: ({ row }) => {
+      const label = labels.find((label) => label.value === row.original.name);
+
+      return (
+        <div className="flex space-x-2">
+          {label && <Badge variant="outline">{label.label}</Badge>}
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("locationAddress")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "categories",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Category" />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) =>
-          status.value === row.getValue("personalFinanceCategoryPrimary")
+        (status) => status.value === row.getValue("categories")
       );
 
       if (!status) {
