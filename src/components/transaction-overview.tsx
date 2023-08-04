@@ -10,6 +10,7 @@ import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
 import { TableNav } from "./data-table-nav";
 import { DataTable } from "./data-table";
 import { columns } from "./data-column";
+import { Overview } from "./overview";
 
 const TransactionOverview: React.FC = () => {
   // we first get the user id
