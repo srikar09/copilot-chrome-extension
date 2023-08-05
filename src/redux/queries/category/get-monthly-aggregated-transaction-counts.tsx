@@ -3,7 +3,7 @@ import { api } from "src/redux/api/api";
 import {
   GetTransactionAggregatesRequest,
   GetTransactionAggregatesResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+} from "src/types/request-response/get-transaction-aggregates";
 
 const GetMonthlyAggregatedTransactionCounts = api.injectEndpoints({
   endpoints: (builder) => ({

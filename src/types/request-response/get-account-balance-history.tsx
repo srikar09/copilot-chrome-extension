@@ -1,7 +1,7 @@
 import { ErrorResponse } from "../error/error";
 import { AccountBalanceHistory } from "../financials/clickhouse_financial_service";
 
-class GetAccountBalanceHistoryResponse extends ErrorResponse {
+export class GetAccountBalanceHistoryResponse extends ErrorResponse {
   accountBalanceHistory: AccountBalanceHistory[] = [];
 
   constructor(data: Partial<GetAccountBalanceHistoryResponse>) {
@@ -17,7 +17,7 @@ class GetAccountBalanceHistoryResponse extends ErrorResponse {
 /**
  * Represents the request for getting account balance history.
  */
-class GetAccountBalanceHistoryRequest {
+export class GetAccountBalanceHistoryRequest {
   /**
    * The account ID associated with the request.
    */

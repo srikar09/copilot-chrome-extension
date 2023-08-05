@@ -3,7 +3,7 @@ import { api } from "src/redux/api/api";
 import {
   GetUserCategoryMonthlyExpenditureRequest,
   GetUserCategoryMonthlyExpenditureResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+} from "src/types/request-response/get-user-category-monthly-expenditure";
 
 /**
  * Get monthly category expenditure

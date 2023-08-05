@@ -15,7 +15,7 @@ export class GetTransactionAggregatesResponse extends ErrorResponse {
   }
 }
 
-class GetTransactionAggregatesRequest {
+export class GetTransactionAggregatesRequest {
   /**
    * The user ID associated with the request.
    */

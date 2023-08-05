@@ -1,18 +1,17 @@
 import { processErrorIfPresent } from "src/lib/utils";
 import { api } from "src/redux/api/api";
 import {
-  GetMonthlyIncomeRequest,
-  GetMonthlyIncomeResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+  GetMonthlyTransactionCountRequest,
+  GetMonthlyTransactionCountResponse,
+} from "src/types/request-response/get-monthly-transaction-count";
 
-const GetMonthlyIncome = api.injectEndpoints({
+const GetMonthlyTransactionCount = api.injectEndpoints({
   endpoints: (builder) => ({
-    getMonthlyIncome: builder.query({
-      query: (req: GetMonthlyIncomeRequest) => ({
-        url: getMonthlyIncomeEndpoint(req),
+    getMonthlyTransactionCount: builder.query({
+      query: (req: GetMonthlyTransactionCountRequest) => ({
+        url: buildEndpoint(req),
       }),
-      transformResponse: (response: GetMonthlyIncomeResponse) => {
-        console.log("response", response);
+      transformResponse: (response: GetMonthlyTransactionCountResponse) => {
         processErrorIfPresent(response.error_message);
         return response;
       },
@@ -21,9 +20,8 @@ const GetMonthlyIncome = api.injectEndpoints({
   overrideExisting: false,
 });
 
-const getMonthlyIncomeEndpoint = (req: GetMonthlyIncomeRequest) => {
-  let url = `/service/financials/analytics/monthly-income/user/${req.userId}`;
-
+const buildEndpoint = (req: GetMonthlyTransactionCountRequest) => {
+  let url = `/service/financials/analytics/monthly-transaction-count/user/${req.userId}`;
   if (req.month) {
     if (url.includes("?")) {
       url += `&month=${req.month}`;
@@ -51,5 +49,6 @@ const getMonthlyIncomeEndpoint = (req: GetMonthlyIncomeRequest) => {
   return url;
 };
 
-export { GetMonthlyIncome };
-export const { useGetMonthlyIncomeQuery } = GetMonthlyIncome;
+export { GetMonthlyTransactionCount };
+export const { useGetMonthlyTransactionCountQuery } =
+  GetMonthlyTransactionCount;
