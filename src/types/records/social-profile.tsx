@@ -1,8 +1,8 @@
-import { Bookmark } from "src/types/social/message";
-import { Tag } from "src/types/social/subtypes/tag";
+import { Bookmark } from "./bookmark";
+import { Tags } from "./tags";
 
 /**
- * The profile of a user is the single entity around which all social interactions
+ * The SocialProfile of a user is the single entity around which all social interactions
  * are all referenced from. It is the entity that fascilitates all things social and enables
  * the user to interact with other users.
  *
@@ -10,53 +10,13 @@ import { Tag } from "src/types/social/subtypes/tag";
  * @remarks
  *
  * ```ts
- * var profile = new Profile({...});
+ * var profile = new SocialProfile({...});
  * ```
  * @sealed
  */
-class Profile {
-  /**
-   * The number of followers this profile has.
-   *
-   * @type {string}
-   */
-  followers = "";
-  /**
-   * The number of users this profile is following.
-   *
-   * @type {string}
-   */
-  following = "";
-  /**
-   * the id of the profile
-   *
-   * @type {string}
-   */
-  id = "";
-  /**
-   * this is the username of the profile
-   *
-   * @type {string}
-   */
-  name = "";
-  /**
-   * The set of tags associated to this profile
-   *
-   * @type {Tag[]}
-   */
-  tags: Tag[] = [];
-  /**
-   * Deliniates wether the profile is a private or public one
-   *
-   * @type {boolean}
-   */
-  private = false;
-  /**
-   * The profile image url.
-   *
-   * @type {string}
-   */
-  profileImageUrl = "";
+class SocialProfile {
+  /** User profile ID */
+  id: number = 0;
   /**
    * User profile id.
    * This is the id of the user that owns the profile.
@@ -66,20 +26,45 @@ class Profile {
    * @type {string}
    */
   userProfileid = "";
-
-  bookmarks: Bookmark = Bookmark.create();
-
+  /** Tags are interests */
+  tags: Tags[] = [];
   /**
-   * Creates an instance of Profile.
-   *
-   * @constructor
-   * @param {?Partial<Profile>} [data]
+   * Profile name is the name tied to the user profile
+   * user name must be at least 5 characters long
    */
-  constructor(data?: Partial<Profile>) {
+  name: string = "";
+  /**
+   * Private defines wether only approved followers can see what this profile
+   * posts
+   */
+  private: boolean = false;
+  /** Followers outlines the number of followers this user profile has */
+  followers: number = 0;
+  /** Number of people account is following */
+  following: number = 0;
+  /**
+   * Notification timeline Id. Notification for anything a user/group is
+   * following
+   */
+  notificationFeedTimelineId: string = "";
+  /** Personal timeline ID Has activities for a user that can be followed */
+  personalFeedTimelineId: string = "";
+  /**
+   * Newsfeed timeline ID Displays all followed and group activities the user
+   * follows
+   */
+  newsFeedTimelineId: string = "";
+  /** ProfileImageUrl witholds the url of a given profile image */
+  profileImageUrl: string = "";
+  /** all the bookmarked pieces of content on the platform */
+  bookmarks: Bookmark | undefined = new Bookmark();
+  /** The id of the algolia record referencing this user */
+  algoliaId: string = "";
+
+  constructor(data?: Partial<SocialProfile>) {
     if (data) {
       Object.assign(this, {
         ...data,
-        tags: data?.tags || [],
       });
     }
   }
@@ -114,7 +99,7 @@ class Profile {
    *
    * @returns {(Tag[] | string[])} The tags of the profile.
    */
-  getTags(): Tag[] | string[] {
+  getTags(): Tags[] | string[] {
     return this.tags;
   }
 
@@ -132,7 +117,7 @@ class Profile {
    * @returns {string[]} The tag names of the profile.
    */
   getTagNames(): string[] {
-    return this.tags.map((tag) => (tag as Tag).getName());
+    return this.tags.map((tag) => (tag as Tags).tagName);
   }
 
   /**
@@ -153,4 +138,4 @@ class Profile {
   }
 }
 
-export { Profile };
+export { SocialProfile };

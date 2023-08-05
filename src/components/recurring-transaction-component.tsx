@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "src/components/ui/button";
 import { cn } from "src/lib/utils";
 import {
-  selectCurrentUserProfile,
+  selectCurrentSocialProfile,
   selectUserFinancialProfile,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { formatToTwoDecimalPoints } from "src/lib/utils";
@@ -36,7 +36,7 @@ enum SidebarOption {
 const RecurringTransactionOverview: React.FC<{
   children?: React.ReactNode;
 }> = ({ children }) => {
-  const user = useAppSelector(selectCurrentUserProfile);
+  const user = useAppSelector(selectCurrentSocialProfile);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const [selectedSidebarOption, setSelectedSidebarOption] =
     useState<SidebarOption>(SidebarOption.OVERVIEW);

@@ -4,7 +4,7 @@ import {
   formatToTwoDecimalPoints,
   replaceUnderscoreWithSpace,
 } from "src/lib/utils";
-import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import { selectCurrentSocialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { Card, CardHeader, CardContent } from "./ui/card";
 import { frequencyToString } from "./recurring-transaction-component";
@@ -27,7 +27,7 @@ const RecurrinTransactionCard: React.FC<{
   enableDetailedDisplay?: boolean;
 }> = (props) => {
   const { transaction, nextTransactionDate, enableDetailedDisplay } = props;
-  const user = useAppSelector(selectCurrentUserProfile);
+  const user = useAppSelector(selectCurrentSocialProfile);
   // if transaction  will occur at a date less than the current date then return null
   if (
     transaction.isActive === false ||

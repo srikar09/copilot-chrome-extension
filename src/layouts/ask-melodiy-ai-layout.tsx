@@ -21,9 +21,9 @@ import { PromptContext } from "src/lib/context-prompt";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { cn } from "src/lib/utils";
 import {
+  selectCurrentSocialProfile,
   selectCurrentUserAccount,
   selectCurrentUserID,
-  selectCurrentUserProfile,
   selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
@@ -78,7 +78,7 @@ const AskMelodiyAILayout: React.FC<{
   /**
    * User's profile information.
    */
-  const profile = useAppSelector(selectCurrentUserProfile);
+  const profile = useAppSelector(selectCurrentSocialProfile);
   /**
    * State variable for the user's key.
    */

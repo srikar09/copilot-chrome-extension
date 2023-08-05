@@ -1,14 +1,28 @@
-import { UserAccount } from "src/types/service/message";
+import { UserAccount } from "../records/user-account";
+import { IRequest } from "./IRequest";
 
 /**
  * UpdateUserRequest: Represents the request object invoked against the user
  * service to update a given user account
  */
-export interface UpdateUserAccountRequest {
+export class UpdateUserAccountRequest implements IRequest {
   /**
    * UserAccount to update
    * Validation:
    * - cannot nil hence required
    */
-  account: UserAccount | undefined;
+  account: UserAccount | undefined = new UserAccount();
+
+  constructor(data?: Partial<UpdateUserAccountRequest>) {
+    if (data) {
+      Object.assign(this, {
+        ...data,
+        account: new UserAccount(data?.account),
+      });
+    }
+  }
+
+  isValid(): boolean {
+    return this.account !== undefined;
+  }
 }

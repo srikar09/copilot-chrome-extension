@@ -1,7 +1,14 @@
-import { ErrorResponse } from "src/types/error/error";
-import { Address } from "src/types/social/subtypes/address";
-import { Tag } from "src/types/social/subtypes/tag";
+import { Address } from "../records/address";
+import { Tags } from "../records/tags";
+import { IRequest } from "./IRequest";
 
+/*
+ * UserRegistrationAccountDetails is a type that represents the account details
+ * of a user that is being registered
+ *
+ * @export
+ * @class UserRegistrationAccountDetails
+ * */
 export class UserRegistrationAccountDetails {
   /** account id */
   id = 0;
@@ -41,7 +48,7 @@ export class UserRegistrationAccountDetails {
    * Validations:
    * - must be at provide between 1 and 10 tags
    */
-  tags: Tag[] = [];
+  tags: Tags[] = [];
   /** authentication service account id */
   authnAccountId = 0;
   /** infers wether the account is active */
@@ -90,7 +97,7 @@ export class UserRegistrationAccountDetails {
  * @export
  * @class CreateAccountRequest
  */
-export class CreateAccountRequest {
+export class CreateAccountRequest implements IRequest {
   account: UserRegistrationAccountDetails =
     new UserRegistrationAccountDetails();
   communityIdsToFollow: number[] = [];
@@ -106,13 +113,14 @@ export class CreateAccountRequest {
     }
   }
 
-  /**
-   * @description Validates the request
-   * @author Yoan Yomba
-   * @returns {*}  {boolean}
-   * @memberof CreateAccountRequest
-   */
-  validate(): boolean {
+  /*
+   * Validate the create account request object
+   *
+   * @returns {boolean}
+   *
+   * @memberOf CreateAccountRequest
+   * */
+  isValid(): boolean {
     return (
       this.account.email.length > 0 &&
       this.account.username.length > 0 &&

@@ -5,7 +5,7 @@ import { cn } from "src/lib/utils";
 import { routes } from "src/constant/routes";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "src/redux/store/hooks";
-import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import { selectCurrentSocialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { RocketIcon } from "@radix-ui/react-icons";
 import { LogoutButton } from "./logout-button";
 
@@ -15,7 +15,7 @@ const navigation = [
 ];
 
 const Nav: React.FC<{}> = () => {
-  const userProfile = useAppSelector(selectCurrentUserProfile);
+  const userProfile = useAppSelector(selectCurrentSocialProfile);
   return (
     <Disclosure as="nav" className="bg-white">
       {({ open }) => (

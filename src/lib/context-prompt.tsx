@@ -2,7 +2,7 @@
  * Importing MelodyFinancialContext and UserAccount from specific modules
  */
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
-import { UserAccount } from "src/types/user/account";
+import { UserAccount } from "src/types/records/user-account";
 
 /**
  * IContextPrompt interface defines a contract for the PromptContext class.

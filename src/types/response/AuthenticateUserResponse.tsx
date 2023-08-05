@@ -1,8 +1,8 @@
 import { ErrorResponse } from "../error/error";
 import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
-import { UserAccount } from "../user/account";
+import { SocialProfile } from "../records/social-profile";
+import { UserAccount } from "../records/user-account";
 import { FinancialProfile } from "../user/financialProfile";
-import { Profile } from "../user/profile";
 
 type FinancialProfileResponse = {
   profile: FinancialProfile;
@@ -21,7 +21,7 @@ export class AuthenticationResponse extends ErrorResponse {
   err = "";
   token = "";
   user_account: UserAccount = new UserAccount();
-  user_profile: Profile = new Profile();
+  user_profile: SocialProfile = new SocialProfile();
   user_financial_profile: FinancialProfileResponse = {
     profile: new FinancialProfile(),
     financialContext: MelodyFinancialContext.create({}),
@@ -33,7 +33,7 @@ export class AuthenticationResponse extends ErrorResponse {
       Object.assign(this, {
         ...data,
         user_account: new UserAccount(data?.user_account),
-        user_profile: new Profile(data?.user_profile),
+        user_profile: new SocialProfile(data?.user_profile),
         user_financial_profile: {
           profile: new FinancialProfile(data?.user_financial_profile?.profile),
           financialContext: MelodyFinancialContext.create(

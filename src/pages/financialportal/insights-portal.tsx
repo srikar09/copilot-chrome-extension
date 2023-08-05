@@ -17,7 +17,7 @@ import {
 } from "src/components/ui/tabs";
 import { InsightsPortalLayout } from "src/layouts/insights-portal-layout";
 import {
-  selectCurrentUserProfile,
+  selectCurrentSocialProfile,
   selectUserFinancialProfile,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
@@ -27,7 +27,7 @@ import { useAppSelector } from "src/redux/store/hooks";
  * Renders a responsive layout with tabs for Insights and Metrics.
  */
 export default function InsightsPortal() {
-  const user = useAppSelector(selectCurrentUserProfile);
+  const user = useAppSelector(selectCurrentSocialProfile);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const actionableInsights = financialProfile.actionableInsights;
   return (

@@ -3,7 +3,7 @@ import { ChatGPTMessage, ChatLine, LoadingChatLine } from "./chat-line";
 import {
   selectCurrentUserAccount,
   selectCurrentUserID,
-  selectCurrentUserProfile,
+  selectCurrentSocialProfile,
   selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
@@ -118,7 +118,7 @@ const Chat: React.FC<{
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const profile = useAppSelector(selectCurrentUserProfile);
+  const profile = useAppSelector(selectCurrentSocialProfile);
   const [userKey] = useState(profile.name);
   const { financialContext } = props;
 

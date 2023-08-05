@@ -1,3 +1,5 @@
+import { Address } from 'src/types/social/subtypes/address';
+import { UserAccount } from './social/subtypes/account';
 
 export type SubscriptionPlan = {
   name: string
@@ -60,3 +62,4 @@ export type SiteConfig = {
     github: string
   }
 }
+

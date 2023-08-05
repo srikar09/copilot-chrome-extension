@@ -10,11 +10,11 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { useAppSelector } from "src/redux/store/hooks";
-import { selectCurrentUserProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import { selectCurrentSocialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function TableNav() {
-  const user = useAppSelector(selectCurrentUserProfile);
+  const user = useAppSelector(selectCurrentSocialProfile);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

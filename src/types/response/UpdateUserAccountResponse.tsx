@@ -1,5 +1,5 @@
 import { ErrorResponse } from "src/types/error/error";
-import { UserAccount } from "src/types/service/message";
+import { UserAccount } from "../records/user-account";
 
 export class UpdateUserAccountResponse extends ErrorResponse {
   accountUpdated = false;
@@ -10,7 +10,7 @@ export class UpdateUserAccountResponse extends ErrorResponse {
     if (data) {
       Object.assign(this, {
         ...data,
-        account: UserAccount.create(data?.account),
+        account: new UserAccount(data?.account),
       });
     }
   }

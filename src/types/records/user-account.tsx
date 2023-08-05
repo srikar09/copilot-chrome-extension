@@ -1,5 +1,5 @@
-import { Address } from "src/types/social/subtypes/address";
-import { Tag } from "src/types/social/subtypes/tag";
+import { Address } from "./address";
+import { Tags } from "./tags";
 
 /**
  * The UserAccount is the single reference point of a user within simfiny's backend. All operations
@@ -17,42 +17,104 @@ import { Tag } from "src/types/social/subtypes/tag";
  * @class UserAccount
  */
 class UserAccount {
-  address?: Address = new Address();
-  bio?: string = "";
-  email = "";
-  firstname?: string;
-  lastname?: string;
-  username = "";
-  headline?: string;
-  phoneNumber?: string;
+  /** account id */
+  id: number = 0;
+  /**
+   * account email
+   * Validations:
+   * - must be an email and required
+   */
+  email: string = "";
+  /**
+   * the address associated with the user
+   * Validations:
+   * - can be empty
+   */
+  address: Address = new Address();
+  /**
+   * simple description specific to account should be less than 200 characters
+   * Validations:
+   * - can be empty
+   */
+  bio: string = "";
+  /**
+   * profile headline
+   * Validations:
+   * - can be empty
+   */
+  headline: string = "";
+  /**
+   * account phone number
+   * Validations:
+   * - mcan be empty
+   */
+  phoneNumber: string = "";
+  /**
+   * sample tags easily associable to account
+   * account first name
+   * Validations:
+   * - must be at provide between 1 and 10 tags
+   */
+  tags: Tags[] = [];
+  /** authentication service account id */
+  authnAccountId: number = 0;
+  /** infers wether the account is active */
+  isActive: boolean = false;
+  /**
+   * account first name
+   * Validations:
+   * - can be empty
+   */
+  firstname: string = "";
+  /**
+   * account last name
+   * Validations:
+   * - can be empty
+   */
+  lastname: string = "";
+  /**
+   * account user name
+   * Validations:
+   * - must be at least 10 character
+   */
+  username: string = "";
+  /** account is private */
+  isPrivate: boolean = false;
+  /**
+   * isEmailVerified is a field denoting wether or not the user account has
+   * indeed verified their email address
+   */
+  isEmailVerified: boolean = false;
+  createdAt: Date | undefined;
+  verifiedAt: Date | undefined;
+
+  /*
+   * userAccountID is a field denoting the user account id
+   *
+   * @type {string}
+   * @memberOf UserAccount
+   * */
   userAccountID?: string;
-  userAuthnAccountID?: string;
-  id = "";
-  tags: Tag[] = [];
-  created_at?: string;
-  isEmailVerified?: boolean;
-  isPrivate?: boolean;
-  verifiedAt?: string;
-  isActive?: boolean;
-  authnAccountId?: string;
-  createdAt?: string;
 
   /**
-   * A constructor function that takes in a data object and assigns the data to the UserAccount class.
-   * @param [data] - The data that you want to assign to the object.
+   * userAuthnAccountID is a field denoting the user authn account id
+   *
+   * @type {string}
+   * @memberOf UserAccount
    */
+  userAuthnAccountID?: string;
+
   constructor(data?: Partial<UserAccount>) {
-    if (data)
+    if (data) {
       Object.assign(this, {
         ...data,
-        // address: new Address(data?.address),
-        tags: data?.tags?.map((tag) => new Tag(tag)),
         id: data?.userAccountID !== undefined ? data?.userAccountID : data?.id,
         authnAccountId:
           data?.userAuthnAccountID !== undefined
             ? data?.userAuthnAccountID
             : data?.authnAccountId,
       });
+    }
   }
 
   /**
@@ -71,7 +133,7 @@ class UserAccount {
    * @return {*}  {Tag[]}
    * @memberof UserAccount
    */
-  getTags(): Tag[] {
+  getTags(): Tags[] {
     return this.tags;
   }
 
@@ -123,16 +185,6 @@ class UserAccount {
    */
   getHeadline(): string | undefined {
     return this.headline;
-  }
-
-  /**
-   * @description Returns the ID of the account
-   * @author Yoan Yomba
-   * @returns {*}  {string}
-   * @memberof UserAccount
-   */
-  getID(): string | undefined {
-    return this.id;
   }
 }
 
