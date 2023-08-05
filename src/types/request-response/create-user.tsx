@@ -1,6 +1,6 @@
 import { UserAccount } from "../records/user-account";
 
-class CreateUserRequest {
+export class CreateUserRequest {
   /**
    * User account to create
    * Validations:
@@ -34,5 +34,3 @@ class CreateUserRequest {
     }
   }
 }
-
-export { CreateUserRequest };

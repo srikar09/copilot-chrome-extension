@@ -1,7 +1,9 @@
+import {
+  PlaidExchangeTokenRequest,
+  PlaidExchangeTokenResponse,
+} from "src/types/request-response/plaid-exchange-token";
 import { api } from "../api/api";
 import { processErrorIfPresent } from "src/lib/utils";
-import { PlaidExchangeTokenRequest } from "src/types/financials/request_response_financial_service";
-import { PlaidExchangeTokenResponse } from "src/types/response/PlaidExchangeTokenResponse";
 
 /**
  * The `PlaidExchangePublicTokenMutation` function is a Redux Toolkit Query API endpoint injector.

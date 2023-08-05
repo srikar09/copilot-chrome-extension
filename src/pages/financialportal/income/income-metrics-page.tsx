@@ -19,7 +19,7 @@ import {
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { MonthlyIncome } from "src/types/financials/clickhouse_financial_service";
-import { GetUserCategoryMonthlyIncomeRequest } from "src/types/financials/request_response_financial_analytics_service";
+import { GetUserCategoryMonthlyIncomeRequest } from "src/types/request-response/get-user-category-monthly-income";
 
 /**
  * MonthlyIncomeMetricsCard component to render the monthly income metrics.
@@ -41,19 +41,18 @@ const MonthlyIncomeMetricsCard = () => {
   );
 
   // pull monthly income
+  const req = new GetUserCategoryMonthlyIncomeRequest({
+    userId: Number(userId),
+    pageNumber: pageNumber,
+    pageSize: pageSize,
+  });
   const {
     data: response,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetMonthlyIncomeQuery(
-    GetUserCategoryMonthlyIncomeRequest.create({
-      userId: Number(userId),
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-    })
-  );
+  } = useGetMonthlyIncomeQuery(req);
 
   /**
    * Function to handle fetching the monthly income data and managing the spinner.

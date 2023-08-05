@@ -3,7 +3,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { AuthenticateRequest } from "src/types/requests/AuthenticateUserRequest";
 import { useAuthenticatedUserMutation } from "src/redux/mutations/authenticate-user";
 import { persistentStorage } from "src/lib/persistent-storage";
 import { constants } from "src/constant/constants";
@@ -14,6 +13,7 @@ import { toast } from "./ui/use-toast";
 import { Input } from "./ui/input";
 import { Spinner } from "./spinner";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
+import { AuthenticateRequest } from "src/types/request-response/authenticate-user";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;

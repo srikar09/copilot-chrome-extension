@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error/error";
+import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
 import { Address } from "../records/address";
 import { Tags } from "../records/tags";
 import { IRequest } from "./IRequest";
@@ -127,5 +129,18 @@ export class CreateAccountRequest implements IRequest {
       this.password.length > 10 &&
       this.profileImage.length > 0
     );
+  }
+}
+
+export class GetMelodyFinancialContextResponse extends ErrorResponse {
+  melodyFinancialContext: MelodyFinancialContext | undefined;
+
+  constructor(data: Partial<GetMelodyFinancialContextResponse>) {
+    super();
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
   }
 }

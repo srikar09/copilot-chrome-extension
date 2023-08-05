@@ -12,7 +12,6 @@ import {
   CategoryMonthlyExpenditure,
   MonthlyIncome,
 } from "src/types/financials/clickhouse_financial_service";
-import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/financials/request_response_financial_analytics_service";
 import { useGetMonthlyCategoryExpenditureQuery } from "src/redux/queries/category/get-monthly-category-expenditure";
 import { MonthlyIncomeMetricsCard } from "./income/income-metrics-page";
 import {
@@ -22,6 +21,7 @@ import {
   TabsTrigger,
 } from "src/components/ui/tabs";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
+import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/request-response/get-user-category-expenditure";
 
 /**
  * Enum representing different types of analytics available in the portal.
@@ -92,19 +92,18 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
   );
 
   // pull monthly income
+  const req = new GetUserCategoryMonthlyExpenditureRequest({
+    userId: Number(userId),
+    pageNumber: pageNumber,
+    pageSize: pageSize,
+  });
   const {
     data: response,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetMonthlyCategoryExpenditureQuery(
-    GetUserCategoryMonthlyExpenditureRequest.create({
-      userId: Number(userId),
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-    })
-  );
+  } = useGetMonthlyCategoryExpenditureQuery(req);
 
   // pull monthly across categories
 
@@ -115,7 +114,7 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
       // convert all negative values to positive
       const categoryMonthlyExpenditure =
         response.categoryMonthlyExpenditure.map(
-          (categoryMonthlyExpenditure) => {
+          (categoryMonthlyExpenditure: CategoryMonthlyExpenditure) => {
             return {
               ...categoryMonthlyExpenditure,
               totalSpending: Math.abs(categoryMonthlyExpenditure.totalSpending),

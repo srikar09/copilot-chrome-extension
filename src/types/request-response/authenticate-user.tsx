@@ -2,7 +2,39 @@ import { ErrorResponse } from "../error/error";
 import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
 import { SocialProfile } from "../records/social-profile";
 import { UserAccount } from "../records/user-account";
+import { IRequest } from "./IRequest";
 import { FinancialProfile } from "../user/financialProfile";
+
+/**
+ * @description The request to authenticate a user
+ * @author Yoan Yomba
+ * @export
+ * @class AuthenticateRequest
+ */
+export class AuthenticateRequest implements IRequest {
+  Username = "";
+  Password = "";
+
+  constructor(data?: Partial<AuthenticateRequest>) {
+    if (data) {
+      Object.assign(this, {
+        ...data,
+      });
+    }
+  }
+
+  /*
+   * Validates the authenticate request object.
+   * Ensures the username and password fields are not empty
+   *
+   * @returns {boolean}
+   *
+   * @memberOf AuthenticateRequest
+   * */
+  isValid(): boolean {
+    return this.Username !== "" && this.Password !== "";
+  }
+}
 
 type FinancialProfileResponse = {
   profile: FinancialProfile;
