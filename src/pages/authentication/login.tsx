@@ -2,6 +2,10 @@ import { RocketIcon } from "@radix-ui/react-icons";
 import { UserAuthForm } from "src/components/login-form";
 import { Layout } from "src/layouts/layout";
 
+/**
+ * LoginPage component to render the login page.
+ * @returns {JSX.Element} - The JSX element representing the LoginPage component.
+ */
 const LoginPage: React.FC = () => {
   return (
     <Layout>

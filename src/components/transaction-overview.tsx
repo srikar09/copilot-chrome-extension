@@ -6,7 +6,7 @@ import { GetTransactionsRequest } from "src/types/financials/request_response_fi
 import { Spinner } from "./spinner";
 import { Transaction } from "src/types/financials/clickhouse_financial_service";
 import { Card, CardHeader, CardTitle } from "./ui/card";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { TableNav } from "./data-table-nav";
 import { DataTable } from "./data-table";
 import { columns } from "./data-column";
@@ -83,7 +83,7 @@ const TransactionsComponent: React.FC = () => {
   }, [isLoading, isError, response]);
 
   return (
-    <AnalyticAiCardLayout context={undefined}>
+    <AskMelodiyAILayout context={undefined}>
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Transactions{" "}
@@ -103,7 +103,7 @@ const TransactionsComponent: React.FC = () => {
         </div>
         <DataTable data={transactions} columns={columns} />
       </div>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 

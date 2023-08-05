@@ -15,14 +15,17 @@ import {
   TabsList,
   TabsTrigger,
 } from "src/components/ui/tabs";
-import { listenNowAlbums, madeForYouAlbums } from "src/data/album";
-import { InsightsPortalLayout } from "src/layouts/insights-layout";
+import { InsightsPortalLayout } from "src/layouts/insights-portal-layout";
 import {
   selectCurrentUserProfile,
   selectUserFinancialProfile,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 
+/**
+ * Insights portal component that displays financial insights and metrics.
+ * Renders a responsive layout with tabs for Insights and Metrics.
+ */
 export default function InsightsPortal() {
   const user = useAppSelector(selectCurrentUserProfile);
   const financialProfile = useAppSelector(selectUserFinancialProfile);

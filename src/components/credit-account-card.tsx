@@ -18,7 +18,7 @@ import {
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import { CreditAccount } from "src/types/financials/message_financial_service";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 
 const CreditAccountSummaryCard: React.FC<{
   account: CreditAccount;
@@ -27,7 +27,7 @@ const CreditAccountSummaryCard: React.FC<{
   const { account, institutionName } = props;
 
   return (
-    <AnalyticAiCardLayout context={account}>
+    <AskMelodiyAILayout context={account}>
       <Card>
         <CardHeader className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 space-y-0">
           <div className="space-y-1">
@@ -188,7 +188,7 @@ const CreditAccountSummaryCard: React.FC<{
           )}
         </div>
       </Card>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 

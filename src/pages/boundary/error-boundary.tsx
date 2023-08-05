@@ -1,5 +1,9 @@
 import react from "react";
 
+/**
+ * ErrorFallbackPage component to render the error page for internal server errors (500).
+ * @returns {JSX.Element} - The JSX element representing the ErrorFallbackPage component.
+ */
 const ErrorFallbackPage: React.FC = () => {
   return (
     <div>

@@ -1,6 +1,9 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
+/**
+ * This file is used to define the environment variables that are used in the client-side code.
+ */
 export const applicationEnvConfigs = createEnv({
   /*
    * Specify what prefix the client-side variables must have.

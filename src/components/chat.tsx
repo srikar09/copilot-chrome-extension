@@ -10,6 +10,7 @@ import { handler } from "src/chat-stream/stream";
 import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-context";
 import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
+import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -117,6 +118,9 @@ const Chat: React.FC<{
 
   // send message to API /api/chat endpoint
   const sendMessage = async (message: string) => {
+    // increase the mixpanel metric for question asked
+    mixPanelClient.trackEventOfType(MIXPANEL_EVENTS.QUESTION_ASKED);
+
     setLoading(true);
     const contextDrivenQuestion = `Given this financial context ${JSON.stringify(
       financialContext

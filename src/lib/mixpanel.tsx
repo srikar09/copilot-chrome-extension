@@ -32,13 +32,14 @@ enum MIXPANEL_EVENTS {
 }
 
 // Constant representing the name of the Mixpanel client
-const MIXPANEL_CLIENT_NAME: string = "melodiy-chrome-extension";
+const MIXPANEL_CLIENT_NAME: string = "melodiy-web-app";
 
 /**
  * Implementation of TelemetryClient using MixPanel
  */
 class MixPanelClient implements TelemetryClient {
-  private instance: Mixpanel; // Instance of Mixpanel client
+  private static instance: MixPanelClient;
+  private mixpanelInstance: Mixpanel; // Instance of Mixpanel client
   private isProd: boolean; // Flag indicating whether the environment is production
 
   /**
@@ -48,9 +49,34 @@ class MixPanelClient implements TelemetryClient {
    * @param name - Name of the Mixpanel client
    * @param env - Current environment
    */
-  constructor(token: string, debugMode: boolean, name: string, env: string) {
-    this.instance = mixpanel.init(token, { debug: debugMode }, name);
+  private constructor(
+    token: string,
+    debugMode: boolean,
+    name: string,
+    env: string
+  ) {
+    this.mixpanelInstance = mixpanel.init(token, { debug: debugMode }, name);
     this.isProd = env === "production";
+  }
+
+  /**
+   * Creates a single instance of MixPanelClient
+   */
+  public static getInstance(): MixPanelClient {
+    if (!MixPanelClient.instance) {
+      const token: string = applicationEnvConfigs.REACT_APP_MIXPANEL_TOKEN;
+      const env: string = process.env.NODE_ENV;
+      const debugMode: boolean = ["development", "test"].includes(env);
+
+      MixPanelClient.instance = new MixPanelClient(
+        token,
+        debugMode,
+        MIXPANEL_CLIENT_NAME,
+        env
+      );
+    }
+
+    return MixPanelClient.instance;
   }
 
   /**
@@ -59,7 +85,7 @@ class MixPanelClient implements TelemetryClient {
    */
   registerSuperProperties(props: Dict): void {
     if (this.isProd) {
-      this.instance.register_once(props);
+      this.mixpanelInstance.register_once(props);
     }
   }
 
@@ -71,8 +97,8 @@ class MixPanelClient implements TelemetryClient {
   trackEvent(eventName: string, properties?: Dict): void {
     if (this.isProd) {
       properties
-        ? this.instance.track(eventName, properties)
-        : this.instance.track(eventName);
+        ? this.mixpanelInstance.track(eventName, properties)
+        : this.mixpanelInstance.track(eventName);
     }
   }
 
@@ -92,27 +118,17 @@ class MixPanelClient implements TelemetryClient {
    */
   setIdentity(userID: string, metaData?: TelemetryUserMetadata): void {
     if (this.isProd) {
-      this.instance.identify(userID);
+      this.mixpanelInstance.identify(userID);
       if (metaData) {
-        this.instance.people.union(metaData);
+        this.mixpanelInstance.people.union(metaData);
       }
     }
   }
 }
 
-// Get Mixpanel token and environment from configuration
-const token: string = applicationEnvConfigs.REACT_APP_MIXPANEL_TOKEN;
-const env: string = process.env.NODE_ENV;
-// Set debug mode based on environment
-const debugMode: boolean = ["development", "test"].includes(env);
-
 /**
  * An instance of MixPanelClient
  * @public
  */
-export const mixPanelClient = new MixPanelClient(
-  token,
-  debugMode,
-  MIXPANEL_CLIENT_NAME,
-  env
-);
+export const mixPanelClient = MixPanelClient.getInstance();
+export { MIXPANEL_EVENTS };

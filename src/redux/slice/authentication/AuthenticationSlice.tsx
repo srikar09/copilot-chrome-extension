@@ -3,7 +3,7 @@ import { InitialAuthenticationState } from "./AuthenticationState";
 import { authenticateUser, deAuthenticateUser } from "./AuthenticationReducer";
 import { api } from "src/redux/api/api";
 
-import { AuthenticateUser } from "src/redux/mutations/AuthenticateUserMutation";
+import { AuthenticateUser } from "src/redux/mutations/authenticate-user";
 import { persistentStorage } from "src/lib/persistent-storage";
 import { constants } from "src/constant/constants";
 import { validations } from "src/lib/validations";

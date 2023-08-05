@@ -10,26 +10,41 @@ import InsightsPortal from "src/pages/financialportal/insights-portal";
 import { FinancialAnalyticsPortal } from "src/pages/financialportal/financial-portal";
 import { VerificationPage } from "src/pages/verification/verfication";
 
+/**
+ * Global Routes component to define the routing configuration for the application.
+ * @returns {JSX.Element} - JSX element representing the routing configuration.
+ */
 function GlobalRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Route for the authentication page */}
         <Route path={routes.AUTHENTICATION} element={<LoginPage />} />
+        {/* Route for the verification page with a dynamic user ID */}
         <Route path="/verification/:userID" element={<VerificationPage />} />
         <Route element={<ProtectedRoute />}>
+          {/* Default route when no specific route matches */}
           <Route path={"/"} element={<FinancialAnalyticsPortal />} />
+          {/* Route for the chat page */}
           <Route path={routes.HOME} element={<ChatPage />} />
+          {/* Route for the financial portal */}
           <Route
             path={routes.FINANCIALPORTAL}
             element={<FinancialAnalyticsPortal />}
           />
+          {/* Route for the insights portal */}
           <Route path={routes.INSIGHTSPORTAL} element={<InsightsPortal />} />
         </Route>
+
         {/* 
-          If no other route is hit, this will be the default page shown
+          Fallback route - This will be shown if no other route matches
           ref: https://blog.diogomartino.com/index.php/2021/11/22/how-to-create-a-fallback-route-in-react-router-6/
         */}
         <Route path="*" element={<ErrorFallbackPage />} />
+        {/* 
+          Note: The commented-out route for LandingPage is not used in the current configuration.
+          If needed, uncomment and provide the corresponding LandingPage component.
+        */}
         {/* <Route path={routes.LANDING} element={<LandingPage />} /> */}
       </Routes>
     </BrowserRouter>

@@ -14,7 +14,7 @@ import { formatToTwoDecimalPoints } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import { BankAccount } from "src/types/financials/message_financial_service";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 
 const BankAccountSummaryCard: React.FC<{
   account: BankAccount;
@@ -29,7 +29,7 @@ const BankAccountSummaryCard: React.FC<{
   }, 0);
 
   return (
-    <AnalyticAiCardLayout context={account}>
+    <AskMelodiyAILayout context={account}>
       <Card>
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">
@@ -121,7 +121,7 @@ const BankAccountSummaryCard: React.FC<{
           </CardContent>
         )}
       </Card>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 

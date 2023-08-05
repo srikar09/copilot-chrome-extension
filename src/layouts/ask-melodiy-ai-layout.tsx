@@ -1,5 +1,3 @@
-import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
-import { MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { handler } from "src/chat-stream/stream";
 import { InputMessage } from "src/components/chat";
@@ -8,7 +6,6 @@ import {
   ChatLine,
   LoadingChatLine,
 } from "src/components/chat-line";
-import { Checkbox } from "src/components/ui/checkbox";
 import { ScrollArea } from "src/components/ui/scroll-area";
 import {
   Select,
@@ -20,17 +17,18 @@ import {
 } from "src/components/ui/select";
 import { Switch } from "src/components/ui/switch";
 import { useToast } from "src/components/ui/use-toast";
+import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { cn } from "src/lib/utils";
-import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-context";
 import {
   selectCurrentUserID,
   selectCurrentUserProfile,
   selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
-import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
-import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
 
+/**
+ * The initial message that the assistant will say.
+ */
 const initialAnalyticMessage: ChatGPTMessage[] = [
   {
     role: "assistant",
@@ -38,28 +36,75 @@ const initialAnalyticMessage: ChatGPTMessage[] = [
   },
 ];
 
-const AnalyticAiCardLayout: React.FC<{
+/**
+ * This is the main layout for the Analytic AI card.
+ *
+ * @param children - The child components to render within this component.
+ * @param className - The CSS classes to apply to the component.
+ * @param context - The context for the AI to operate in.
+ *
+ * @example
+ * ```
+ * <AskMelodiyAILayout context={context}>
+ *   <ChildComponent />
+ * </AskMelodiyAILayout>
+ * ```
+ */
+const AskMelodiyAILayout: React.FC<{
   children: React.ReactNode;
   className?: string;
   context: any;
 }> = ({ children, className, context }) => {
+  /**
+   * State variable for the messages in the chat.
+   */
   const [messages, setMessages] = useState<ChatGPTMessage[]>(
     initialAnalyticMessage
   );
+  /**
+   * A hook to show toast messages.
+   */
   const { toast } = useToast();
+  /**
+   * State variable for the input in the chat.
+   */
   const [input, setInput] = useState("");
+  /**
+   * State variable to handle loading states.
+   */
   const [loading, setLoading] = useState(false);
+  /**
+   * User's profile information.
+   */
   const profile = useAppSelector(selectCurrentUserProfile);
+  /**
+   * State variable for the user's key.
+   */
   const [userKey] = useState(profile.name);
+  /**
+   * State variable for the global financial context setting.
+   */
   const [enableGlobalFinancialContext, setEnableGlobalFinancialContext] =
     useState<boolean>(false);
 
+  /**
+   * User's ID.
+   */
   const userId = useAppSelector(selectCurrentUserID);
+  /**
+   * User's financial context.
+   */
   const financialContext = useAppSelector(selectUserFinancialContext);
 
-  // TODO: this needs to be extracted from the financial profile
-
+  /**
+   * Function to send a message to the AI.
+   *
+   * @param message - The message to send.
+   */
   const sendMessage = async (message: string) => {
+    // increment the question asked metrics in mixpanel
+    mixPanelClient.trackEventOfType(MIXPANEL_EVENTS.QUESTION_ASKED);
+
     setLoading(true);
     let questionContext: string = JSON.stringify(context).trim();
     const globalContext = JSON.stringify(financialContext).trim();
@@ -172,4 +217,4 @@ const AnalyticAiCardLayout: React.FC<{
   );
 };
 
-export { AnalyticAiCardLayout };
+export { AskMelodiyAILayout };

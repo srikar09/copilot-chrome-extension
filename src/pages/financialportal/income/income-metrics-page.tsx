@@ -1,19 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { useEffect, useState } from "react";
-import {
-  CartesianGrid,
-  Label,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { CardinalAreaChart } from "src/components/category-monthly-income-card";
 import { Spinner } from "src/components/spinner";
-import { Button } from "src/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,8 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "src/components/ui/card";
-import { Input } from "src/components/ui/input";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { convertToMonth, roundToTwoDecimalPlaces } from "src/lib/utils";
 import { useGetMonthlyIncomeQuery } from "src/redux/queries/category/get-monthly-income";
 import {
@@ -34,7 +21,12 @@ import { useAppSelector } from "src/redux/store/hooks";
 import { MonthlyIncome } from "src/types/financials/clickhouse_financial_service";
 import { GetUserCategoryMonthlyIncomeRequest } from "src/types/financials/request_response_financial_analytics_service";
 
+/**
+ * MonthlyIncomeMetricsCard component to render the monthly income metrics.
+ * @returns {JSX.Element} - The JSX element representing the MonthlyIncomeMetricsCard component.
+ */
 const MonthlyIncomeMetricsCard = () => {
+  // Get the current user ID and financial profile from the Redux store
   const userId = useAppSelector(selectCurrentUserID);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const linkedBankAccounts = financialProfile.link;
@@ -43,6 +35,7 @@ const MonthlyIncomeMetricsCard = () => {
   const [month, setMonth] = useState<number>(202307);
   const [monthlyIncome, setMonthlyIncome] = useState<MonthlyIncome[]>([]);
 
+  // State to manage the loading spinner and error handling
   const [spinner, setSpinner] = useState<React.ReactElement | null>(
     <Spinner className={"w-8 h-8 mt-3 ml-3"} />
   );
@@ -62,6 +55,9 @@ const MonthlyIncomeMetricsCard = () => {
     })
   );
 
+  /**
+   * Function to handle fetching the monthly income data and managing the spinner.
+   */
   const getMetric = () => {
     if (isSuccess && response.monthlyIncomes) {
       setSpinner(null);
@@ -86,12 +82,13 @@ const MonthlyIncomeMetricsCard = () => {
     }
   };
 
+  // Fetch the data on component load and on any change in loading, error, or response
   useEffect(() => {
     getMetric();
   }, [isLoading, isError, response]);
 
   return (
-    <AnalyticAiCardLayout context={monthlyIncome}>
+    <AskMelodiyAILayout context={monthlyIncome}>
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Income Metrics <span className="ml-1 text-xs"> </span>
@@ -102,10 +99,16 @@ const MonthlyIncomeMetricsCard = () => {
           <MonthlyIncomeMetricSeriesSummaryCard monthlyIncome={monthlyIncome} />
         </>
       )}
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 
+/**
+ * MonthlyIncomeMetricsSummaryCard component to render the summary of monthly income metrics.
+ * @param {object} props - The component props.
+ * @param {MonthlyIncome[]} props.monthlyIncome - The monthly income data.
+ * @returns {JSX.Element} - The JSX element representing the MonthlyIncomeMetricsSummaryCard component.
+ */
 const MonthlyIncomeMetricsSummaryCard: React.FC<{
   monthlyIncome: MonthlyIncome[];
 }> = (props) => {
@@ -226,6 +229,12 @@ const MonthlyIncomeMetricsSummaryCard: React.FC<{
   );
 };
 
+/**
+ * MonthlyIncomeMetricSeriesSummaryCard component to render the monthly income metric series summary.
+ * @param {object} props - The component props.
+ * @param {MonthlyIncome[]} props.monthlyIncome - The monthly income data.
+ * @returns {JSX.Element} - The JSX element representing the MonthlyIncomeMetricSeriesSummaryCard component.
+ */
 const MonthlyIncomeMetricSeriesSummaryCard: React.FC<{
   monthlyIncome: MonthlyIncome[];
 }> = (props) => {
@@ -334,6 +343,14 @@ const MonthlyIncomeMetricSeriesSummaryCard: React.FC<{
   );
 };
 
+// Helper functions to compute metrics from the monthly income data
+
+/**
+ * Helper function to get the total income for a given year from the monthly income data.
+ * @param {MonthlyIncome[]} incomes - The array of monthly income data.
+ * @param {number} year - The year for which to compute the total income.
+ * @returns {number} - The total income for the given year.
+ */
 function getTotalIncomeForYear(incomes: any[], year: number): number {
   let total = 0;
   for (let income of incomes) {
@@ -344,6 +361,12 @@ function getTotalIncomeForYear(incomes: any[], year: number): number {
   return roundToTwoDecimalPlaces(total);
 }
 
+/**
+ * Helper function to get the number of months with income above a given value from the monthly income data.
+ * @param {MonthlyIncome[]} incomes - The array of monthly income data.
+ * @param {number} value - The value to compare the income against.
+ * @returns {number} - The number of months with income above the given value.
+ */
 function getNumMonthsIncomeAbove(incomes: any[], value: number): number {
   let count = 0;
   for (let income of incomes) {
@@ -354,6 +377,11 @@ function getNumMonthsIncomeAbove(incomes: any[], value: number): number {
   return roundToTwoDecimalPlaces(count);
 }
 
+/**
+ * Calculate the income growth rate from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {number} - The income growth rate.
+ */
 function getIncomeGrowthRate(incomes: any[]): number {
   let firstMonthIncome = incomes[incomes.length - 1].totalIncome;
   let lastMonthIncome = incomes[0].totalIncome;
@@ -361,6 +389,11 @@ function getIncomeGrowthRate(incomes: any[]): number {
   return roundToTwoDecimalPlaces(growthRate);
 }
 
+/**
+ * Get the month with the minimum income from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {number} - The month with the minimum income.
+ */
 function getMonthWithMinIncome(incomes: any[]): number {
   let minIncome = incomes[0].totalIncome;
   let month = incomes[0].month;
@@ -373,6 +406,11 @@ function getMonthWithMinIncome(incomes: any[]): number {
   return month;
 }
 
+/**
+ * Get the income trend from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {string[]} - An array containing "Positive" or "Negative" for each data point's trend.
+ */
 function getIncomeTrend(incomes: any[]): string[] {
   let trend: string[] = [];
   for (let i = 1; i < incomes.length; i++) {
@@ -385,6 +423,11 @@ function getIncomeTrend(incomes: any[]): string[] {
   return trend;
 }
 
+/**
+ * Get the month with the maximum income from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {number} - The month with the maximum income.
+ */
 function getMonthWithMaxIncome(incomes: any[]): number {
   let maxIncome = incomes[0].totalIncome;
   let month = incomes[0].month;
@@ -397,6 +440,11 @@ function getMonthWithMaxIncome(incomes: any[]): number {
   return month;
 }
 
+/**
+ * Get the maximum monthly income from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {number} - The maximum monthly income.
+ */
 function getMaxMonthlyIncome(incomes: any[]): number {
   let maxIncome = incomes[0].totalIncome;
   for (let income of incomes) {
@@ -407,12 +455,22 @@ function getMaxMonthlyIncome(incomes: any[]): number {
   return roundToTwoDecimalPlaces(maxIncome);
 }
 
+/**
+ * Calculate the average monthly income from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {number} - The average monthly income.
+ */
 function getAverageMonthlyIncome(incomes: any[]): number {
   let total = getTotalIncome(incomes);
   let average = total / incomes.length;
   return roundToTwoDecimalPlaces(average);
 }
 
+/**
+ * Calculate the total income from a given array of incomes.
+ * @param {any[]} incomes - The array of income data.
+ * @returns {number} - The total income.
+ */
 function getTotalIncome(incomes: any[]): number {
   let total = 0;
   for (let income of incomes) {
@@ -421,9 +479,19 @@ function getTotalIncome(incomes: any[]): number {
   return roundToTwoDecimalPlaces(total);
 }
 
+/**
+ * Helper function to convert an array of MonthlyIncome data to a format suitable for charts.
+ * @param {MonthlyIncome[]} data - The array of MonthlyIncome data.
+ * @returns {any[]} - An array of objects containing 'month' and 'totalIncome' properties.
+ */
 const monthlyIncome = (data: MonthlyIncome[]) =>
   data.map((item) => ({ month: item.month, totalIncome: item.totalIncome }));
 
+/**
+ * Calculate the yearly income by summing up the total income for each year.
+ * @param {MonthlyIncome[]} data - The array of MonthlyIncome data.
+ * @returns {Object} - An object where each key is the year and its value is the total income for that year.
+ */
 const yearlyIncome = (data: MonthlyIncome[]) => {
   const yearlyIncome: { [key: number]: number } = {};
   data.forEach((item) => {
@@ -433,6 +501,11 @@ const yearlyIncome = (data: MonthlyIncome[]) => {
   return yearlyIncome;
 };
 
+/**
+ * Calculate the cumulative income over time from a given array of incomes.
+ * @param {MonthlyIncome[]} data - The array of MonthlyIncome data.
+ * @returns {any[]} - An array of objects containing 'month' and 'totalIncome' properties representing the cumulative income.
+ */
 const cumulativeIncome = (data: MonthlyIncome[]) => {
   let total = 0;
   return data.map((item) => {
@@ -441,6 +514,12 @@ const cumulativeIncome = (data: MonthlyIncome[]) => {
   });
 };
 
+/**
+ * Calculate the moving average of income over a given period from a given array of incomes.
+ * @param {MonthlyIncome[]} data - The array of MonthlyIncome data.
+ * @param {number} period - The number of months to consider for the moving average (default is 3).
+ * @returns {any[]} - An array of objects containing 'month' and 'totalIncome' properties representing the moving average.
+ */
 const movingAverage = (data: MonthlyIncome[], period = 3) => {
   let result = [];
   for (let i = 0; i < data.length - period + 1; i++) {
@@ -456,6 +535,11 @@ const movingAverage = (data: MonthlyIncome[], period = 3) => {
   return result;
 };
 
+/**
+ * Calculate the income growth rate for each month from a given array of incomes.
+ * @param {MonthlyIncome[]} data - The array of MonthlyIncome data.
+ * @returns {any[]} - An array of objects containing 'month' and 'growthRate' properties representing the growth rate.
+ */
 const incomeGrowthRate = (data: MonthlyIncome[]) => {
   let result = [];
   for (let i = 1; i < data.length; i++) {

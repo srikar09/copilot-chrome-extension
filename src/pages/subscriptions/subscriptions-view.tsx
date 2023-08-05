@@ -16,7 +16,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "src/components/ui/tabs";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { Overview } from "../../components/overview";
 import {
   SidebarOption,
@@ -27,10 +27,8 @@ import {
   ReOccuringTransactionsFrequency,
   ReOccuringTransactionsStatus,
 } from "src/types/financials/clickhouse_financial_service";
-import { RecentSales } from "src/components/recent-sales";
 import { replaceUnderscoreWithSpace } from "src/lib/utils";
 import { RecurringTransactionDatatable } from "src/components/recurring-transaction-data-table";
-import { Transaction } from "../../types/financials/clickhouse_financial_service";
 
 interface IRecurringTransactionProps {
   recurring_transactions: ReOccuringTransaction[];
@@ -345,7 +343,7 @@ class SubscriptionsView extends React.Component<
                 />
                 <div className="col-span-3 lg:col-span-4 lg:border-l">
                   {this.state.selected_sidebar_tab === "OVERVIEW" && (
-                    <AnalyticAiCardLayout
+                    <AskMelodiyAILayout
                       context={this._computeContext()}
                       className="m-2"
                     >
@@ -361,7 +359,7 @@ class SubscriptionsView extends React.Component<
                         totalRecurringTransactionCosts={this.state.total_costs}
                         categoriesToRecurringTransactions={this.computeCategoriesToRecurringTransactionMap()}
                       />
-                    </AnalyticAiCardLayout>
+                    </AskMelodiyAILayout>
                   )}
                   {this.state.selected_sidebar_tab === "INFLOW" && (
                     <RecurringTransactionsFlowComponent
@@ -684,7 +682,7 @@ const RecurringTransactionsFlowComponent: React.FC<
     .slice(0, 5);
 
   return (
-    <AnalyticAiCardLayout context={context} className="m-2">
+    <AskMelodiyAILayout context={context} className="m-2">
       <div className="p-4 leading-5 rounded-2xl bg-white border">
         <p className="m-2 text-3xl font-bold">{title}</p>
         <p className="m-6 text-xs font-bold">{description}</p>
@@ -698,7 +696,7 @@ const RecurringTransactionsFlowComponent: React.FC<
           />
         ))}
       </div>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 
@@ -781,7 +779,7 @@ const UpcomingRecurringTransactionsComponent: React.FC<
     );
 
   return (
-    <AnalyticAiCardLayout context={context} className="m-2">
+    <AskMelodiyAILayout context={context} className="m-2">
       <Tabs
         className="h-full px-4 py-6 lg:px-8"
         defaultValue={UpcomingTransactionOptions.OVERVIEW}
@@ -828,7 +826,7 @@ const UpcomingRecurringTransactionsComponent: React.FC<
           value={UpcomingTransactionOptions.CALENDAR_VIEW}
         ></TabsContent>
       </Tabs>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 

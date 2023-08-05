@@ -1,3 +1,22 @@
+/**
+ * An object containing key-value pairs representing constant values used throughout the application.
+ * @type {Object}
+ *
+ * @property {string} JWT_TOKEN_KEY - The key for the JSON Web Token in storage.
+ * @property {number} DEFAULT_REQUEST_TIMEOUT - The default timeout for requests in milliseconds.
+ * @property {string} DEFAULT_BASE_URI - The default base URI for the API gateway.
+ * @property {string} DEFAULT_REACT_APP_MIXPANEL_TOKEN - The Mixpanel token for tracking events.
+ * @property {string} USER_ID_KEY - The key for the user ID in storage.
+ * @property {string} USER_PROFILE_ID_KEY - The key for the user profile ID in storage.
+ * @property {string} USER_PROFILE_KEY - The key for the user profile data in storage.
+ * @property {string} USER_ACCOUNT_KEY - The key for the user account data in storage.
+ * @property {string} PROFILE_PICTURE - The default URL for a user profile picture.
+ * @property {string} REACT_APP_ALGOLIA_APP_ID - The application ID for Algolia search.
+ * @property {string} REACT_APP_ALGOLIA_API_KEY - The API key for Algolia search.
+ * @property {number} RECOMMENDED_ENTITIES_LIMIT - The default limit for recommended entities in queries.
+ * @property {string} USER_FINANCIAL_PROFILE_KEY - The key for the user's financial profile in storage.
+ * @property {string} USER_FINANCIAL_CONTEXT_KEY - The key for the user's financial context in storage.
+ */
 export const constants: {
   JWT_TOKEN_KEY: string;
   DEFAULT_REQUEST_TIMEOUT: number;

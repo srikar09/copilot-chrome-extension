@@ -1,8 +1,5 @@
 import { BankAccount } from "src/types/financials/message_financial_service";
 import { BankAccountSummaryCard } from "./bank-account-card";
-import { Button } from "./ui/button";
-import { PlusCircle } from "lucide-react";
-import { ConnectPlaidAccountButton } from "./connect-plaid-account-button";
 import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
 
 const BankAccountsOverviewSummary: React.FC<{

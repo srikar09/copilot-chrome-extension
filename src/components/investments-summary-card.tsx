@@ -8,7 +8,7 @@ import {
 } from "src/types/financials/message_financial_service";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { cn, formatToTwoDecimalPoints } from "src/lib/utils";
 import { HoldingCard } from "./holding-card";
 import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
@@ -66,7 +66,7 @@ const LinkedInvestmentAccounts: React.FC<{
   return (
     <>
       {investmentAccounts.map((account, idx) => (
-        <AnalyticAiCardLayout
+        <AskMelodiyAILayout
           context={account}
           key={idx}
           className={
@@ -117,7 +117,7 @@ const LinkedInvestmentAccounts: React.FC<{
               </div>
             </CardContent>
           </Card>
-        </AnalyticAiCardLayout>
+        </AskMelodiyAILayout>
       ))}
     </>
   );
