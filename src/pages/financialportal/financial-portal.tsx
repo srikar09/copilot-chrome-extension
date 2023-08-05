@@ -21,6 +21,9 @@ import { InvestmentsSummaryCard } from "src/components/investments-summary-card"
 import { TransactionOverview } from "src/components/transaction-overview";
 import { RecurringTransactionOverview } from "src/components/recurring-transaction-component";
 
+/**
+ * Enum representing different types of selected account types in the portal.
+ */
 enum SelectedAccountType {
   BANK_ACCOUNT = "BANK_ACCOUNT",
   CREDIT_CARD = "CREDIT_CARD",
@@ -29,6 +32,9 @@ enum SelectedAccountType {
   SUBSCRIPTIONS = "SUBSCRIPTIONS",
 }
 
+/**
+ * The main financial analytics portal component that renders summary and analytics tabs.
+ */
 const FinancialAnalyticsPortal: React.FC = () => {
   return (
     <PortalLayout>
@@ -48,6 +54,9 @@ const FinancialAnalyticsPortal: React.FC = () => {
   );
 };
 
+/**
+ * Component displaying the financial portal overview.
+ */
 const FinancialPortal: React.FC = () => {
   const [selectedAccountType, setSelectedAccountType] =
     useState<SelectedAccountType>(SelectedAccountType.BANK_ACCOUNT);

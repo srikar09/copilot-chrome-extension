@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { AuthenticateRequest } from "src/types/requests/AuthenticateUserRequest";
-import { useAuthenticatedUserMutation } from "src/redux/mutations/AuthenticateUserMutation";
+import { useAuthenticatedUserMutation } from "src/redux/mutations/authenticate-user";
 import { persistentStorage } from "src/lib/persistent-storage";
 import { constants } from "src/constant/constants";
 import { routes } from "src/constant/routes";
@@ -13,6 +13,7 @@ import { buttonVariants } from "./ui/button";
 import { toast } from "./ui/use-toast";
 import { Input } from "./ui/input";
 import { Spinner } from "./spinner";
+import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -47,6 +48,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const record = await authenticateUser(formattedRequest).unwrap();
     const { user_account, user_financial_profile } = record;
     const { profile, financialContext } = user_financial_profile;
+    // emit login mixpanel event
+    mixPanelClient.trackEvent(MIXPANEL_EVENTS.LOGIN);
+
     // Set the userID and userProfileID in browserCache
     persistentStorage.setItem(constants.JWT_TOKEN_KEY, record.token);
     persistentStorage.setItem(

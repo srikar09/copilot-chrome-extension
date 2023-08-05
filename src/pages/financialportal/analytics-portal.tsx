@@ -21,8 +21,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "src/components/ui/tabs";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 
+/**
+ * Enum representing different types of analytics available in the portal.
+ */
 enum AnalyticType {
   INCOME = "INCOME",
   EXPENDITURE = "EXPENDITURE",
@@ -33,6 +36,9 @@ enum AnalyticType {
   DEBT = "DEBT",
 }
 
+/**
+ * The main analytics portal component that renders different analytics tabs.
+ */
 const AnalyticsPortal = () => {
   const userId = useAppSelector(selectCurrentUserID);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
@@ -67,6 +73,9 @@ const AnalyticsPortal = () => {
   );
 };
 
+/**
+ * Component displaying monthly categorized income metrics.
+ */
 const MonthlyCategorizedIncomeMetricsCard = () => {
   const userId = useAppSelector(selectCurrentUserID);
   const financialProfile = useAppSelector(selectUserFinancialProfile);
@@ -140,7 +149,7 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
   }, [isLoading, isError, response]);
 
   return (
-    <AnalyticAiCardLayout context={categoryMonthlyExpenditure}>
+    <AskMelodiyAILayout context={categoryMonthlyExpenditure}>
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Monthly Expenditures <span className="ml-1 text-xs"> </span>
@@ -166,7 +175,7 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
           />
         </PieChart>
       </ResponsiveContainer>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 

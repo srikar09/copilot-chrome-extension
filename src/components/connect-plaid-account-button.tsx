@@ -25,7 +25,7 @@ import {
 } from "react-plaid-link";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
-import { usePlaidExchangePublicTokenMutation } from "src/redux/mutations/plaid-exchange-public-token-mutation";
+import { usePlaidExchangePublicTokenMutation } from "src/redux/mutations/plaid-exchange-public-token";
 import { Button } from "./ui/button";
 import { useUpdateLinkTokenMutation } from "src/redux/mutations/update-link-token";
 

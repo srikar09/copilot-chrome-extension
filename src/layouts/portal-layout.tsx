@@ -1,5 +1,5 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
-import React from "react";
+// Importing required packages and components
+import { FC, ReactNode, useState } from "react";
 import { MainNav } from "src/components/main-nav";
 import { Search } from "src/components/search";
 import TeamSwitcher from "src/components/team-switcher";
@@ -7,18 +7,30 @@ import { Layout } from "src/layouts/layout";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 
+// Defining options for the Portal Layout
 const OPTIONS = {
   OVERVIEW: "OVERVIEW",
   ANALYTICS: "ANALYTICS",
 };
 
-const PortalLayout: React.FC<{
-  children?: React.ReactNode;
+/**
+ * The PortalLayout component is a functional component that structures the main portal layout of the application.
+ * It includes the TeamSwitcher, MainNav and Search components along with the provided children components.
+ *
+ * @param props - An object containing the children components to be rendered within this layout.
+ * @returns The PortalLayout component
+ */
+const PortalLayout: FC<{
+  children?: ReactNode;
 }> = (props) => {
   const { children } = props;
+
+  // useSelector hook to extract data from Redux Store, getting user's financial profile from the authentication selector
   const financialProfile = useAppSelector(selectUserFinancialProfile);
   const linkedBankAccounts = financialProfile.link;
-  const [currentTrigger, setCurrentTrigger] = React.useState<string>(
+
+  // Using useState hook to manage state for the currentTrigger.
+  const [currentTrigger, setCurrentTrigger] = useState<string>(
     OPTIONS.OVERVIEW
   );
 

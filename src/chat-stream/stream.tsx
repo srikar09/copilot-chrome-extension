@@ -2,6 +2,11 @@ import { ChatGPTMessage } from "src/components/chat-line";
 import { OpenAIStreamPayload, OpenAIStream } from "src/lib/stream";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 
+/**
+ * Handler for processing chat requests and generating AI responses.
+ * @param req - Request object containing the last 10 messages, the user, and the financial context.
+ * @returns A readable stream containing the AI's responses.
+ */
 const handler = async (req: {
   last10messages: ChatGPTMessage[];
   user: string;

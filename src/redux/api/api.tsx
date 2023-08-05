@@ -3,11 +3,12 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { constants } from "../../constant/constants";
 import { RootState } from "../store/store";
 import { persistentStorage } from "../../lib/persistent-storage";
+import { applicationEnvConfigs } from "src/env/client";
+import { tagTypes } from "./tag-types";
 
-const baseUrl: string =
-  process.env.REACT_APP_BASE_URL === undefined
-    ? constants.DEFAULT_BASE_URI
-    : process.env.REACT_APP_BASE_URL;
+// Define the base URL for our API requests
+const baseUrl =
+  applicationEnvConfigs.REACT_APP_BASE_URL || constants.DEFAULT_BASE_URI;
 
 // Define our single API slice object
 // NOTE: we can only have one `createApi` call in our entire application
@@ -36,44 +37,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: [
-    "USER_FEED",
-    "NEWS_FEED",
-    "POST_THREAD_PARTICIPANT",
-    "COMMENT",
-    "POSTS",
-    "POLL_POST",
-    "SHARED_POST",
-    "REGULAR_POST",
-    "USER",
-    "COMMUNITY",
-    "POST",
-    "TOPICS_USER_FOLLOW",
-    "ACTIVITIES",
-    "COMMUNITY_ACTIVITIES",
-    "UNAUTHORIZED",
-    "UNKNOWN_ERROR",
-    "Posts",
-    "TOPICS",
-    "NOTIFICATIONS",
-    "NOTIFICATION_FEED",
-    "COMMUNITY_NEWS_FEED",
-    "PENDING_REQUESTS",
-    "COMMUNITIES",
-    "COMMUNITIES_USER_FOLLOWS",
-    "PROFILES_USER_FOLLOWS",
-    "DISCOVER_PROFILES_AND_TOPICS",
-    "BOOKMARKED_POST",
-    "COMMUNITY_FOLLOWERS",
-    "USER_FOLLOWERS",
-    "USER_FOLLOWING",
-    "COMMUNITY_FOLLOWING",
-    "COMMUNITY_FEED",
-    "COMMUNITY_DISCOVER",
-    "TRANSACTION",
-    "MONTHLY_TRANSACTION_METRICS",
-    "RECURRING_TRANSACTION",
-  ],
+  tagTypes: tagTypes,
   // global configuration for the api
   keepUnusedDataFor: 60,
   // The "endpoints" represent operations and requests for this server

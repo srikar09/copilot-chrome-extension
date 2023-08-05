@@ -5,6 +5,10 @@ import { buttonVariants } from "src/components/ui/button";
 import { Layout } from "src/layouts/layout";
 import { cn } from "src/lib/utils";
 
+/**
+ * Registration page component for creating a new user account.
+ * Allows users to create an account by providing their email and password.
+ */
 export default function RegistrationPage() {
   return (
     <>
@@ -16,22 +20,7 @@ export default function RegistrationPage() {
           </h2>
         </div>
 
-        <div className="md:hidden">
-          {/* <Image
-          src="/examples/authentication-light.png"
-          width={1280}
-          height={843}
-          alt="Authentication"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/authentication-dark.png"
-          width={1280}
-          height={843}
-          alt="Authentication"
-          className="hidden dark:block"
-        /> */}
-        </div>
+        <div className="md:hidden"></div>
         <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
           <Link
             to="/examples/authentication"

@@ -1,7 +1,6 @@
-import { ChevronDownIcon, PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "@radix-ui/react-icons";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -14,11 +13,26 @@ import { formatToTwoDecimalPoints } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import { BankAccount } from "src/types/financials/message_financial_service";
-import { AnalyticAiCardLayout } from "src/layouts/analytic-ai-card-layout";
+import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 
-const BankAccountSummaryCard: React.FC<{
+/**
+ * Props interface for the BankAccountSummaryCard component.
+ */
+interface IProps {
+  /**
+   * The bank account information to display.
+   */
   account: BankAccount;
-}> = (props) => {
+}
+
+/**
+ * BankAccountSummaryCard component displays a summary card for a bank account.
+ * It shows details like balance, account number, pockets, and goals.
+ *
+ * @param props - The props for the component.
+ * @returns A React functional component.
+ */
+const BankAccountSummaryCard: React.FC<IProps> = (props) => {
   const { account } = props;
 
   // get number of pockets
@@ -29,7 +43,7 @@ const BankAccountSummaryCard: React.FC<{
   }, 0);
 
   return (
-    <AnalyticAiCardLayout context={account}>
+    <AskMelodiyAILayout context={account}>
       <Card>
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">
@@ -121,10 +135,16 @@ const BankAccountSummaryCard: React.FC<{
           </CardContent>
         )}
       </Card>
-    </AnalyticAiCardLayout>
+    </AskMelodiyAILayout>
   );
 };
 
+/**
+ * Helper function to format the pocket name string.
+ *
+ * @param input - The pocket name string to format.
+ * @returns The formatted pocket name string.
+ */
 function formatPocketNameString(input: string): string {
   const prefix = "POCKET_TYPE_";
 

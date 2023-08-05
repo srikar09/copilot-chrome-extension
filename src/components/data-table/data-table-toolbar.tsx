@@ -3,10 +3,10 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { DataTableViewOptions } from "./data-table-view-options";
-import { priorities, statuses } from "./data/data";
+import { priorities, statuses } from "../data/data";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -32,6 +32,7 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("personalFinanceCategoryPrimary")}
             title="Personal Finance Category"
+            // TODO: need to ensure we pass this as a props
             options={statuses}
           />
         )}
@@ -39,6 +40,7 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("merchantName")}
             title="Merchant Name"
+            // TODO: need to ensure we pass this as a props
             options={priorities}
           />
         )}

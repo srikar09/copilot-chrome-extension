@@ -12,6 +12,26 @@ import { AuthenticateRequest } from "../../types/requests/AuthenticateUserReques
  * Calling injectEndpoints will inject the endpoints into the original API, but also give you that same API
  *  with correct types for these endpoints back. (Unfortunately, it cannot modify the types for the original definition.)
  */
+
+/**
+ * The `AuthenticateUser` function is a Redux Toolkit Query API endpoint injector.
+ * It extends the API slice defined in the imported 'api' module with a new 'authenticatedUser' mutation endpoint.
+ *
+ * This endpoint is for authenticating a user in the application. It takes an `AuthenticateRequest`
+ * object as an argument which should contain the user's 'Username' and 'Password'.
+ *
+ * The 'authenticatedUser' mutation sends a POST request to the '/user/login/{username}/{password}' API endpoint,
+ * and expects an `AuthenticationResponse` object as a response.
+ *
+ * If there is an error message in the response, it will be processed by the `processErrorIfPresent` utility function.
+ *
+ * `AuthenticateUser` function can be beneficial in larger applications that have many endpoints, by allowing
+ * you to inject additional endpoints after setting up the initial service definition, thus keeping your initial
+ * bundle size small.
+ *
+ * The `overrideExisting` option is set to 'false' which means that if an endpoint with the same name already
+ * exists, it won't be overridden by this injector.
+ */
 const AuthenticateUser = api.injectEndpoints({
   endpoints: (builder) => ({
     authenticatedUser: builder.mutation({
@@ -29,5 +49,6 @@ const AuthenticateUser = api.injectEndpoints({
   overrideExisting: false,
 });
 
+// Export the `AuthenticateUser` injector and the auto-generated 'useAuthenticatedUserMutation' hook for dispatching mutations to the 'authenticatedUser' endpoint.
 export { AuthenticateUser };
 export const { useAuthenticatedUserMutation } = AuthenticateUser;
