@@ -15,13 +15,13 @@ const GetMonthlyTransactionCount = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
-      providesTags: (result) =>
+      providesTags: (result, error, arg) =>
         result && result.monthlyTransactionCounts
           ? result.monthlyTransactionCounts.map((transaction) => ({
               type: "MONTHLY_TRANSACTION_METRICS",
-              id: transaction.month,
+              id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} tx:${transaction.month}-${transaction.transactionCount}`,
             }))
-          : [],
+          : ["MONTHLY_TRANSACTION_METRICS"],
     }),
   }),
   overrideExisting: false,

@@ -22,6 +22,13 @@ const GetMonthlyCategoryExpenditure = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) =>
+        result && result.categoryMonthlyExpenditure
+          ? result.categoryMonthlyExpenditure.map((expenditrue) => ({
+              type: "MONTHLY_CATEGORY_EXPENDITURES",
+              id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} tx:${expenditrue.month}-${expenditrue.personalFinanceCategoryPrimary}`,
+            }))
+          : ["MONTHLY_CATEGORY_EXPENDITURES"],
     }),
   }),
   overrideExisting: false,

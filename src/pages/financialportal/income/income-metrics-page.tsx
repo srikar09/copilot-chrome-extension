@@ -12,7 +12,7 @@ import {
 } from "src/components/ui/card";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { convertToMonth, roundToTwoDecimalPlaces } from "src/lib/utils";
-import { useGetMonthlyIncomeQuery } from "src/redux/queries/category/get-monthly-income";
+import { useGetMonthlyIncomeQuery } from "src/redux/queries/category/get-monthly-category-income";
 import {
   selectCurrentUserID,
   selectUserFinancialProfile,

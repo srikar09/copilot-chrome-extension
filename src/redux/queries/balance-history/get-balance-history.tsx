@@ -41,6 +41,18 @@ const GetAllConnectedAccountsBalanceHistory = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => {
+        if (!result || !result.accountBalanceHistory) {
+          return ["ACCOUNT_BALANCE_HISTORY"];
+        }
+
+        return [
+          {
+            type: "ACCOUNT_BALANCE_HISTORY",
+            id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+          },
+        ];
+      },
     }),
   }),
   overrideExisting: false,

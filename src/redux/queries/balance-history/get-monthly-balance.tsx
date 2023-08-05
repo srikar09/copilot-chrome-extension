@@ -15,6 +15,18 @@ const GetMonthlyBalance = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => {
+        if (!result || !result.monthlyBalances) {
+          return ["MONTHLY_ACCOUNT_BALANCE"];
+        }
+
+        return [
+          {
+            type: "MONTHLY_ACCOUNT_BALANCE",
+            id: `page:${arg.pageNumber} size:${arg.pageSize}`,
+          },
+        ];
+      },
     }),
   }),
   overrideExisting: false,

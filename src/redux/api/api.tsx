@@ -39,7 +39,7 @@ export const api = createApi({
   }),
   tagTypes: tagTypes,
   // global configuration for the api
-  keepUnusedDataFor: 60,
+  keepUnusedDataFor: 120,
   // The "endpoints" represent operations and requests for this server
   endpoints: () => ({}),
 });

@@ -1,7 +1,9 @@
 import { api } from "../api/api";
 import { processErrorIfPresent } from "../../lib/utils";
-import { AuthenticationResponse } from "../../types/response/AuthenticateUserResponse";
-import { AuthenticateRequest } from "../../types/requests/AuthenticateUserRequest";
+import {
+  AuthenticateRequest,
+  AuthenticationResponse,
+} from "src/types/request-response/authenticate-user";
 
 /**
  * RTK Query makes it possible to trim down your initial bundle size by allowing you

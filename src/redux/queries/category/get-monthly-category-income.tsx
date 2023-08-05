@@ -16,6 +16,13 @@ const GetMonthlyIncome = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) =>
+        result && result.monthlyIncomes
+          ? result.monthlyIncomes.map((income) => ({
+              type: "MONTHLY_CATEGORY_EXPENDITURES",
+              id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} tx:${income.month}-${income.totalIncome}`,
+            }))
+          : ["MONTHLY_CATEGORY_EXPENDITURES"],
     }),
   }),
   overrideExisting: false,

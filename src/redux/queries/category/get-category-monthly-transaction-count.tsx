@@ -23,6 +23,13 @@ const GetCategorizedMonthlyTransactionCounts = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) =>
+        result && result.categoryMonthlyTransactionCount
+          ? result.categoryMonthlyTransactionCount.map((transaction) => ({
+              type: "CATEGORY_MONTHLY_TRANSACTION_METRICS",
+              id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month} category:${arg.personalFinanceCategoryPrimary} tx:${transaction.month}-${transaction.transactionCount}`,
+            }))
+          : ["CATEGORY_MONTHLY_TRANSACTION_METRICS"],
     }),
   }),
   overrideExisting: false,

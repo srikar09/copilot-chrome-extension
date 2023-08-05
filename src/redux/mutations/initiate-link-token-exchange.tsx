@@ -1,5 +1,7 @@
-import { PlaidLinkRequest } from "src/types/requests/PlaidLinkRequest";
-import { PlaidLinkResponse } from "src/types/response/PlaidLinkResponse";
+import {
+  PlaidLinkRequest,
+  PlaidLinkResponse,
+} from "src/types/request-response/plaid-link";
 import { api } from "../api/api";
 import { processErrorIfPresent } from "src/lib/utils";
 
