@@ -11,7 +11,7 @@ import {
 import {
   GetReCurringTransactionsRequest,
   GetReCurringTransactionsResponse,
-} from "src/types/financials/request_response_financial_service";
+} from "src/types/request-response/get-recurring-transactions";
 
 /**
  * `GetRecurringTransactions` is a function defined within the `api` object's `injectEndpoints` method.
