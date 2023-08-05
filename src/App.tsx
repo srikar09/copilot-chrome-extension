@@ -37,7 +37,6 @@ function App() {
     }
   }
 
-  console.log(process.env);
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackPage}>
       <div className="flex min-h-screen flex-col min-w-full  bg-background font-sans antialiased">

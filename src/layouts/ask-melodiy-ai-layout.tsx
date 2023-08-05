@@ -17,9 +17,11 @@ import {
 } from "src/components/ui/select";
 import { Switch } from "src/components/ui/switch";
 import { useToast } from "src/components/ui/use-toast";
+import { PromptContext } from "src/lib/context-prompt";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { cn } from "src/lib/utils";
 import {
+  selectCurrentUserAccount,
   selectCurrentUserID,
   selectCurrentUserProfile,
   selectUserFinancialContext,
@@ -95,6 +97,7 @@ const AskMelodiyAILayout: React.FC<{
    * User's financial context.
    */
   const financialContext = useAppSelector(selectUserFinancialContext);
+  const userAccount = useAppSelector(selectCurrentUserAccount);
 
   /**
    * Function to send a message to the AI.
@@ -108,14 +111,16 @@ const AskMelodiyAILayout: React.FC<{
     setLoading(true);
     let questionContext: string = JSON.stringify(context).trim();
     const globalContext = JSON.stringify(financialContext).trim();
+    const promptGenerator = new PromptContext(financialContext, userAccount);
     let contextDrivenQuestion: string = "";
     if (enableGlobalFinancialContext) {
-      contextDrivenQuestion = `Given this global context ${globalContext}, and this additional 
-                              details ${questionContext} act as a smart financial advisor, answer
-                               this question concisely: ${message}`;
+      contextDrivenQuestion = promptGenerator.getFinancialContextBasedPrompt(
+        message,
+        questionContext
+      );
     } else {
-      contextDrivenQuestion = `Given this financial context ${questionContext}, act as a smart 
-                              financial advisor, answer this question concisely: ${message}`;
+      contextDrivenQuestion =
+        promptGenerator.getFinancialContextBasedPrompt(message);
     }
 
     const newMessages = [

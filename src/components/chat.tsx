@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { ChatGPTMessage, ChatLine, LoadingChatLine } from "./chat-line";
 import {
+  selectCurrentUserAccount,
   selectCurrentUserID,
   selectCurrentUserProfile,
+  selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { Button } from "./ui/button";
@@ -11,6 +13,7 @@ import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-con
 import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
+import { PromptContext } from "src/lib/context-prompt";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -60,9 +63,12 @@ const SendMessage = async (
   setLoadingState: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setLoadingState(true);
-  const contextDrivenQuestion = `Given this financial context ${JSON.stringify(
-    context
-  )}, act as a smart financial copilot with personality: ${message}`;
+  const financialContext = useAppSelector(selectUserFinancialContext);
+  const userAccount = useAppSelector(selectCurrentUserAccount);
+  const promptGenerator = new PromptContext(financialContext, userAccount);
+
+  const contextDrivenQuestion =
+    promptGenerator.getFinancialContextBasedPrompt(message);
 
   const newMessages = [
     ...previousMessages,
@@ -122,9 +128,12 @@ const Chat: React.FC<{
     mixPanelClient.trackEventOfType(MIXPANEL_EVENTS.QUESTION_ASKED);
 
     setLoading(true);
-    const contextDrivenQuestion = `Given this financial context ${JSON.stringify(
-      financialContext
-    )}, pretend you are talking to a college student and act as a smart financial advisor: ${message}`;
+    const financialContext = useAppSelector(selectUserFinancialContext);
+    const userAccount = useAppSelector(selectCurrentUserAccount);
+    const promptGenerator = new PromptContext(financialContext, userAccount);
+
+    const contextDrivenQuestion =
+      promptGenerator.getFinancialContextBasedPrompt(message);
 
     const newMessages = [
       ...messages,
