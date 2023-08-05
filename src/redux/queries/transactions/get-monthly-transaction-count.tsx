@@ -15,6 +15,12 @@ const GetMonthlyTransactionCount = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "MONTHLY_TRANSACTION_COUNT",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

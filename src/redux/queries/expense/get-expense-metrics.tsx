@@ -15,6 +15,12 @@ const GetExpenseMetrics = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "EXPENSE_METRICS",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

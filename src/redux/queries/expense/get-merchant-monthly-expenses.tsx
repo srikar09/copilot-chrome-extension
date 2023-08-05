@@ -15,6 +15,12 @@ const GetMerchantMonthlyExpenses = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "MERCHANT_MONTHLY_EXPENSES",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

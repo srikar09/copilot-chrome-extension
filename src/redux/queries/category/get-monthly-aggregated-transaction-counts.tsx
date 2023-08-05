@@ -15,13 +15,12 @@ const GetMonthlyAggregatedTransactionCounts = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
-      providesTags: (result, error, arg) =>
-        result && result.transactionAggregates
-          ? result.transactionAggregates.map((transaction) => ({
-              type: "TRANSACTION_AGGREGATES_BY_MONTH",
-              id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} tx:${transaction.month}-${transaction.transactionCount}`,
-            }))
-          : ["TRANSACTION_AGGREGATES_BY_MONTH"],
+      providesTags: (result, error, arg) => [
+        {
+          type: "TRANSACTION_AGGREGATES_BY_MONTH",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

@@ -151,7 +151,7 @@ const GetRecurringTransactions = api.injectEndpoints({
               type: "RECURRING_TRANSACTION",
               id: transaction.id,
             }))
-          : [],
+          : ["RECURRING_TRANSACTION"],
     }),
   }),
   overrideExisting: false,

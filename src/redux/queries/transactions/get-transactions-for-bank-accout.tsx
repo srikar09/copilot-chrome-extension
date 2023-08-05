@@ -15,6 +15,12 @@ const GetTransactionsForBankAccount = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "BANK_ACCOUNT_TRANSACTIONS",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} plaidAccountId:${arg.plaidAccountId}}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,
