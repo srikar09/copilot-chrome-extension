@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { ChatGPTMessage, ChatLine, LoadingChatLine } from "./chat-line";
 import {
   selectCurrentUserAccount,
-  selectCurrentUserID,
   selectCurrentSocialProfile,
   selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { Button } from "./ui/button";
 import { handler } from "src/chat-stream/stream";
-import { useGetFinancialContextQuery } from "src/redux/queries/get-financial-context";
-import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { PromptContext } from "src/lib/context-prompt";
