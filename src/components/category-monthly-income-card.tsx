@@ -13,8 +13,19 @@ import {
 import { curveCardinal } from "d3-shape";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 
+/**
+ * Interface for the data items
+ */
 interface DataItem {}
 
+/**
+ * Props for the CategoryMonthlyIncomeCard component
+ * @template T - Type of the data items
+ * @property data - Data array
+ * @property xAxisDataKey - Key of the X axis data in data objects
+ * @property yAxisDataKey - Key of the Y axis data in data objects
+ * @property title - Title of the card
+ */
 interface CategoryMonthlyIncomeCardProps<T> {
   data: T[];
   xAxisDataKey: string;
@@ -22,6 +33,12 @@ interface CategoryMonthlyIncomeCardProps<T> {
   title: string;
 }
 
+/**
+ * A bar chart component that is responsive and shows data on a bar chart
+ * @template T - Type of the data items which extends DataItem
+ * @param props - Props for the component
+ * @returns ReactElement
+ */
 const CardinalAreaChart = <T extends DataItem>({
   data,
   xAxisDataKey,

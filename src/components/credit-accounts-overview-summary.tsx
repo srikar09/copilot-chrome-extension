@@ -2,11 +2,13 @@ import { CreditAccount } from "src/types/financials/message_financial_service";
 import { CreditAccountSummaryCard } from "./credit-account-card";
 import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
 
-const CreditAccountsOverviewSummary: React.FC<{
+interface IProps {
   creditCardToInstitutionNameMap: {
     [key: string]: CreditAccount[];
   };
-}> = (props) => {
+}
+
+const CreditAccountsOverviewSummary: React.FC<IProps> = (props) => {
   const { creditCardToInstitutionNameMap } = props;
   // for each institution name get all credit cards and display them in the CreditAccountSummaryCard
 

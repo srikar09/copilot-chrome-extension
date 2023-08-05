@@ -2,9 +2,24 @@ import { BankAccount } from "src/types/financials/message_financial_service";
 import { BankAccountSummaryCard } from "./bank-account-card";
 import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
 
-const BankAccountsOverviewSummary: React.FC<{
+/**
+ * Props interface for the BankAccountsOverviewSummary component.
+ */
+interface IProps {
+  /**
+   * An array of BankAccount objects representing all bank accounts to be displayed.
+   */
   allBankAccounts: BankAccount[];
-}> = (props) => {
+}
+
+/**
+ * BankAccountsOverviewSummary component displays an overview of all bank accounts.
+ * It shows a header with the total count of bank accounts and a list of bank account cards.
+ *
+ * @param props - The props for the component.
+ * @returns A React functional component.
+ */
+const BankAccountsOverviewSummary: React.FC<IProps> = (props) => {
   const { allBankAccounts } = props;
   return (
     <div className="col-span-7 gap-2">

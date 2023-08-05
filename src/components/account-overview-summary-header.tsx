@@ -1,4 +1,3 @@
-import react from "react";
 import { ConnectPlaidAccountButton } from "./connect-plaid-account-button";
 import {
   Sheet,
@@ -11,14 +10,34 @@ import {
 import { PlusCircle } from "lucide-react";
 import { useAppSelector } from "src/redux/store/hooks";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
-import { Badge } from "./ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardHeader, CardTitle } from "./ui/card";
 
-const AccountOverviewSummaryHeader: React.FC<{
+/**
+ * Props interface for the AccountOverviewSummaryHeader component.
+ */
+interface IProps {
+  /**
+   * The title to display for the account overview.
+   */
   title: string;
+  /**
+   * The title to display for the "Connect Another Account" button.
+   */
   buttonTitle: string;
+  /**
+   * The total count of accounts to display.
+   */
   count: number;
-}> = (props) => {
+}
+
+/**
+ * AccountOverviewSummaryHeader component displays a header for the account overview.
+ * It shows the title of the account overview and the "Connect Another Account" button.
+ *
+ * @param props - The props for the component.
+ * @returns A React functional component.
+ */
+const AccountOverviewSummaryHeader: React.FC<IProps> = (props) => {
   const { title, buttonTitle, count } = props;
 
   return (
@@ -31,6 +50,13 @@ const AccountOverviewSummaryHeader: React.FC<{
   );
 };
 
+/**
+ * AccountSheet component displays the connected accounts in a sheet.
+ * It shows the "Connect Another Account" button and a list of connected accounts.
+ *
+ * @param props - The props for the component.
+ * @returns A React functional component.
+ */
 const AccountSheet: React.FC<{
   buttonTitle: string;
 }> = (props) => {

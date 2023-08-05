@@ -1,5 +1,3 @@
-import react from "react";
-
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 
@@ -15,10 +13,10 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
-import { taskSchema } from "./data/schema";
-import { labels } from "./data/data";
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { taskSchema } from "../data/schema";
+import { labels } from "../data/data";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

@@ -20,10 +20,12 @@ import { Label } from "./ui/label";
 import { CreditAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 
-const CreditAccountSummaryCard: React.FC<{
+interface IProps {
   account: CreditAccount;
   institutionName: string;
-}> = (props) => {
+}
+
+const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
   const { account, institutionName } = props;
 
   return (

@@ -1,5 +1,3 @@
-import react from "react";
-
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -13,9 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { cn } from "src/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {

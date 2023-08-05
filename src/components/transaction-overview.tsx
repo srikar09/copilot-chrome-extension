@@ -7,10 +7,10 @@ import { Spinner } from "./spinner";
 import { Transaction } from "src/types/financials/clickhouse_financial_service";
 import { Card, CardHeader, CardTitle } from "./ui/card";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
-import { TableNav } from "./data-table-nav";
-import { DataTable } from "./data-table";
-import { columns } from "./data-column";
-import { Overview } from "./overview";
+
+import { columns } from "./data-table/data-column";
+import { TableNav } from "./data-table/data-table-nav";
+import { DataTable } from "./data-table/data-table";
 
 const TransactionOverview: React.FC = () => {
   // we first get the user id

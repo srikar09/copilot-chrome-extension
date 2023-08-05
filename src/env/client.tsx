@@ -9,8 +9,8 @@ export const applicationEnvConfigs = createEnv({
    * Specify what prefix the client-side variables must have.
    * This is enforced both on type-level and at runtime.
    */
-  clientPrefix: "REACT_APP_",
-  client: {
+  // clientPrefix: "REACT_APP_",
+  server: {
     REACT_APP_OPENAI_API_KEY: z.string().nonempty(),
     REACT_APP_AI_TEMP: z.number().int().positive(),
     REACT_APP_AI_MAX_TOKENS: z.number().int().positive(),
