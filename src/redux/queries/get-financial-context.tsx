@@ -1,7 +1,9 @@
-import { GetMelodyFinancialContextRequest } from "src/types/financials/request_response_financial_analytics_service";
+import {
+  GetMelodyFinancialContextRequest,
+  GetMelodyFinancialContextResponse,
+} from "src/types/request-response/get-financial-context";
 import { api } from "../api/api";
 import { processErrorIfPresent } from "src/lib/utils";
-import { GetMelodyFinancialContextResponse } from "src/types/response/GetMelodyFinancialContextResponse";
 
 const GetFinancialContext = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,6 +14,18 @@ const GetFinancialContext = api.injectEndpoints({
       transformResponse: (response: GetMelodyFinancialContextResponse) => {
         processErrorIfPresent(response.error_message);
         return response;
+      },
+      providesTags: (result, error, arg) => {
+        if (!result || !result.melodyFinancialContext) {
+          return [];
+        }
+
+        return [
+          {
+            type: "FINANCIAL_CONTEXT",
+            id: arg.userId,
+          },
+        ];
       },
     }),
   }),

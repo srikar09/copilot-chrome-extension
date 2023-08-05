@@ -3,7 +3,7 @@ import { api } from "src/redux/api/api";
 import {
   GetTransactionAggregatesRequest,
   GetTransactionAggregatesResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+} from "src/types/request-response/get-transaction-aggregates";
 
 const GetMonthlyAggregatedTransactionCounts = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,6 +15,12 @@ const GetMonthlyAggregatedTransactionCounts = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "TRANSACTION_AGGREGATES_BY_MONTH",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

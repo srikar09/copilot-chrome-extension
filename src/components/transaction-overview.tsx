@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useGetTransactionsQuery } from "src/redux/queries/transactions/get-transactions";
 import { selectCurrentUserID } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
-import { GetTransactionsRequest } from "src/types/financials/request_response_financial_service";
 import { Spinner } from "./spinner";
 import { Transaction } from "src/types/financials/clickhouse_financial_service";
 import { Card, CardHeader, CardTitle } from "./ui/card";
@@ -11,6 +10,7 @@ import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { columns } from "./data-table/data-column";
 import { TableNav } from "./data-table/data-table-nav";
 import { DataTable } from "./data-table/data-table";
+import { GetTransactionsRequest } from "src/types/request-response/get-transactions";
 
 const TransactionOverview: React.FC = () => {
   // we first get the user id
@@ -32,19 +32,19 @@ const TransactionsComponent: React.FC = () => {
   );
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
+  const req = new GetTransactionsRequest({
+    userId: Number(userId),
+    pageNumber: pageNumber,
+    pageSize: pageSize,
+  });
+
   const {
     data: response,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetTransactionsQuery(
-    GetTransactionsRequest.create({
-      userId: Number(userId),
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-    })
-  );
+  } = useGetTransactionsQuery(req);
 
   const processTransactionQuery = () => {
     if (isSuccess && response.transactions) {

@@ -1,7 +1,9 @@
 import { processErrorIfPresent } from "src/lib/utils";
 import { api } from "src/redux/api/api";
-import { GetUserAccountBalanceHistoryRequest } from "src/types/financials/request_response_financial_analytics_service";
-import { GetUserAccountBalanceHistoryResponse } from "src/types/response/GetUserAccountBalanceHistoryResponse";
+import {
+  GetUserAccountBalanceHistoryRequest,
+  GetUserAccountBalanceHistoryResponse,
+} from "src/types/request-response/get-user-account-balance-history";
 
 const GetAllConnectedAccountsBalanceHistory = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -38,6 +40,18 @@ const GetAllConnectedAccountsBalanceHistory = api.injectEndpoints({
          */
         processErrorIfPresent(response.error_message);
         return response;
+      },
+      providesTags: (result, error, arg) => {
+        if (!result || !result.accountBalanceHistory) {
+          return ["ACCOUNT_BALANCE_HISTORY"];
+        }
+
+        return [
+          {
+            type: "ACCOUNT_BALANCE_HISTORY",
+            id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+          },
+        ];
       },
     }),
   }),

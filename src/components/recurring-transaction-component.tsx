@@ -18,12 +18,12 @@ import { RecurringTransactionAggregate } from "src/types/custom/recurring-transa
 import { useAppSelector } from "src/redux/store/hooks";
 import { selectCurrentUserID } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useGetRecurringTransactionsQuery } from "src/redux/queries/transactions/get-recurring-transactions";
-import { GetReCurringTransactionsRequest } from "src/types/financials/request_response_financial_service";
 import { ReOccuringTransaction } from "src/types/financials/clickhouse_financial_service";
 import { Spinner } from "src/components/spinner";
 import { Card, CardHeader, CardTitle } from "src/components/ui/card";
 import { Badge } from "./ui/badge";
 import { SubscriptionsView } from "src/pages/subscriptions/subscriptions-view";
+import { GetReCurringTransactionsRequest } from "src/types/request-response/get-recurring-transactions";
 
 enum SidebarOption {
   INFLOW = "INFLOW",
@@ -48,17 +48,16 @@ const RecurringTransactionOverview: React.FC<{
   const [recurringTransactionAggregate, setRecurringTransactionAggregate] =
     useState<RecurringTransactionAggregate>();
 
+  const req = new GetReCurringTransactionsRequest({
+    userId: Number(userId),
+  });
   const {
     data: response,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetRecurringTransactionsQuery(
-    GetReCurringTransactionsRequest.create({
-      userId: Number(userId),
-    })
-  );
+  } = useGetRecurringTransactionsQuery(req);
 
   const processTransactionQuery = () => {
     if (isSuccess && response) {

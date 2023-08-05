@@ -3,7 +3,7 @@ import { api } from "src/redux/api/api";
 import {
   GetUserCategoryMonthlyExpenditureRequest,
   GetUserCategoryMonthlyExpenditureResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+} from "src/types/request-response/get-user-category-monthly-expenditure";
 
 /**
  * Get monthly category expenditure
@@ -22,6 +22,12 @@ const GetMonthlyCategoryExpenditure = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "MONTHLY_CATEGORY_EXPENDITURES",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

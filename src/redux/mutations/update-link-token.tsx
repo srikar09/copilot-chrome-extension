@@ -1,7 +1,7 @@
 import {
   PlaidInitiateTokenUpdateRequest,
   PlaidInitiateTokenUpdateResponse,
-} from "src/types/financials/request_response_financial_service";
+} from "src/types/request-response/plaid-token-update";
 import { api } from "../api/api";
 import { processErrorIfPresent } from "src/lib/utils";
 

@@ -3,7 +3,7 @@ import { api } from "src/redux/api/api";
 import {
   GetMonthlyIncomeRequest,
   GetMonthlyIncomeResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+} from "src/types/request-response/get-monthly-income";
 
 const GetMonthlyIncome = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,6 +16,12 @@ const GetMonthlyIncome = api.injectEndpoints({
         processErrorIfPresent(response.error_message);
         return response;
       },
+      providesTags: (result, error, arg) => [
+        {
+          type: "MONTHLY_CATEGORY_INCOME",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+        },
+      ],
     }),
   }),
   overrideExisting: false,

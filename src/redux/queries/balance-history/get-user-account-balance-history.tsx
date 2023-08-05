@@ -3,7 +3,7 @@ import { api } from "src/redux/api/api";
 import {
   GetAccountBalanceHistoryRequest,
   GetAccountBalanceHistoryResponse,
-} from "src/types/financials/request_response_financial_analytics_service";
+} from "src/types/request-response/get-account-balance-history";
 
 /**
  * Function to fetch account balance history from the API.
@@ -35,6 +35,18 @@ const GetAccountBalanceHistory = api.injectEndpoints({
       transformResponse: (response: GetAccountBalanceHistoryResponse) => {
         processErrorIfPresent(response.error_message);
         return response;
+      },
+      providesTags: (result, error, arg) => {
+        if (!result || !result.accountBalanceHistory) {
+          return ["ACCOUNT_BALANCE_HISTORY"];
+        }
+
+        return [
+          {
+            type: "ACCOUNT_BALANCE_HISTORY",
+            id: `account:${arg.plaidAccountId} page:${arg.pageNumber} size:${arg.pageSize}`,
+          },
+        ];
       },
     }),
   }),

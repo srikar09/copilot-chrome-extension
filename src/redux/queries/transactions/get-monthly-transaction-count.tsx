@@ -9,7 +9,7 @@ const GetMonthlyTransactionCount = api.injectEndpoints({
   endpoints: (builder) => ({
     getMonthlyTransactionCount: builder.query({
       query: (req: GetMonthlyTransactionCountRequest) => ({
-        url: getMonthlyCategorizedTransactionCountEndpoint(req),
+        url: buildEndpoint(req),
       }),
       transformResponse: (response: GetMonthlyTransactionCountResponse) => {
         processErrorIfPresent(response.error_message);
@@ -17,8 +17,8 @@ const GetMonthlyTransactionCount = api.injectEndpoints({
       },
       providesTags: (result, error, arg) => [
         {
-          type: "MONTHLY_TRANSACTION_METRICS",
-          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+          type: "MONTHLY_TRANSACTION_COUNT",
+          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month}`,
         },
       ],
     }),
@@ -26,11 +26,8 @@ const GetMonthlyTransactionCount = api.injectEndpoints({
   overrideExisting: false,
 });
 
-const getMonthlyCategorizedTransactionCountEndpoint = (
-  req: GetMonthlyTransactionCountRequest
-) => {
-  let url = `/service/financials/analytics/category-monthly-transaction-count/user/${req.userId}`;
-
+const buildEndpoint = (req: GetMonthlyTransactionCountRequest) => {
+  let url = `/service/financials/analytics/monthly-transaction-count/user/${req.userId}`;
   if (req.month) {
     if (url.includes("?")) {
       url += `&month=${req.month}`;

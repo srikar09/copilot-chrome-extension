@@ -21,7 +21,7 @@ import {
   TabsTrigger,
 } from "src/components/ui/tabs";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
-import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/request-response/get-user-category-expenditure";
+import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/request-response/get-user-category-monthly-expenditure";
 
 /**
  * Enum representing different types of analytics available in the portal.

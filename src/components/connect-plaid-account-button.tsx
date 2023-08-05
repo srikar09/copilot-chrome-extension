@@ -9,10 +9,7 @@ import {
   selectCurrentUserID,
   selectCurrentUserAccount,
 } from "src/redux/slice/authentication/AuthenticationSelector";
-import {
-  PlaidExchangeTokenRequest,
-  PlaidInitiateTokenUpdateRequest,
-} from "src/types/financials/request_response_financial_service";
+
 import { useNavigate } from "react-router";
 import {
   PlaidLinkOptions,
@@ -28,6 +25,8 @@ import { ToastAction } from "./ui/toast";
 import { usePlaidExchangePublicTokenMutation } from "src/redux/mutations/plaid-exchange-public-token";
 import { Button } from "./ui/button";
 import { useUpdateLinkTokenMutation } from "src/redux/mutations/update-link-token";
+import { PlaidExchangeTokenRequest } from "src/types/request-response/plaid-exchange-token";
+import { PlaidInitiateTokenUpdateRequest } from "src/types/request-response/plaid-token-update";
 
 /**
  *  This component enables us to connect a new bank account through plaid
