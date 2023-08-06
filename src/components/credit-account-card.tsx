@@ -28,9 +28,15 @@ interface IProps {
 
 const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
   const { account, institutionName } = props;
+  const samplQuestions: string[] = [
+    "What is my account's interest rate?",
+    "What is my minimum payment, and when is it due?",
+    "What is my credit limit?",
+    "How is my credit utilization ratio calculated?",
+  ];
 
   return (
-    <AskMelodiyAILayout context={account}>
+    <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
       <Card>
         <CardHeader className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 space-y-0">
           <div className="space-y-1">

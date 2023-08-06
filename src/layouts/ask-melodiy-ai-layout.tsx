@@ -1,3 +1,4 @@
+import { BrainCircuit, BrainCog, PiggyBank } from "lucide-react";
 import { useState } from "react";
 import { handler } from "src/chat-stream/stream";
 import { InputMessage } from "src/components/chat";
@@ -6,6 +7,13 @@ import {
   ChatLine,
   LoadingChatLine,
 } from "src/components/chat-line";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "src/components/ui/accordion";
+import { Card, CardTitle } from "src/components/ui/card";
 import { ScrollArea } from "src/components/ui/scroll-area";
 import {
   Select,
@@ -56,7 +64,8 @@ const AskMelodiyAILayout: React.FC<{
   children: React.ReactNode;
   className?: string;
   context: any;
-}> = ({ children, className, context }) => {
+  sampleQuestions: string[];
+}> = ({ children, className, context, sampleQuestions }) => {
   /**
    * State variable for the messages in the chat.
    */
@@ -172,7 +181,7 @@ const AskMelodiyAILayout: React.FC<{
           >
             <SelectValue placeholder="Ask Melodiy" />
           </SelectTrigger>
-          <SelectContent className="p-1 min-h-[250px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-50 border-4 border-gray-300 shadow-md">
+          <SelectContent className="p-1 min-h-[400px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-50 border-4 border-gray-300 shadow-md">
             <SelectGroup className="p-2">
               <ScrollArea>
                 {messages.map(({ content, role }, index) => (
@@ -206,6 +215,24 @@ const AskMelodiyAILayout: React.FC<{
                     </>
                   )}
                 </SelectLabel>
+                <div className="grid grid-cols-2 gap-2">
+                  {sampleQuestions.map((question, index) => (
+                    <Card
+                      className="p-2 rounded-lg shadow-md bg-white flex flex-row gap-1"
+                      key={index}
+                    >
+                      <div className="p-1 border rounded-lg bg-black">
+                        <BrainCog className="h-6 w-6 bg-black text-white" />
+                      </div>
+                      <CardTitle
+                        className="text-xs"
+                        onClick={() => setInput(question)}
+                      >
+                        {question}
+                      </CardTitle>
+                    </Card>
+                  ))}
+                </div>
               </ScrollArea>
 
               <InputMessage

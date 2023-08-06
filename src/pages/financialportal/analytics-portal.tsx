@@ -147,8 +147,18 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
     getMetric();
   }, [isLoading, isError, response]);
 
+  const sampleQuestions: string[] = [
+    "What were my total expenditures last month",
+    "What categories do my expenses fall into?",
+    "Are there any unusual or unexpected expenditures on my account?",
+    "How much am I spending on non-essentials?",
+  ];
+
   return (
-    <AskMelodiyAILayout context={categoryMonthlyExpenditure}>
+    <AskMelodiyAILayout
+      context={categoryMonthlyExpenditure}
+      sampleQuestions={sampleQuestions}
+    >
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Monthly Expenditures <span className="ml-1 text-xs"> </span>

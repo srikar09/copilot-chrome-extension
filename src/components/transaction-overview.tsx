@@ -82,8 +82,15 @@ const TransactionsComponent: React.FC = () => {
     processTransactionQuery();
   }, [isLoading, isError, response]);
 
+  const sampleQuestions: string[] = [
+    "Is there a transaction limit on my account?",
+    "How can I set up alerts for large transactions?",
+    "Across what categories am l spending most?",
+    "How can I optimize my spending?",
+  ];
+
   return (
-    <AskMelodiyAILayout context={undefined}>
+    <AskMelodiyAILayout context={undefined} sampleQuestions={sampleQuestions}>
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Transactions{" "}

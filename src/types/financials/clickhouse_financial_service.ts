@@ -1,4 +1,5 @@
 import { Any } from "./any";
+import { BankAccount, InvestmentAccount, CreditAccount, MortgageAccount, StudentLoanAccount } from "./message_financial_service";
 import { Timestamp } from "./timestamp";
 
 export const protobufPackage = "financial_integration_service_api.v1";
@@ -647,6 +648,11 @@ export interface MelodyFinancialContext {
   locations: LocationFinancialSubProfile[];
   merchants: MerchantMetricsFinancialSubProfile[];
   paymentChannels: PaymentChannelMetricsFinancialSubProfile[];
+  bankAccounts: BankAccount[];
+  investmentAccounts: InvestmentAccount[];
+  creditAccounts: CreditAccount[];
+  mortgageLoanAccounts: MortgageAccount[];
+  studentLoanAccounts: StudentLoanAccount[];
 }
 
 function createBaseInvestmentTransaction(): InvestmentTransaction {
@@ -2757,11 +2763,22 @@ export const UserFinancialHealthMetricsTable = {
 };
 
 function createBaseMelodyFinancialContext(): MelodyFinancialContext {
-  return { categories: [], expenses: [], income: [], locations: [], merchants: [], paymentChannels: [] };
+  return {
+    categories: [],
+    expenses: [],
+    income: [],
+    locations: [],
+    merchants: [],
+    paymentChannels: [],
+    bankAccounts: [],
+    investmentAccounts: [],
+    creditAccounts: [],
+    mortgageLoanAccounts: [],
+    studentLoanAccounts: [],
+  };
 }
 
 export const MelodyFinancialContext = {
-
   fromJSON(object: any): MelodyFinancialContext {
     return {
       categories: Array.isArray(object?.categories)
@@ -2781,6 +2798,21 @@ export const MelodyFinancialContext = {
         : [],
       paymentChannels: Array.isArray(object?.paymentChannels)
         ? object.paymentChannels.map((e: any) => PaymentChannelMetricsFinancialSubProfile.fromJSON(e))
+        : [],
+      bankAccounts: Array.isArray(object?.bankAccounts)
+        ? object.bankAccounts.map((e: any) => BankAccount.fromJSON(e))
+        : [],
+      investmentAccounts: Array.isArray(object?.investmentAccounts)
+        ? object.investmentAccounts.map((e: any) => InvestmentAccount.fromJSON(e))
+        : [],
+      creditAccounts: Array.isArray(object?.creditAccounts)
+        ? object.creditAccounts.map((e: any) => CreditAccount.fromJSON(e))
+        : [],
+      mortgageLoanAccounts: Array.isArray(object?.mortgageLoanAccounts)
+        ? object.mortgageLoanAccounts.map((e: any) => MortgageAccount.fromJSON(e))
+        : [],
+      studentLoanAccounts: Array.isArray(object?.studentLoanAccounts)
+        ? object.studentLoanAccounts.map((e: any) => StudentLoanAccount.fromJSON(e))
         : [],
     };
   },
@@ -2805,13 +2837,27 @@ export const MelodyFinancialContext = {
     if (message.paymentChannels?.length) {
       obj.paymentChannels = message.paymentChannels.map((e) => PaymentChannelMetricsFinancialSubProfile.toJSON(e));
     }
+    if (message.bankAccounts?.length) {
+      obj.bankAccounts = message.bankAccounts.map((e) => BankAccount.toJSON(e));
+    }
+    if (message.investmentAccounts?.length) {
+      obj.investmentAccounts = message.investmentAccounts.map((e) => InvestmentAccount.toJSON(e));
+    }
+    if (message.creditAccounts?.length) {
+      obj.creditAccounts = message.creditAccounts.map((e) => CreditAccount.toJSON(e));
+    }
+    if (message.mortgageLoanAccounts?.length) {
+      obj.mortgageLoanAccounts = message.mortgageLoanAccounts.map((e) => MortgageAccount.toJSON(e));
+    }
+    if (message.studentLoanAccounts?.length) {
+      obj.studentLoanAccounts = message.studentLoanAccounts.map((e) => StudentLoanAccount.toJSON(e));
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<MelodyFinancialContext>, I>>(base?: I): MelodyFinancialContext {
-    return MelodyFinancialContext.fromPartial(base ?? {});
+    return MelodyFinancialContext.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<MelodyFinancialContext>, I>>(object: I): MelodyFinancialContext {
     const message = createBaseMelodyFinancialContext();
     message.categories = object.categories?.map((e) => CategoryMetricsFinancialSubProfile.fromPartial(e)) || [];
@@ -2821,6 +2867,11 @@ export const MelodyFinancialContext = {
     message.merchants = object.merchants?.map((e) => MerchantMetricsFinancialSubProfile.fromPartial(e)) || [];
     message.paymentChannels =
       object.paymentChannels?.map((e) => PaymentChannelMetricsFinancialSubProfile.fromPartial(e)) || [];
+    message.bankAccounts = object.bankAccounts?.map((e) => BankAccount.fromPartial(e)) || [];
+    message.investmentAccounts = object.investmentAccounts?.map((e) => InvestmentAccount.fromPartial(e)) || [];
+    message.creditAccounts = object.creditAccounts?.map((e) => CreditAccount.fromPartial(e)) || [];
+    message.mortgageLoanAccounts = object.mortgageLoanAccounts?.map((e) => MortgageAccount.fromPartial(e)) || [];
+    message.studentLoanAccounts = object.studentLoanAccounts?.map((e) => StudentLoanAccount.fromPartial(e)) || [];
     return message;
   },
 };

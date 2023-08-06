@@ -18,7 +18,7 @@ const GetMonthlyTransactionCount = api.injectEndpoints({
       providesTags: (result, error, arg) => [
         {
           type: "MONTHLY_TRANSACTION_COUNT",
-          id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month}`,
+          id: `user:${arg.userId}`,
         },
       ],
     }),

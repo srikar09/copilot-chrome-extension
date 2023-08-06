@@ -315,9 +315,16 @@ const InvestmentAccountsSection: React.FC<IIInvestmentAccountsSectionProps> = (
     InvestmentAccount | undefined
   >(accounts.length > 0 ? accounts[0] : undefined);
 
+  const samplQuestions: string[] = [
+    "What is the current value of my portfolio? ",
+    "What investments do I currently hold in my portfolio?",
+    "How is my portfolio diversified?",
+    "How can I adjust the asset allocation in my portfolio?",
+  ];
+
   return (
     <Sheet>
-      <AskMelodiyAILayout context={accounts}>
+      <AskMelodiyAILayout context={accounts} sampleQuestions={samplQuestions}>
         <SheetTrigger className="grid grid-cols-2 gap-5 justify-start">
           {accounts.map((account, idx) => (
             <Card
