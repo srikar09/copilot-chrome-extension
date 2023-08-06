@@ -86,8 +86,18 @@ const MonthlyIncomeMetricsCard = () => {
     getMetric();
   }, [isLoading, isError, response]);
 
+  const sampleQuestions: string[] = [
+    "What was my total income last month?",
+    "Has there been a change in my income over time?",
+    "How does my income compare to my expenses? ",
+    "Are there any discrepancies in my income?",
+  ];
+
   return (
-    <AskMelodiyAILayout context={monthlyIncome}>
+    <AskMelodiyAILayout
+      context={monthlyIncome}
+      sampleQuestions={sampleQuestions}
+    >
       {spinner}
       <h2 className="ml-5 text-xl font-bold tracking-tight">
         Income Metrics <span className="ml-1 text-xs"> </span>

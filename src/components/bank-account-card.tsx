@@ -43,8 +43,15 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
     return acc + pocket.goals.length;
   }, 0);
 
+  const samplQuestions: string[] = [
+    "How much money do I have in my account?",
+    "Am l spending too much in my account?",
+    "What fees are associated with my account?",
+    "How can l optimize my spending on this account?",
+  ];
+
   return (
-    <AskMelodiyAILayout context={account}>
+    <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
       <Card>
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">

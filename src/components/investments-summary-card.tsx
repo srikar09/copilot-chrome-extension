@@ -63,6 +63,13 @@ const LinkedInvestmentAccounts: React.FC<{
     setSelectedAccount(investmentAccounts[idx]);
   };
 
+  const samplQuestions: string[] = [
+    "What is the current value of my portfolio? ",
+    "What investments do I currently hold in my portfolio?",
+    "How is my portfolio diversified?",
+    "How can I adjust the asset allocation in my portfolio?",
+  ];
+
   return (
     <>
       {investmentAccounts.map((account, idx) => (
@@ -72,6 +79,7 @@ const LinkedInvestmentAccounts: React.FC<{
           className={
             account.id === selectedAccount.id ? "border-4 border-black" : ""
           }
+          sampleQuestions={samplQuestions}
         >
           <Card
             className={cn(

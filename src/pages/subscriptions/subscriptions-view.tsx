@@ -326,6 +326,12 @@ class SubscriptionsView extends React.Component<
   };
 
   render() {
+    const sampleQuestions: string[] = [
+      "What subscriptions am I currently paying for?",
+      "How much does each subscription cost me monthly/annually?",
+      "Which subscriptions are non-essential?",
+      "Do any of my subscriptions have overlapping services?",
+    ];
     return (
       <>
         <div className="md:hidden">
@@ -346,6 +352,7 @@ class SubscriptionsView extends React.Component<
                     <AskMelodiyAILayout
                       context={this._computeContext()}
                       className="m-2"
+                      sampleQuestions={sampleQuestions}
                     >
                       <OverviewComponent
                         inflowTransactions={this.computeInflowTransactions()}
@@ -681,8 +688,19 @@ const RecurringTransactionsFlowComponent: React.FC<
     .sort((a, b) => b.amount - a.amount)
     .slice(0, 5);
 
+  const sampleQuestions: string[] = [
+    "What subscriptions am I currently paying for?",
+    "How much does each subscription cost me monthly/annually?",
+    "Which subscriptions are non-essential?",
+    "Do any of my subscriptions have overlapping services?",
+  ];
+
   return (
-    <AskMelodiyAILayout context={context} className="m-2">
+    <AskMelodiyAILayout
+      context={context}
+      className="m-2"
+      sampleQuestions={sampleQuestions}
+    >
       <div className="p-4 leading-5 rounded-2xl bg-white border">
         <p className="m-2 text-3xl font-bold">{title}</p>
         <p className="m-6 text-xs font-bold">{description}</p>
@@ -778,8 +796,19 @@ const UpcomingRecurringTransactionsComponent: React.FC<
         transaction !== null
     );
 
+  const sampleQuestions: string[] = [
+    "which subscriptions do l owe in the next week?",
+    "Which subscription do l owe in the next month?",
+    "Which subscriptions are non-essential?",
+    "Do any of my subscriptions have overlapping services?",
+  ];
+
   return (
-    <AskMelodiyAILayout context={context} className="m-2">
+    <AskMelodiyAILayout
+      context={context}
+      className="m-2"
+      sampleQuestions={sampleQuestions}
+    >
       <Tabs
         className="h-full px-4 py-6 lg:px-8"
         defaultValue={UpcomingTransactionOptions.OVERVIEW}
