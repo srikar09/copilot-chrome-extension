@@ -252,7 +252,6 @@ const RecurringTransactionCard: React.FC<{
 };
 
 const frequencyToString = (frequency: string): string => {
-  console.log(frequency);
   switch (frequency) {
     case "RE_OCCURING_TRANSACTIONS_FREQUENCY_ANNUALLY":
       return "Annually";

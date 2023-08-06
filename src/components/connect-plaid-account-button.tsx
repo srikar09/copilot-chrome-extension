@@ -115,7 +115,6 @@ const ConnectPlaidAccountButton: React.FC<{
     if (linkId != null) {
       // link token was successfully updated
       // update mode: no need to exchange public token
-      console.log(linkId);
     } else {
       // call to Plaid api endpoint: /item/public_token/exchange in order to obtain access_token which is then stored with the created item
       try {

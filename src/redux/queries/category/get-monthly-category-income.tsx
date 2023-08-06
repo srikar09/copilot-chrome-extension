@@ -12,7 +12,6 @@ const GetMonthlyIncome = api.injectEndpoints({
         url: getMonthlyIncomeEndpoint(req),
       }),
       transformResponse: (response: GetMonthlyIncomeResponse) => {
-        console.log("response", response);
         processErrorIfPresent(response.error_message);
         return response;
       },

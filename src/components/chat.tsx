@@ -85,9 +85,6 @@ const SendMessage = async (
     user: userKey,
     financialContext: context,
   });
-
-  console.log("Edge function returned.");
-
   const reader = data.getReader();
   const decoder = new TextDecoder();
   let done = false;
@@ -150,9 +147,7 @@ const Chat: React.FC<{
       user: userKey,
       financialContext: financialContext,
     });
-
-    console.log("Edge function returned.");
-
+    
     const reader = data.getReader();
     const decoder = new TextDecoder();
     let done = false;
