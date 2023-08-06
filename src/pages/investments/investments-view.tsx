@@ -10,6 +10,7 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from "src/components/ui/card";
 import {
   Sheet,
@@ -209,6 +210,37 @@ const OverviewPane: React.FC<{
   numberOfInvestmentAccounts: number;
   accounts: InvestmentAccount[];
 }> = ({ totalBalance, numberOfInvestmentAccounts, accounts }) => {
+  // compute the total number of holdings across all accounts
+  const totalNumberOfHoldings = accounts.reduce((acc, account) => {
+    return acc + account.holdings.length;
+  }, 0);
+
+  // compute the total number of securities across all accounts
+  const totalNumberOfSecurities = accounts.reduce((acc, account) => {
+    return acc + account.securities.length;
+  }, 0);
+
+  // compute the number of shares held across all accounts
+  const totalNumberOfShares = accounts.reduce((acc, account) => {
+    return (
+      acc +
+      account.holdings.reduce((acc, holding) => {
+        return acc + holding.quantity;
+      }, 0)
+    );
+  }, 0);
+
+  // compute average cost basis
+  const averageCostBasis =
+    accounts.reduce((acc, account) => {
+      return (
+        acc +
+        account.holdings.reduce((acc, holding) => {
+          return acc + holding.costBasis;
+        }, 0)
+      );
+    }, 0) / totalNumberOfHoldings;
+
   return (
     <div className="m-4">
       <h2 className="ml-5 text-xl font-bold tracking-tight pb-5">
@@ -220,6 +252,25 @@ const OverviewPane: React.FC<{
         buttonTitle={"Investment Accounts"}
         count={numberOfInvestmentAccounts}
       />
+      <div className="pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+          <InvestmentAccountStatistic
+            title={"Total Shares Held"}
+            value={totalNumberOfShares}
+            statisticDetails={""}
+          />
+          <InvestmentAccountStatistic
+            title={"Securities"}
+            value={totalNumberOfSecurities}
+            statisticDetails={""}
+          />
+          <InvestmentAccountStatistic
+            title={"Average Cost Basis"}
+            value={Number(averageCostBasis.toFixed(2))}
+            statisticDetails={""}
+          />
+        </div>
+      </div>
       <Tabs defaultValue="accounts">
         <TabsList>
           <TabsTrigger value="accounts">Accounts</TabsTrigger>
@@ -237,6 +288,38 @@ const OverviewPane: React.FC<{
         </TabsContent>
       </Tabs>
     </div>
+  );
+};
+
+const InvestmentAccountStatistic: React.FC<{
+  title: string;
+  value: number;
+  statisticDetails: string;
+}> = ({ title, value, statisticDetails }) => {
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          className="h-4 w-4 text-muted-foreground"
+        >
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      </CardHeader>
+      <CardContent>
+        <div className="text-2xl font-bold">{value}</div>
+        <p className="text-xs text-muted-foreground">{statisticDetails}</p>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -311,7 +394,9 @@ const InvestmentAccountsSection: React.FC<IIInvestmentAccountsSectionProps> = (
       </AskMelodiyAILayout>
       <SheetContent className="w-[500px] sm:w-[540px]">
         <SheetHeader>
-          <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+          <SheetTitle className="font-bold text-xl">
+            {selectedAccount && selectedAccount.name.toUpperCase()}
+          </SheetTitle>
           <div className="pt-5">
             {selectedAccount && <HoldingCard Account={selectedAccount} />}
           </div>

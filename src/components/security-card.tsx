@@ -2,11 +2,7 @@ import { useState } from "react";
 import { InvestmentSecurity } from "src/types/financials/message_financial_service";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { cn, formatDate } from "src/lib/utils";
-import {
-  AdvancedRealTimeChart,
-  FundamentalData,
-  MiniChart,
-} from "react-ts-tradingview-widgets";
+import { FundamentalData, MiniChart } from "react-ts-tradingview-widgets";
 import {
   Accordion,
   AccordionContent,
