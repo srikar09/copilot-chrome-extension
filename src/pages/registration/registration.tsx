@@ -1,5 +1,5 @@
-import { RocketIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Logo } from "src/components/Logo";
 import { UserAuthForm } from "src/components/login-form";
 import { buttonVariants } from "src/components/ui/button";
 import { Layout } from "src/layouts/layout";
@@ -14,7 +14,9 @@ export default function RegistrationPage() {
     <>
       <Layout>
         <div className="pt-[5%] sm:mx-auto sm:w-full sm:max-w-md">
-          <RocketIcon className="mx-auto h-10 w-auto" />
+        <Link to="/financial-portal" aria-label="Home">
+          <Logo />
+        </Link>
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>

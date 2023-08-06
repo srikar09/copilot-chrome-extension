@@ -6,8 +6,9 @@ import { routes } from "src/constant/routes";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "src/redux/store/hooks";
 import { selectCurrentSocialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
-import { RocketIcon } from "@radix-ui/react-icons";
 import { LogoutButton } from "./logout-button";
+
+import { Logo } from 'src/components/Logo'
 
 const navigation = [
   { name: "Financial Portal", href: routes.FINANCIALPORTAL },
@@ -36,8 +37,9 @@ const Nav: React.FC<{}> = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center gap-2">
-                  <RocketIcon className="h-8 w-auto" />
-                  <p className="text-xl font-bold">Melodiy</p>
+                  <Link to="/financial-portal" aria-label="Home">
+                    <Logo />
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

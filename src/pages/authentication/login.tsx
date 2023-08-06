@@ -2,6 +2,9 @@ import { RocketIcon } from "@radix-ui/react-icons";
 import { UserAuthForm } from "src/components/login-form";
 import { Layout } from "src/layouts/layout";
 
+import { Logo } from 'src/components/Logo'
+import { Link } from "react-router-dom";
+
 /**
  * LoginPage component to render the login page.
  * @returns {JSX.Element} - The JSX element representing the LoginPage component.
@@ -10,7 +13,9 @@ const LoginPage: React.FC = () => {
   return (
     <Layout>
       <div className="pt-[5%] sm:mx-auto sm:w-full sm:max-w-md">
-        <RocketIcon className="mx-auto h-10 w-auto" />
+      <Link to="/financial-portal" aria-label="Home">
+        <Logo />
+      </Link>
         <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
