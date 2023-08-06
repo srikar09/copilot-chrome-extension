@@ -19,6 +19,7 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import { CreditAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
+import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 
 interface IProps {
   account: CreditAccount;
@@ -94,15 +95,11 @@ const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
             </div>
           </div>
           <div className="flex justify-end items-end space-x-1 rounded-md bg-secondary text-secondary-foreground">
-            <Button variant="secondary" className="px-3 shadow-none">
-              <StarIcon className="mr-2 h-4 w-4" />
-              More
-            </Button>
-            <Separator orientation="vertical" className="h-[20px]" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="secondary" className="px-2 shadow-none">
-                  <ChevronDownIcon className="h-4 w-4 text-secondary-foreground" />
+                  <ChevronDoubleDownIcon className="h-4 w-4 text-secondary-foreground m-2 " />
+                  More
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent

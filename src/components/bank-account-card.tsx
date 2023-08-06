@@ -14,6 +14,7 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import { BankAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
+import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 
 /**
  * Props interface for the BankAccountSummaryCard component.
@@ -83,8 +84,8 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
           <div className="flex flex-shrink items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="px-3 shadow-none">
-                  <PlusIcon className="mr-2 h-4 w-4" />
+                <Button variant="secondary" className="px-2 shadow-none">
+                  <ChevronDoubleDownIcon className="h-4 w-4 text-secondary-foreground m-2 " />
                   More
                 </Button>
               </DropdownMenuTrigger>
