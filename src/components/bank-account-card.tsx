@@ -58,8 +58,8 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
       <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
         <Card>
           <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
-            <div className="space-y-1">
-              <CardTitle className="text-xs text-gray-600 font-bold">
+            <div className="space-y-1 text-left">
+              <CardTitle className="text-xs text-gray-900 font-bold">
                 ${formatToTwoDecimalPoints(account.currentFunds)}
               </CardTitle>
               <CardTitle
