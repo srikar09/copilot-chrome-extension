@@ -2,7 +2,17 @@ import { useState } from "react";
 import { InvestmentSecurity } from "src/types/financials/message_financial_service";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { cn, formatDate } from "src/lib/utils";
-import { AdvancedRealTimeChart, MiniChart } from "react-ts-tradingview-widgets";
+import {
+  AdvancedRealTimeChart,
+  FundamentalData,
+  MiniChart,
+} from "react-ts-tradingview-widgets";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 const SecurityCard: React.FC<{
   security: InvestmentSecurity;
@@ -57,6 +67,22 @@ const SecurityCard: React.FC<{
               symbol={`${security.tickerSymbol}`}
               isTransparent={true}
             ></MiniChart>
+          </div>
+          <div>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Fundamentals</AccordionTrigger>
+                <AccordionContent>
+                  <FundamentalData
+                    colorTheme="light"
+                    width={"100%"}
+                    symbol={`${security.tickerSymbol}`}
+                    isTransparent={true}
+                    displayMode="compact"
+                  ></FundamentalData>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </CardContent>
         <CardFooter className="flex flex-row justify-between">
