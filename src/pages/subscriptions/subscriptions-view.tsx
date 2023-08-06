@@ -1,6 +1,6 @@
 import React from "react";
 import { RecurrinTransactionCard } from "src/components/recurring-transaction-card";
-import { SubscriptionSidebar } from "src/components/recurring-subscriptions-sidebar";
+import { SubscriptionSidebar } from "src/components/sidebar/recurring-subscriptions-sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "src/components/ui/avatar";
 import { Calendar } from "src/components/ui/calendar";
 import {
@@ -19,7 +19,7 @@ import {
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { Overview } from "../../components/overview";
 import {
-  SidebarOption,
+  SubscriptionsSidebarOption,
   UpcomingRecurringTransactions,
 } from "src/types/custom/recurring-transaction-types";
 import {
@@ -38,7 +38,7 @@ interface IRecurringTransactionState {
   recurring_transactions: ReOccuringTransaction[];
   total_costs: number;
   total_transactions: number;
-  selected_sidebar_tab: SidebarOption;
+  selected_sidebar_tab: SubscriptionsSidebarOption;
 }
 
 /**
@@ -291,7 +291,7 @@ class SubscriptionsView extends React.Component<
     return nextTransactionDate;
   };
 
-  private _selectSidebarOption = (option: SidebarOption) => {
+  private _selectSidebarOption = (option: SubscriptionsSidebarOption) => {
     this.setState({ selected_sidebar_tab: option });
   };
 

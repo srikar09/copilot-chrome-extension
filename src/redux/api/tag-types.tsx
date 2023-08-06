@@ -55,6 +55,7 @@ const tagTypes = [
   "INCOME_EXPENSE_RATIO",
   "MONTHLY_SAVINGS",
   "MONTHLY_TRANSACTION_COUNT",
+  "BANK_ACCOUNT_TRANSACTIONS",
 ];
 
 export { tagTypes };

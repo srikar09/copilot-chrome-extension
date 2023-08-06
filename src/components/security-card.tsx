@@ -2,6 +2,7 @@ import { useState } from "react";
 import { InvestmentSecurity } from "src/types/financials/message_financial_service";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { cn, formatDate } from "src/lib/utils";
+import { AdvancedRealTimeChart, MiniChart } from "react-ts-tradingview-widgets";
 
 const SecurityCard: React.FC<{
   security: InvestmentSecurity;
@@ -14,7 +15,7 @@ const SecurityCard: React.FC<{
     <>
       <Card
         className={cn(
-          "flex flex-col justify-between border-t rounded-2xl min-h-[300px]",
+          "flex flex-col justify-between border-t rounded-2xl",
           isSelected ? "border border-black" : ""
         )}
         onClick={() => {
@@ -36,8 +37,8 @@ const SecurityCard: React.FC<{
             </span>
           </p>
         </CardHeader>
-        <CardContent>
-          <p className="text-md md:text-2xl lg:text-3xl font-bold">
+        <CardContent className="grid grid-cols-1">
+          <div className="text-md md:text-2xl lg:text-3xl font-bold">
             ${security.closePrice}
             <span
               className="text-xs p-1 rounded-2xl bg-black text-white font-bold ml-1"
@@ -48,7 +49,15 @@ const SecurityCard: React.FC<{
               {" "}
               {security.type}
             </span>
-          </p>
+          </div>
+          <div className="shadow-md border rounded-2xl my-4 p-2">
+            <MiniChart
+              colorTheme="light"
+              width={"100%"}
+              symbol={`${security.tickerSymbol}`}
+              isTransparent={true}
+            ></MiniChart>
+          </div>
         </CardContent>
         <CardFooter className="flex flex-row justify-between">
           <div className="flex flex-col">

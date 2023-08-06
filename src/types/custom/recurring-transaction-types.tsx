@@ -1,3 +1,4 @@
+import { SubscriptionsSidebarOption } from "..";
 import { ReOccuringTransaction } from "../financials/clickhouse_financial_service";
 type UpcomingRecurringTransactions = {
   nextTransactionDate: string;
@@ -19,15 +20,8 @@ type RecurringTransactionAggregate = {
   mostExpensiveMerchant: string;
 };
 
-type SidebarOption =
-  | "INFLOW"
-  | "OUTFLOW"
-  | "UPCOMING"
-  | "DRILLDOWN"
-  | "OVERVIEW";
-
 export type {
   RecurringTransactionAggregate,
   UpcomingRecurringTransactions,
-  SidebarOption,
+  SubscriptionsSidebarOption,
 };
