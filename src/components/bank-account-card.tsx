@@ -72,11 +72,13 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
               </CardTitle>
               <div>
                 <div className="flex flex-1 gap-2 justify-start">
-                  <Badge className="bg-white border border-black text-black">
+                  <Badge
+                    className="bg-white border border-black text-black font-bold"
+                    style={{
+                      fontSize: "10px",
+                    }}
+                  >
                     {account.subtype}
-                  </Badge>
-                  <Badge className="bg-white border border-black text-black">
-                    {account.currency.toLowerCase()}
                   </Badge>
                 </div>
               </div>
