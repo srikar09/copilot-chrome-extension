@@ -150,7 +150,6 @@ export const logEvent = (
     | PlaidLinkOnExitMetadata,
   error?: PlaidLinkError | null
 ) => {
-  console.log(`Link Event: ${eventName}`, metadata, error);
 };
 
 /**
