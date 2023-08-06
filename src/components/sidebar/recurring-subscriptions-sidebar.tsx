@@ -1,5 +1,5 @@
 import { cn } from "src/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   ArrowDownToDot,
   ArrowUpFromDot,
@@ -9,7 +9,7 @@ import {
   CandlestickChart,
   Rocket,
 } from "lucide-react";
-import { SidebarOption } from "src/types/custom/recurring-transaction-types";
+import { SubscriptionsSidebarOption } from "src/types/custom/recurring-transaction-types";
 
 /*
  * ISubscriptionSidebarProps is a React Component properties that passed to React
@@ -19,7 +19,7 @@ import { SidebarOption } from "src/types/custom/recurring-transaction-types";
  * */
 interface ISubscriptionSidebarProps {
   className?: React.ReactNode;
-  setSelectedOption: (option: SidebarOption) => void;
+  setSelectedOption: (option: SubscriptionsSidebarOption) => void;
 }
 
 /**

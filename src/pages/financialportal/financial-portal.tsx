@@ -20,6 +20,7 @@ import {
 import { InvestmentsSummaryCard } from "src/components/investments-summary-card";
 import { TransactionOverview } from "src/components/transaction-overview";
 import { RecurringTransactionOverview } from "src/components/recurring-transaction-component";
+import { InvestmentAccountsView } from "../investments/investments-view";
 
 /**
  * Enum representing different types of selected account types in the portal.
@@ -30,6 +31,7 @@ enum SelectedAccountType {
   INVESTMENT_ACCOUNT = "INVESTMENT_ACCOUNT",
   TRANSACTIONS = "TRANSACTIONS",
   SUBSCRIPTIONS = "SUBSCRIPTIONS",
+  INVESTMENTS_ACCOUNT_V2 = "INVESTMENTS_ACCOUNT_V2",
 }
 
 /**
@@ -138,7 +140,9 @@ const FinancialPortal: React.FC = () => {
             value={SelectedAccountType.INVESTMENT_ACCOUNT}
             className="pt-20 md:pt-15 lg:pt-10"
           >
-            <InvestmentsSummaryCard accounts={allInvestmentAccounts} />
+            <InvestmentAccountsView
+              investment_accounts={allInvestmentAccounts}
+            />
           </TabsContent>
           <TabsContent
             value={SelectedAccountType.TRANSACTIONS}

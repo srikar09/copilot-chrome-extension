@@ -19,7 +19,7 @@ const GetDebtToIncomeRatio = api.injectEndpoints({
       },
       providesTags: (result, error, arg) => [
         {
-          type: "FINANCIAL_PROFILE",
+          type: "DEBT_TO_INCOME_RATIO",
           id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize} month:${arg.month}`,
         },
       ],

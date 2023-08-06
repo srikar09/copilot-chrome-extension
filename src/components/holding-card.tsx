@@ -76,7 +76,7 @@ const HoldingCard: React.FC<{
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3">
+          <div className="flex flex-1 flex-wrap gap-3">
             <div className="flex flex-col text-xs text-muted-foreground">
               <p className="font-bold"> average cost basis </p>
               <p>${formatToTwoDecimalPoints(averageCostBasis)}</p>
@@ -93,7 +93,7 @@ const HoldingCard: React.FC<{
         </CardContent>
       </Card>
 
-      <div className="py-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="py-3 grid grid-cols-1 gap-3">
         {securities.map((security, index) => (
           <SecurityCard
             security={security}
@@ -102,7 +102,7 @@ const HoldingCard: React.FC<{
           />
         ))}
       </div>
-      {selectedSecurity && (
+      {/* {selectedSecurity && (
         <Card className="py-2">
           <CardContent className="p-5">
             <AdvancedRealTimeChart
@@ -119,7 +119,7 @@ const HoldingCard: React.FC<{
             ></AdvancedRealTimeChart>
           </CardContent>
         </Card>
-      )}
+      )} */}
     </>
   );
 };
