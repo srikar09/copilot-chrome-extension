@@ -121,9 +121,6 @@ const FinancialPortal: React.FC = () => {
             <TabsTrigger value={SelectedAccountType.SUBSCRIPTIONS}>
               Subscriptions
             </TabsTrigger>
-            <TabsTrigger value={SelectedAccountType.INVESTMENTS_ACCOUNT_V2}>
-              Investment Account v2
-            </TabsTrigger>
           </TabsList>
           <TabsContent
             value={SelectedAccountType.BANK_ACCOUNT}
@@ -143,7 +140,9 @@ const FinancialPortal: React.FC = () => {
             value={SelectedAccountType.INVESTMENT_ACCOUNT}
             className="pt-20 md:pt-15 lg:pt-10"
           >
-            <InvestmentsSummaryCard accounts={allInvestmentAccounts} />
+            <InvestmentAccountsView
+              investment_accounts={allInvestmentAccounts}
+            />
           </TabsContent>
           <TabsContent
             value={SelectedAccountType.TRANSACTIONS}
@@ -156,14 +155,6 @@ const FinancialPortal: React.FC = () => {
             className="pt-20 md:pt-15 lg:pt-10"
           >
             <RecurringTransactionOverview />
-          </TabsContent>
-          <TabsContent
-            value={SelectedAccountType.INVESTMENTS_ACCOUNT_V2}
-            className="pt-20 md:pt-15 lg:pt-10"
-          >
-            <InvestmentAccountsView
-              investment_accounts={allInvestmentAccounts}
-            />
           </TabsContent>
         </Tabs>
       </div>

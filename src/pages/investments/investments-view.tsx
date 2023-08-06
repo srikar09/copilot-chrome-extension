@@ -25,8 +25,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "src/components/ui/tabs";
+import { GlobalCryptoScreenerWidget } from "src/components/widgets/crypto-screener";
 import { GlobalEconomicCalendarChart } from "src/components/widgets/economic-calendar";
 import { GlobalStockHeatmapChart } from "src/components/widgets/global-stock-heatmap";
+import { GlobalStockScreenerWidget } from "src/components/widgets/stock-screener";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { cn } from "src/lib/utils";
 import { InvestmentSidebarOption } from "src/types";
@@ -162,38 +164,16 @@ class InvestmentAccountsView extends React.Component<
                       accounts={this.state.investment_accounts}
                     />
                   )}
-                  {this.state.selected_sidebar_tab === "HOLDINGS" && (
-                    <AskMelodiyAILayout
-                      context={this._computeContext()}
-                      className="m-2"
-                    >
+                  {this.state.selected_sidebar_tab === "CRYPTO" && (
+                    <div className="m-2">
                       {/** Show holdings */}
-                    </AskMelodiyAILayout>
+                      <GlobalCryptoScreenerWidget />
+                    </div>
                   )}
-                  {this.state.selected_sidebar_tab === "TRANSACTIONS" && (
-                    <AskMelodiyAILayout
-                      context={this._computeContext()}
-                      className="m-2"
-                    >
-                      {/** Show holdings */}
-                    </AskMelodiyAILayout>
-                  )}
-                  {this.state.selected_sidebar_tab === "PERFORMANCE" && (
-                    <AskMelodiyAILayout
-                      context={this._computeContext()}
-                      className="m-2"
-                    >
-                      {/** Show holdings */}
-                    </AskMelodiyAILayout>
-                  )}
-                  {/** If sidebar tab upcoming show the upcoming recurring transactions */}
-                  {this.state.selected_sidebar_tab === "SECURITIES" && (
-                    <AskMelodiyAILayout
-                      context={this._computeContext()}
-                      className="m-2"
-                    >
-                      {/** Show holdings */}
-                    </AskMelodiyAILayout>
+                  {this.state.selected_sidebar_tab === "STOCKS" && (
+                    <div className="m-4 border rounded-2xl">
+                      <GlobalStockScreenerWidget />
+                    </div>
                   )}
                 </div>
               </div>

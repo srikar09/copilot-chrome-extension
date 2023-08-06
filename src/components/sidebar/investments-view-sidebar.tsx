@@ -4,6 +4,8 @@ import {
   ArrowUpFromDot,
   ArrowUpNarrowWide,
   Rocket,
+  Bitcoin,
+  CircleDollarSign,
 } from "lucide-react";
 import { cn } from "src/lib/utils";
 import { Button } from "../ui/button";
@@ -39,41 +41,21 @@ const InvestmentViewSidebar: React.FC<IProps> = (props) => {
               variant="ghost"
               className="w-full justify-start"
               onClick={() => {
-                setSelectedOption("HOLDINGS");
+                setSelectedOption("CRYPTO");
               }}
             >
-              <ArrowDownToDot className="mr-2 h-4 w-4" />
-              Holdings
+              <Bitcoin className="mr-2 h-4 w-4" />
+              CryptoCurrencies
             </Button>
             <Button
               variant="ghost"
               className="w-full justify-start"
               onClick={() => {
-                setSelectedOption("TRANSACTIONS");
+                setSelectedOption("STOCKS");
               }}
             >
-              <ArrowUpFromDot className="mr-2 h-4 w-4" />
-              Transactions
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => {
-                setSelectedOption("PERFORMANCE");
-              }}
-            >
-              <ArrowUpNarrowWide className="mr-2 h-4 w-4" />
-              Performance
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => {
-                setSelectedOption("SECURITIES");
-              }}
-            >
-              <Rocket className="mr-2 h-4 w-4" />
-              Securities
+              <CircleDollarSign className="mr-2 h-4 w-4" />
+              Stocks
             </Button>
           </div>
         </div>

@@ -72,7 +72,5 @@ export type SubscriptionsSidebarOption =
 
 export type InvestmentSidebarOption = 
   | "OVERVIEW"
-  | "HOLDINGS"
-  | "TRANSACTIONS"
-  | "PERFORMANCE"
-  | "SECURITIES";
+  | "CRYPTO"
+  | "STOCKS"
