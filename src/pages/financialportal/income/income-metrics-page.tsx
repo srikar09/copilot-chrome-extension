@@ -1,6 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { useEffect, useState } from "react";
 import { CardinalAreaChart } from "src/components/category-monthly-income-card";
+import { IncomeMetricsPane } from "src/components/income-pane/income-metrics-pane";
 import { Spinner } from "src/components/spinner";
 import {
   Card,
@@ -105,6 +106,7 @@ const MonthlyIncomeMetricsCard = () => {
       {monthlyIncome.length > 0 && (
         <>
           <MonthlyIncomeMetricsSummaryCard monthlyIncome={monthlyIncome} />
+          <IncomeMetricsPane />
           <MonthlyIncomeMetricSeriesSummaryCard monthlyIncome={monthlyIncome} />
         </>
       )}

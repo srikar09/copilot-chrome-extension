@@ -22,6 +22,7 @@ import {
 } from "src/components/ui/tabs";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { GetUserCategoryMonthlyExpenditureRequest } from "src/types/request-response/get-user-category-monthly-expenditure";
+import { IncomeMetricsPane } from "src/components/income-pane/income-metrics-pane";
 
 /**
  * Enum representing different types of analytics available in the portal.
@@ -169,6 +170,7 @@ const MonthlyCategorizedIncomeMetricsCard = () => {
         yAxisDataKey="totalSpending"
         title="Monthly Expenditures"
       />
+
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={400} height={400}>
           <Pie
