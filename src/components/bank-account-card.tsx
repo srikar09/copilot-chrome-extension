@@ -15,6 +15,9 @@ import { Label } from "./ui/label";
 import { BankAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
+import { Sheet } from "lucide-react";
+import { SheetContent, SheetTrigger } from "./ui/sheet";
+import { BankAccountTransactions } from "./account-transactions";
 
 /**
  * Props interface for the BankAccountSummaryCard component.
@@ -51,99 +54,103 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
   ];
 
   return (
-    <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
-      <Card>
-        <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
-          <div className="space-y-1">
-            <CardTitle className="text-xs text-gray-600 font-bold">
-              ${formatToTwoDecimalPoints(account.currentFunds)}
-            </CardTitle>
-            <CardTitle
-              className="text-xs font-bold"
-              style={{
-                fontSize: "11px",
-              }}
-            >
-              {account.name}
-            </CardTitle>
-            <div>
-              <div className="flex flex-1 gap-2 justify-start">
-                <Badge className="bg-white border border-black text-black">
-                  {account.subtype}
-                </Badge>
-                <Badge className="bg-white border border-black text-black">
-                  {account.currency.toLowerCase()}
-                </Badge>
-              </div>
-            </div>
-            <div>
-              <div className="flex gap-1">
-                <span className="text-xs text-gray-600">Account Number: </span>
-                <span className="text-xs font-bold">{account.number}</span>
-              </div>
-            </div>
-            <div>
-              <Label className="text-2xl font-bold">
-                ${formatToTwoDecimalPoints(account.balance)}
-              </Label>
-            </div>
-          </div>
-          <div className="flex flex-shrink items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="px-2 shadow-none">
-                  <ChevronDoubleDownIcon className="h-4 w-4 text-secondary-foreground m-2 " />
-                  More
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                alignOffset={-5}
-                className="w-[200px]"
-                forceMount
+    <>
+      <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
+        <Card>
+          <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
+            <div className="space-y-1">
+              <CardTitle className="text-xs text-gray-600 font-bold">
+                ${formatToTwoDecimalPoints(account.currentFunds)}
+              </CardTitle>
+              <CardTitle
+                className="text-xs font-bold"
+                style={{
+                  fontSize: "11px",
+                }}
               >
-                <DropdownMenuLabel className="flex items-center justify-center">
-                  <p className="text-sm">
-                    {account.name.toLowerCase()} pockets ({" "}
-                    {account.pockets.length})
-                  </p>
-                </DropdownMenuLabel>
-                {account.pockets.map((pocket, idx) => (
-                  <DropdownMenuCheckboxItem checked key={idx}>
-                    <div className="flex flex-row gap-2 items-center text-black font-bold px-2">
-                      {/* <CircleIcon className="mr-1 h-3 w-3 fill-black text-black font-bold" /> */}
-                      <div className="text-xs font-bold">
-                        {formatPocketNameString(pocket.type.toString())}
-                      </div>
-                      {/* <div className="text-xs font-bold">{pocket.goals.length} </div> */}
-                    </div>
-                  </DropdownMenuCheckboxItem>
-                ))}
-                <DropdownMenuSeparator />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </CardHeader>
-        {numberOfPockets > 0 && (
-          <CardContent>
-            <CardTitle className="text-sm font-bold pb-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Badge className="w-full flex justify-center">
-                    Pockets ({numberOfPockets})
+                {account.name}
+              </CardTitle>
+              <div>
+                <div className="flex flex-1 gap-2 justify-start">
+                  <Badge className="bg-white border border-black text-black">
+                    {account.subtype}
                   </Badge>
-                </div>
-                <div>
-                  <Badge className="w-full flex justify-center">
-                    Goals ({numberOfGoals})
+                  <Badge className="bg-white border border-black text-black">
+                    {account.currency.toLowerCase()}
                   </Badge>
                 </div>
               </div>
-            </CardTitle>
-          </CardContent>
-        )}
-      </Card>
-    </AskMelodiyAILayout>
+              <div>
+                <div className="flex gap-1">
+                  <span className="text-xs text-gray-600">
+                    Account Number:{" "}
+                  </span>
+                  <span className="text-xs font-bold">{account.number}</span>
+                </div>
+              </div>
+              <div>
+                <Label className="text-2xl font-bold">
+                  ${formatToTwoDecimalPoints(account.balance)}
+                </Label>
+              </div>
+            </div>
+            <div className="flex flex-shrink items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="secondary" className="px-2 shadow-none">
+                    <ChevronDoubleDownIcon className="h-4 w-4 text-secondary-foreground m-2 " />
+                    More
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  alignOffset={-5}
+                  className="w-[200px]"
+                  forceMount
+                >
+                  <DropdownMenuLabel className="flex items-center justify-center">
+                    <p className="text-sm">
+                      {account.name.toLowerCase()} pockets ({" "}
+                      {account.pockets.length})
+                    </p>
+                  </DropdownMenuLabel>
+                  {account.pockets.map((pocket, idx) => (
+                    <DropdownMenuCheckboxItem checked key={idx}>
+                      <div className="flex flex-row gap-2 items-center text-black font-bold px-2">
+                        {/* <CircleIcon className="mr-1 h-3 w-3 fill-black text-black font-bold" /> */}
+                        <div className="text-xs font-bold">
+                          {formatPocketNameString(pocket.type.toString())}
+                        </div>
+                        {/* <div className="text-xs font-bold">{pocket.goals.length} </div> */}
+                      </div>
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </CardHeader>
+          {numberOfPockets > 0 && (
+            <CardContent>
+              <CardTitle className="text-sm font-bold pb-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Badge className="w-full flex justify-center">
+                      Pockets ({numberOfPockets})
+                    </Badge>
+                  </div>
+                  <div>
+                    <Badge className="w-full flex justify-center">
+                      Goals ({numberOfGoals})
+                    </Badge>
+                  </div>
+                </div>
+              </CardTitle>
+            </CardContent>
+          )}
+        </Card>
+      </AskMelodiyAILayout>
+    </>
   );
 };
 

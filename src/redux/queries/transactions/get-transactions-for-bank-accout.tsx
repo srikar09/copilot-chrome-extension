@@ -18,7 +18,7 @@ const GetTransactionsForBankAccount = api.injectEndpoints({
       providesTags: (result, error, arg) => [
         {
           type: "BANK_ACCOUNT_TRANSACTIONS",
-          id: `plaidAccountId:${arg.plaidAccountId}}`,
+          id: `${arg.plaidAccountId}}`,
         },
       ],
     }),
