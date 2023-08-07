@@ -1,5 +1,5 @@
 import { RocketIcon } from "@radix-ui/react-icons";
-import { UserAuthForm } from "src/components/login-form";
+import { UserAuthForm } from "src/components/Registeration-Login/login-form";
 import { Layout } from "src/layouts/layout";
 
 import { Logo } from 'src/components/Logo'

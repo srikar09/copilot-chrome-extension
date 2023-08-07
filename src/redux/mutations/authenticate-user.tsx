@@ -4,6 +4,7 @@ import {
   AuthenticateRequest,
   AuthenticationResponse,
 } from "src/types/request-response/authenticate-user";
+import { toast } from "src/components/ui/use-toast";
 
 /**
  * RTK Query makes it possible to trim down your initial bundle size by allowing you

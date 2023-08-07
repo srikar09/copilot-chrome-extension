@@ -4,11 +4,12 @@ import { ProtectedRoute } from "./protected-routes";
 import { Routes, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorFallbackPage } from "src/pages/boundary/error-boundary";
-import { Chat } from "src/components/chat";
 import { ChatPage } from "src/pages/chat/chat";
 import InsightsPortal from "src/pages/financialportal/insights-portal";
 import { FinancialAnalyticsPortal } from "src/pages/financialportal/financial-portal";
 import { VerificationPage } from "src/pages/verification/verfication";
+import { EmailVerificationPage } from "src/pages/registration/EmailVerificationPage";
+import RegistrationPage from "src/pages/registration/registration";
 
 /**
  * Global Routes component to define the routing configuration for the application.
@@ -20,6 +21,8 @@ function GlobalRoutes() {
       <Routes>
         {/* Route for the authentication page */}
         <Route path={routes.AUTHENTICATION} element={<LoginPage />} />
+        <Route path={routes.REGISTRATION} element={<RegistrationPage />} />
+
         {/* Route for the verification page with a dynamic user ID */}
         <Route path="/verification/:userID" element={<VerificationPage />} />
         <Route element={<ProtectedRoute />}>
@@ -34,6 +37,8 @@ function GlobalRoutes() {
           />
           {/* Route for the insights portal */}
           <Route path={routes.INSIGHTSPORTAL} element={<InsightsPortal />} />
+          <Route path={routes.EMAILVERIFICATION} element={<EmailVerificationPage />} />
+
         </Route>
 
         {/* 

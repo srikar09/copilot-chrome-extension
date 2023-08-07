@@ -22,6 +22,7 @@
  * @property {string} LANDING - The URL for the landing page.
  * @property {string} INSIGHTS - The URL for the insights page.
  * @property {string} INSIGHTSPORTAL - The URL for the insights portal page.
+ * @property {string} EMAILVERIFICATION - The URL for the email verification page.
  */
 export const routes: {
   REGISTRATION: string;
@@ -44,6 +45,7 @@ export const routes: {
   LANDING: string;
   INSIGHTS: string;
   INSIGHTSPORTAL: string;
+  EMAILVERIFICATION: string;
 } = {
   REGISTRATION: "/registration",
   AUTHENTICATION: "/sign-in",
@@ -65,4 +67,5 @@ export const routes: {
   LANDING: "/",
   INSIGHTS: "/insights",
   INSIGHTSPORTAL: "/insights-portal",
+  EMAILVERIFICATION: "/email-verification"
 };

@@ -8,6 +8,7 @@ import {
   PlaidLinkOnEventMetadata,
   PlaidLinkError,
 } from 'react-plaid-link';
+import { toast } from "src/components/ui/use-toast";
 
 /**
  * Creates a string of CSS classes.
