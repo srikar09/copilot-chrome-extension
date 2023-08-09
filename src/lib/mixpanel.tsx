@@ -1,134 +1,169 @@
-// Import Mixpanel library and necessary interfaces
-import mixpanel, { Dict, Mixpanel } from "mixpanel-browser";
-// Import environment configuration
-import { applicationEnvConfigs } from "src/env/client";
-
-/**
- * Interface that defines the methods a TelemetryClient should implement
- */
+import mixpanel, { Dict, Mixpanel } from 'mixpanel-browser';
+import { eventNames } from './MixPanelEvents';
+import { environment } from './env';
+import {constants} from  'src/constant/constants'
 interface TelemetryClient {
-  trackEvent(eventName: string, properties?: Dict): void;
-  trackEventOfType(type: MIXPANEL_EVENTS, properties?: Dict): void;
+  trackEvent(ventName: string, properties: Dict): void;
   registerSuperProperties(props: Dict): void;
   setIdentity(userID: string, metaData: TelemetryUserMetadata): void;
 }
 
-/**
- * Interface that defines the user metadata for telemetry
- */
 interface TelemetryUserMetadata {
   userName: string;
   tags: string[];
 }
 
+const MIXPANEL_CLIENT_NAME = 'SimfinyMixPanelClient';
+
 /**
  * Enumeration of possible Mixpanel events
  */
-enum MIXPANEL_EVENTS {
+export enum MIXPANEL_EVENTS {
   REGISTRATION = "Registration",
   LOGIN = "Login",
   QUESTION_ASKED = "Question Asked",
   ACCOUNT_LINK = "Account Link",
 }
 
-// Constant representing the name of the Mixpanel client
-const MIXPANEL_CLIENT_NAME: string = "melodiy-web-app";
 
-/**
- * Implementation of TelemetryClient using MixPanel
- */
 class MixPanelClient implements TelemetryClient {
-  private static instance: MixPanelClient;
-  private mixpanelInstance: Mixpanel; // Instance of Mixpanel client
-  private isProd: boolean; // Flag indicating whether the environment is production
+  private instance: Mixpanel;
+  private environment: string;
+  private eventNames = eventNames;
 
-  /**
-   * Constructs a new MixPanelClient
-   * @param token - Mixpanel token
-   * @param debugMode - Whether debug mode is enabled
-   * @param name - Name of the Mixpanel client
-   * @param env - Current environment
-   */
-  private constructor(
-    token: string,
-    debugMode: boolean,
-    name: string,
-    env: string
-  ) {
-    this.mixpanelInstance = mixpanel.init(token, { debug: debugMode }, name);
-    this.isProd = env === "production";
+  constructor(token: string, debugModeEnabled: boolean, name: string, env: string) {
+    this.instance = mixpanel.init(token, { debug: debugModeEnabled }, name);
+    this.environment = env;
   }
-
   /**
-   * Creates a single instance of MixPanelClient
-   */
-  public static getInstance(): MixPanelClient {
-    if (!MixPanelClient.instance) {
-      const token: string = applicationEnvConfigs.REACT_APP_MIXPANEL_TOKEN;
-      const env: string = process.env.NODE_ENV;
-      const debugMode: boolean = ["development", "test"].includes(env);
-
-      MixPanelClient.instance = new MixPanelClient(
-        token,
-        debugMode,
-        MIXPANEL_CLIENT_NAME,
-        env
-      );
-    }
-
-    return MixPanelClient.instance;
-  }
-
-  /**
-   * Registers super properties if in production environment
-   * @param props - The properties to register
+   * Registers super properties
+   * It's very common to have certain properties that we want to include with each event we send. Generally, these are things we know about
+   * the user rather than about a specific event - for example, the user's age, gender, source, or initial referrer. To
+   * make things easier, we can register these properties as super properties. If we tell this instance just once that these properties are important,
+   * we will automatically include them with all events sent. Super properties are stored in a browser cookie, and will persist between visits to the site.
+   *
+   * Super properties uses a cookie (created in the domain of the page loading the lib) to store super properties. These are stored as JSON in the cookie.
+   *  They will persist for the life of that cookie, which by default is 365 days. If we wish to change the life of the cookie,
+   * we may do so using set_config to adjust the value for the cookie_expiration(an integer in days).
+   * @param props
    */
   registerSuperProperties(props: Dict): void {
-    if (this.isProd) {
-      this.mixpanelInstance.register_once(props);
+    if (this.isProd()) {
+      this.instance.register_once(props);
     }
   }
 
-  /**
-   * Tracks an event if in production environment
-   * @param eventName - The name of the event
-   * @param properties - The properties of the event
-   */
   trackEvent(eventName: string, properties?: Dict): void {
-    if (this.isProd) {
-      properties
-        ? this.mixpanelInstance.track(eventName, properties)
-        : this.mixpanelInstance.track(eventName);
-    }
-  }
-
-  /**
-   * Tracks a specific type of event using the Mixpanel events enum
-   * @param type - The type of the event
-   * @param properties - The properties of the event
-   */
-  trackEventOfType(type: MIXPANEL_EVENTS, properties?: Dict): void {
-    this.trackEvent(type, properties);
-  }
-
-  /**
-   * Sets the user identity and metadata if in production environment
-   * @param userID - The user's ID
-   * @param metaData - The user's metadata
-   */
-  setIdentity(userID: string, metaData?: TelemetryUserMetadata): void {
-    if (this.isProd) {
-      this.mixpanelInstance.identify(userID);
-      if (metaData) {
-        this.mixpanelInstance.people.union(metaData);
+    if (this.isProd()) {
+      if (properties === undefined) {
+        this.instance.track(eventName);
+      } else {
+        this.instance.track(eventName, properties);
       }
     }
   }
+
+  trackRegistrationEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.REGISTRATION_EVENT;
+    if (this.isProd()) {
+      this.trackEvent(eventName, properties);
+    }
+  }
+
+  trackLoginEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.LOGIN_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackNewPostEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.LOGIN_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackPostCreationEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.POST_CREATION_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackCommentCreationEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.ARTICLE_CREATION_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackArticleCreationEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.ARTICLE_ENGAGEMENT_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackPostEngagementEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.POST_ENGAGEMENT_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackCommentEngagementEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.COMMENT_ENGAGEMENT_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackCommunityEngagementEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.COMMUNITY_ENGAGEMENT_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackArticleEngagementEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.ARTICLE_ENGAGEMENT_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackTopicCreationEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.TOPIC_CREATION_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  trackCommunityCreationEvent(properties?: Dict): void {
+    const eventName: string = this.eventNames.COMMUNITY_CREATION_EVENT;
+    this.trackEvent(eventName, properties);
+  }
+
+  /**
+   * Sets identity
+   * Identify a user with a unique ID to track user activity across devices, tie a user to their events, and create a user profile.
+   *
+   * NOTE: This should only be called when you know the identity of the current user, typically after log-in or sign-up
+   * @param userID
+   */
+  setIdentity(userID: string, metaData?: TelemetryUserMetadata): void {
+    if (this.isProd()) {
+      this.instance.identify(userID);
+      if (metaData !== undefined) {
+        this.instance.people.union(metaData);
+      }
+    }
+  }
+
+  /**
+   * Determines whether prod is the current set environment
+   * @returns true if prod
+   */
+  private isProd(): boolean {
+    return this.environment === environment.PRODUCTION;
+  }
 }
 
-/**
- * An instance of MixPanelClient
- * @public
- */
-export const mixPanelClient = MixPanelClient.getInstance();
-export { MIXPANEL_EVENTS };
+const token: string =
+  process.env.REACT_APP_MIXPANEL_TOKEN === undefined
+    ? constants.DEFAULT_REACT_APP_MIXPANEL_TOKEN
+    : process.env.REACT_APP_MIXPANEL_TOKEN;
+const env: string =
+  process.env.NODE_ENV === undefined ? environment.PRODUCTION : process.env.NODE_ENV;
+const debugModeEnabled: boolean =
+  process.env.NODE_ENV === environment.DEVELOPMENT || process.env.NODE_ENV === environment.TEST
+    ? true
+    : false;
+
+export const mixPanelClient = new MixPanelClient(
+  token,
+  debugModeEnabled,
+  MIXPANEL_CLIENT_NAME,
+  env
+);

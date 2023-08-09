@@ -9,7 +9,6 @@ import { useAppSelector } from "src/redux/store/hooks";
 import { Button } from "./ui/button";
 import { handler } from "src/chat-stream/stream";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
-import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { PromptContext } from "src/lib/context-prompt";
 
 // default first message to display in UI (not necessary to define the prompt)
@@ -120,7 +119,7 @@ const Chat: React.FC<{
   // send message to API /api/chat endpoint
   const sendMessage = async (message: string) => {
     // increase the mixpanel metric for question asked
-    mixPanelClient.trackEventOfType(MIXPANEL_EVENTS.QUESTION_ASKED);
+    // mixPanelClient.trackEventOfType(MIXPANEL_EVENTS.QUESTION_ASKED);
 
     setLoading(true);
     const financialContext = useAppSelector(selectUserFinancialContext);
