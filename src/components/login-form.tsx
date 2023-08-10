@@ -8,7 +8,7 @@ import { persistentStorage } from "src/lib/persistent-storage";
 import { constants } from "src/constant/constants";
 import { routes } from "src/constant/routes";
 import { Label } from "@radix-ui/react-context-menu";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Input } from "./ui/input";
 import { Spinner } from "./spinner";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
@@ -43,6 +43,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const navigateToRegisteration = () => {
     history(`${routes.REGISTRATION}`);
+  };
+
+  const navigateToRequestPasswordChange = () => {
+    history(`${routes.REQUEST_PASSWORD_CHANGE}`);
   };
 
   async function onSubmit(data: { email: string; password: string }) {
@@ -148,15 +152,28 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </button>
         </div>
       </form>
-      <button
-        onClick={() => {
-          navigateToRegisteration();
-        }}
-        disabled={isLoading}
-      >
-        {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
-        Create a new account
-      </button>
+      <div className="grid grid-cols-2 gap-2">
+        <Button
+          onClick={() => {
+            navigateToRegisteration();
+          }}
+          disabled={isLoading}
+          className="rounded-2xl bg-white text-black"
+        >
+          {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
+          Create a new account
+        </Button>
+        <Button
+          onClick={() => {
+            navigateToRequestPasswordChange();
+          }}
+          disabled={isLoading}
+          className="rounded-2xl bg-white text-black"
+        >
+          {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
+          Forgot password
+        </Button>
+      </div>
     </div>
   );
 }
