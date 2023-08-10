@@ -48,6 +48,7 @@ export const routes: {
   EMAILVERIFICATION: string;
   REQUEST_PASSWORD_CHANGE: string;
   RESET_PASSWORD: string;
+  PAYMENT: string;
 } = {
   REGISTRATION: "/registration",
   AUTHENTICATION: "/sign-in",
@@ -72,4 +73,5 @@ export const routes: {
   EMAILVERIFICATION: "/email-verification",
   REQUEST_PASSWORD_CHANGE: "/request-password-change",
   RESET_PASSWORD: "/reset-password",
+  PAYMENT: "/payment",
 };

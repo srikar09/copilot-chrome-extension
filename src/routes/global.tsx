@@ -10,6 +10,7 @@ import { FinancialAnalyticsPortal } from "src/pages/financialportal/financial-po
 import { VerificationPage } from "src/pages/verification/verfication";
 import { ResetPasswordPage } from "src/pages/password-reset/reset-password";
 import { RequestPasswordResetPage } from "src/pages/password-reset/request-password-reset";
+import PaymentPage from "src/pages/payment/registration-page";
 
 /**
  * Global Routes component to define the routing configuration for the application.
@@ -29,6 +30,8 @@ function GlobalRoutes() {
           element={<RequestPasswordResetPage />}
         />
         <Route path={routes.RESET_PASSWORD} element={<ResetPasswordPage />} />
+        <Route path={routes.PAYMENT} element={<PaymentPage />} />
+
         <Route element={<ProtectedRoute />}>
           {/* Default route when no specific route matches */}
           <Route path={"/"} element={<FinancialAnalyticsPortal />} />
