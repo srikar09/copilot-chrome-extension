@@ -14,6 +14,7 @@ import { applicationEnvConfigs } from "src/env/client";
 const navigation = [
   { name: "Financial Portal", href: routes.FINANCIALPORTAL },
   { name: "Ask Melodiy", href: routes.HOME },
+  { name: "Leave Us Some Feedback", href: routes.FEEDBACK_EXTERNAL_URL },
 ];
 
 const Nav: React.FC<{}> = () => {
@@ -49,7 +50,7 @@ const Nav: React.FC<{}> = () => {
                         key={item.name}
                         to={item.href}
                         className={cn(
-                          "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                          "bg-white border text-black rounded-lg px-3 py-2 text-sm font-bold"
                         )}
                       >
                         {item.name}
@@ -129,6 +130,19 @@ const Nav: React.FC<{}> = () => {
                             )}
                           >
                             My Payment Portal
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href={routes.FEEDBACK_EXTERNAL_URL}
+                            className={cn(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 pb-5 font-bold"
+                            )}
+                          >
+                            Leave Feedback
                           </a>
                         )}
                       </Menu.Item>
