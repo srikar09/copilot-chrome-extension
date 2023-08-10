@@ -7,8 +7,8 @@ export const PaymentPage = () => {
   const currentUserAccount = useAppSelector(selectCurrentUserAccount);
   const { email } = currentUserAccount;
   return (
-    <Layout className="container  h-screen flex-col items-center justify-center">
-      <section className="bg-white dark:bg-gray-900">
+    <div className="p-10 lg:p-20">
+      <section className="bg-white dark:bg-gray-900 container h-screen flex-col items-center justify-center">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 xl:gap-16 lg:py-16 lg:px-6">
           <div className="text-gray-500 sm:text-lg">
             <h2 className="mb-4 text-6xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -259,6 +259,6 @@ export const PaymentPage = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </div>
   );
 };

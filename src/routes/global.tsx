@@ -32,9 +32,9 @@ function GlobalRoutes() {
         />
         <Route path={routes.RESET_PASSWORD} element={<ResetPasswordPage />} />
         <Route path={routes.REGISTRATION} element={<RegistrationPage />} />
-        <Route path={routes.PAYMENT} element={<PaymentPage />} />
 
         <Route element={<ProtectedRoute />}>
+          <Route path={routes.PAYMENT} element={<PaymentPage />} />
           {/* Default route when no specific route matches */}
           <Route path={"/"} element={<FinancialAnalyticsPortal />} />
           {/* Route for the chat page */}

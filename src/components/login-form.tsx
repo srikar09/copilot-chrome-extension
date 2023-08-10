@@ -90,10 +90,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       // if the financial profile has both a subscription and connected accounts, we need to push the user to the home page
       if (
         profile.stripeSubscriptions !== undefined &&
+        profile.stripeSubscriptions !== null &&
         profile.link.length > 0
       ) {
         navigate(routes.HOME);
-      } else if (profile.stripeSubscriptions === undefined) {
+      } else if (
+        profile.stripeSubscriptions === undefined ||
+        profile.stripeSubscriptions === null
+      ) {
         // if the financial profile does not have a subscription object, we need to put the user through the stripe payment link
         navigate(routes.PAYMENT);
       } else if (profile.link.length === 0) {
