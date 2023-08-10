@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Logo, Logomark } from "src/components/Logo";
 import { UserAuthForm } from "src/components/login-form";
+import { RegistrationForm } from "src/components/registration-form";
+import { TermsAndConditions } from "src/components/terms-and-conditions/terms-and-conditions";
 import { buttonVariants } from "src/components/ui/button";
 import { routes } from "src/constant/routes";
 import { cn } from "src/lib/utils";
@@ -32,7 +34,7 @@ export default function RegistrationPage() {
             </blockquote>
           </div>
         </div>
-        <div className="lg:p-8">
+        <div className="lg:p-2">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
@@ -43,22 +45,20 @@ export default function RegistrationPage() {
               </p>
             </div>
             {/** TODO: Remove This */}
+            <RegistrationForm />
             <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{" "}
-              <Link
-                to="/terms"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link
-                to="/privacy"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Privacy Policy
-              </Link>
-              .
+              <div className="flex flex-1 gap-2 justify-center items-center">
+                <TermsAndConditions
+                  title="Terms of Service"
+                  disableCheckbox={true}
+                  className="underline underline-offset-4 hover:text-primary"
+                />
+                <TermsAndConditions
+                  title="Privacy Policy"
+                  disableCheckbox={true}
+                  className="underline underline-offset-4 hover:text-primary"
+                />
+              </div>
             </p>
           </div>
         </div>
