@@ -261,6 +261,21 @@ const RegistrationForm: React.FC = () => {
   );
 };
 
+/*
+ * TagsSelector Component
+ *
+ * This component allows users to select from a set of tags.
+ *
+ * @component
+ *
+ * @param {Object} props
+ * @param {(tagName: string) => void} props.onSelectTags - Callback function that is triggered when a tag is selected.
+ * @param {Tags[]} props.selectedTags - Array of currently selected tags.
+ *
+ * @example
+ *
+ * <TagsSelector onSelectTags={handleTagSelect} selectedTags={[{tagName: "Nature"}, {tagName: "Sports"}]} />
+ */
 const TagsSelector: React.FC<{
   onSelectTags: (tagName: string) => void;
   selectedTags: Tags[];
@@ -298,6 +313,21 @@ const TagsSelector: React.FC<{
   );
 };
 
+/**
+ * AvatarSelector Component
+ *
+ * This component allows users to select an avatar from a set of options.
+ *
+ * @component
+ *
+ * @param {Object} props
+ * @param {(avatar: string) => void} props.onSelectAvatar - Callback function that is triggered when an avatar is selected.
+ * @param {string} props.selectedAvatar - The URL of the currently selected avatar.
+ *
+ * @example
+ *
+ * <AvatarSelector onSelectAvatar={handleSelect} selectedAvatar="https://example.com/avatar1.png" />
+ */
 const AvatarSelector: React.FC<{
   onSelectAvatar: (avatar: string) => void;
   selectedAvatar: string;
