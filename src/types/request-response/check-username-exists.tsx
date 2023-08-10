@@ -7,7 +7,7 @@ import { IRequest } from "./IRequest";
  * @class CheckUsernameExistsRequest
  * @implements {IRequest}
  * */
-class CheckUsernameExistsRequest implements IRequest {
+export class CheckUsernameExistsRequest implements IRequest {
   /** The username of the user of interest */
   username: string = "";
 
@@ -32,6 +32,13 @@ class CheckUsernameExistsRequest implements IRequest {
   }
 }
 
+/*
+ * CheckUsernameExistsResponse is used to assert if a username exists in the database
+ *
+ * @export
+ * @class CheckUsernameExistsResponse
+ * @extends {ErrorResponse}
+ * */
 export class CheckUsernameExistsResponse extends ErrorResponse {
   exists = false;
 
