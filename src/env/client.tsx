@@ -22,6 +22,7 @@ export const applicationEnvConfigs = createEnv({
     REACT_APP_FEATURE_FLAG_ENABLE_FINANCIAL_PORTAL: z.boolean(),
     REACT_APP_FEATURE_FLAG_ENABLE_GOALS: z.boolean(),
     REACT_APP_FEATURE_FLAG_ENABLE_PLAID_ACCOUNT_CONNECTION: z.boolean(),
+    REACT_APP_CUSTOMER_PORTAL_URL: z.string().nonempty(),
   },
   /**
    * What object holds the environment variables at runtime.
@@ -54,5 +55,6 @@ export const applicationEnvConfigs = createEnv({
     /** Feature flag to disable or enable account connection via plaid */
     REACT_APP_FEATURE_FLAG_ENABLE_PLAID_ACCOUNT_CONNECTION:
       process.env.REACT_APP_FEATURE_FLAG_ENABLE_PLAID_ACCOUNT_CONNECTION,
+    REACT_APP_CUSTOMER_PORTAL_URL: process.env.REACT_APP_CUSTOMER_PORTAL_URL,
   },
 });

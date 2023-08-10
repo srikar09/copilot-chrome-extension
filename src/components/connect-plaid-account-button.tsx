@@ -57,7 +57,7 @@ const ConnectPlaidAccountButton: React.FC<{
   const createLinkToken = async () => {
     if (linkId === null || linkId === undefined) {
       const req = {
-        userId: Number(currentAccount.id),
+        userId: Number(currentAccount.userAccountID),
         fullName: currentAccount.username,
         email: currentAccount.email,
         phoneNumber: "",

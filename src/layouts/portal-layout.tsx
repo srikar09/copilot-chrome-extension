@@ -53,7 +53,11 @@ const PortalLayout: FC<{
               Financial Portal{" "}
               <span className="ml-4 text-sm">
                 {" "}
-                ({linkedBankAccounts.length}) Linked Accounts
+                (
+                {linkedBankAccounts !== undefined
+                  ? linkedBankAccounts.length
+                  : 0}
+                ) Linked Accounts
               </span>
             </h2>
           </div>
