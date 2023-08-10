@@ -95,7 +95,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         navigate(routes.HOME);
       } else if (profile.stripeSubscriptions === undefined) {
         // if the financial profile does not have a subscription object, we need to put the user through the stripe payment link
-        navigate(routes.ONBOARDING);
+        navigate(routes.PAYMENT);
       } else if (profile.link.length === 0) {
         // if the financial profile has no connected accounts, we need to put the user through the plaid onboarding flow
         navigate(routes.ONBOARDING);
