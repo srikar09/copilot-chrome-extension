@@ -136,9 +136,6 @@ const ConnectPlaidAccountButton: React.FC<{
 
         // wipe link token from cache on success
         localStorage.removeItem("link_token");
-
-        // push to the payment slide
-        history(`${routes.PAY_FOR_SUBSCRIPTION}`);
       } catch (error) {
         toast({
           title: `Failed to connect bank account. Please try again later. err: ${error}`,
@@ -149,6 +146,8 @@ const ConnectPlaidAccountButton: React.FC<{
         });
       }
     }
+
+    history(`${routes.HOME}`);
   };
 
   const onExit = async (
