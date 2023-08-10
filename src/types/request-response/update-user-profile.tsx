@@ -1,5 +1,5 @@
 import { ErrorResponse } from "../error/error";
-import { UserAccount } from "../records/user-account";
+import { UserAccount } from "../user/account";
 import { IRequest } from "./IRequest";
 
 /**

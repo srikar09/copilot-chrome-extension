@@ -1,7 +1,7 @@
 import { ErrorResponse } from "../error/error";
 import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
-import { Address } from "../records/address";
 import { Tags } from "../records/tags";
+import { Address } from "../social/subtypes/address";
 import { IRequest } from "./IRequest";
 
 /*

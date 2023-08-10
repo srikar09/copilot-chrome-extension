@@ -95,13 +95,13 @@ const GradientText = styled.span`
 export const EmailVerificationPage:React.FC = () => {
     const [toast, setToast] = useState<React.ReactElement | null>(); 
     const [emailVerified, setEmailVerified] = useState(false);
-    const {email, userAccountID}  = useAppSelector(selectCurrentUserAccount);
+    const {email, id}  = useAppSelector(selectCurrentUserAccount);
     const { classes } = useStyles();
     const history = useNavigate();
 
     const{ data: response,
         isLoading,
-        error,refetch} = useGetUpdatedUserProfileQuery({userId: Number(userAccountID)});
+        error,refetch} = useGetUpdatedUserProfileQuery({userId: Number(id)});
     
     useEffect(() => {       
             if(response){

@@ -2,8 +2,9 @@ import { AuthenticationState } from "src/redux/slice/authentication/Authenticati
 import { RootState } from "src/redux/store/store";
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 import { SocialProfile } from "src/types/records/social-profile";
-import { UserAccount } from "src/types/records/user-account";
+import { UserAccount } from "src/types/user/account";
 import { FinancialProfile } from "src/types/user/financialProfile";
+import { Profile } from "src/types/user/profile";
 
 /**
  * selectAuthenticationState obtains authentication state object
@@ -27,7 +28,7 @@ export const selectCurrentUserAccount = (state: RootState): UserAccount =>
  * @param state - root state object
  * @returns
  */
-export const selectCurrentSocialProfile = (state: RootState): SocialProfile =>
+export const selectCurrentSocialProfile = (state: RootState): Profile =>
   state.authentication.userProfile;
 
 /**

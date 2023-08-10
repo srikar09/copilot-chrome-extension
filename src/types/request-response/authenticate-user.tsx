@@ -1,10 +1,10 @@
 import { ErrorResponse } from "../error/error";
 import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
 import { SocialProfile } from "../records/social-profile";
-import { UserAccount } from "../records/user-account";
 import { IRequest } from "./IRequest";
 import { FinancialProfile } from "../user/financialProfile";
 import { Profile } from "../user/profile";
+import { UserAccount } from "../user/account";
 
 /**
  * @description The request to authenticate a user

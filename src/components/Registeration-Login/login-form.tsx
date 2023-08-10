@@ -62,7 +62,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       persistentStorage.setItem(constants.JWT_TOKEN_KEY, record.token);
       persistentStorage.setItem(
         constants.USER_ID_KEY,
-        record.user_account.userAccountID
+        record.user_account.id 
       );
       persistentStorage.setItem(
         constants.USER_PROFILE_ID_KEY,
