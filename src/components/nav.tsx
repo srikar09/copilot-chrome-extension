@@ -8,7 +8,8 @@ import { useAppSelector } from "src/redux/store/hooks";
 import { selectCurrentSocialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { LogoutButton } from "./logout-button";
 
-import { Logo } from 'src/components/Logo'
+import { Logo } from "src/components/Logo";
+import { applicationEnvConfigs } from "src/env/client";
 
 const navigation = [
   { name: "Financial Portal", href: routes.FINANCIALPORTAL },
@@ -96,7 +97,7 @@ const Nav: React.FC<{}> = () => {
                             href="#"
                             className={cn(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-gray-700 font-bold"
                             )}
                           >
                             Your Profile
@@ -109,10 +110,25 @@ const Nav: React.FC<{}> = () => {
                             href="#"
                             className={cn(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-gray-700 py-4 font-bold"
                             )}
                           >
                             Settings
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href={
+                              "https://checkout.melodiy.co/p/login/6oE4jL7Mw0zk1fq9AA"
+                            }
+                            className={cn(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 pb-5 font-bold"
+                            )}
+                          >
+                            My Payment Portal
                           </a>
                         )}
                       </Menu.Item>

@@ -65,7 +65,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
       // Set the userID and userProfileID in browserCache
       persistentStorage.setItem(constants.JWT_TOKEN_KEY, record.token);
-      persistentStorage.setItem(constants.USER_ID_KEY, record.user_account.id);
+      persistentStorage.setItem(
+        constants.USER_ID_KEY,
+        record.user_account.userAccountID
+      );
       persistentStorage.setItem(
         constants.USER_PROFILE_ID_KEY,
         record.user_profile.id
@@ -84,7 +87,19 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         financialContext
       );
 
-      navigate(routes.HOME);
+      // if the financial profile has both a subscription and connected accounts, we need to push the user to the home page
+      if (
+        profile.stripeSubscriptions !== undefined &&
+        profile.link.length > 0
+      ) {
+        navigate(routes.HOME);
+      } else if (profile.stripeSubscriptions === undefined) {
+        // if the financial profile does not have a subscription object, we need to put the user through the stripe payment link
+        navigate(routes.ONBOARDING);
+      } else if (profile.link.length === 0) {
+        // if the financial profile has no connected accounts, we need to put the user through the plaid onboarding flow
+        navigate(routes.ONBOARDING);
+      }
 
       setIsLoading(false);
 

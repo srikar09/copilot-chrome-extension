@@ -4,7 +4,6 @@ import { MelodyFinancialContext } from "src/types/financials/clickhouse_financia
 import { SocialProfile } from "src/types/records/social-profile";
 import { UserAccount } from "src/types/user/user-account";
 import { FinancialProfile } from "src/types/user/financial-profile";
-import { Profile } from "src/types/user/social-profile";
 
 /**
  * selectAuthenticationState obtains authentication state object
@@ -28,7 +27,7 @@ export const selectCurrentUserAccount = (state: RootState): UserAccount =>
  * @param state - root state object
  * @returns
  */
-export const selectCurrentSocialProfile = (state: RootState): Profile =>
+export const selectCurrentSocialProfile = (state: RootState): SocialProfile =>
   state.authentication.userProfile;
 
 /**
