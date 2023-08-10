@@ -11,7 +11,8 @@ import { VerificationPage } from "src/pages/verification/verfication";
 import { ResetPasswordPage } from "src/pages/password-reset/reset-password";
 import { RequestPasswordResetPage } from "src/pages/password-reset/request-password-reset";
 import RegistrationPage from "src/pages/registration/registration-page";
-import { PaymentPage } from "src/pages/payment/payment";
+import { PaymentPage } from "src/pages/onboarding/payment/payment";
+import { BankAccountConnectionPage } from "src/pages/onboarding/bankaccount-connection/bankaccount-connection";
 
 /**
  * Global Routes component to define the routing configuration for the application.
@@ -35,6 +36,11 @@ function GlobalRoutes() {
 
         <Route element={<ProtectedRoute />}>
           <Route path={routes.PAYMENT} element={<PaymentPage />} />
+          <Route
+            path={routes.CONNECT_BANK_ACCOUNT}
+            element={<BankAccountConnectionPage />}
+          />
+
           {/* Default route when no specific route matches */}
           <Route path={"/"} element={<FinancialAnalyticsPortal />} />
           {/* Route for the chat page */}
