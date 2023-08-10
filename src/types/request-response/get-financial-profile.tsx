@@ -1,5 +1,5 @@
 import { ErrorResponse } from "../error/error";
-import { FinancialProfile } from "../user/financialProfile";
+import { FinancialProfile } from "../user/financial-profile";
 
 /**
  * Represents the request for getting financial profile.

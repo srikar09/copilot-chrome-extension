@@ -1,8 +1,8 @@
 import { MelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 import { SocialProfile } from "src/types/records/social-profile";
-import { UserAccount } from "src/types/user/account";
-import { FinancialProfile } from "src/types/user/financialProfile";
-import { Profile } from "src/types/user/profile";
+import { UserAccount } from "src/types/user/user-account";
+import { FinancialProfile } from "src/types/user/financial-profile";
+import { Profile } from "src/types/user/social-profile";
 
 export interface AuthenticationState {
   authenticated: boolean;

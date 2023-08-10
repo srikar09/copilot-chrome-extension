@@ -18,16 +18,16 @@ import { Tag } from "../social/subtypes/tag";
  */
 class UserAccount {
   address?: Address = new Address();
-  bio?: string = '';
-  email = '';
+  bio?: string = "";
+  email = "";
   firstname?: string;
   lastname?: string;
-  username = '';
+  username = "";
   headline?: string;
   phoneNumber?: string;
   userAccountID?: string;
   userAuthnAccountID?: string;
-  id = '';
+  id = "";
   tags: Tag[] = [];
   created_at?: string;
   isEmailVerified?: boolean;
@@ -49,7 +49,9 @@ class UserAccount {
         tags: data?.tags?.map((tag) => new Tag(tag)),
         id: data?.userAccountID !== undefined ? data?.userAccountID : data?.id,
         authnAccountId:
-          data?.userAuthnAccountID !== undefined ? data?.userAuthnAccountID : data?.authnAccountId,
+          data?.userAuthnAccountID !== undefined
+            ? data?.userAuthnAccountID
+            : data?.authnAccountId,
       });
   }
 

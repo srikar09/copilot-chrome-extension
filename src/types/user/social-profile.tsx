@@ -20,25 +20,25 @@ class Profile {
    *
    * @type {string}
    */
-  followers = '';
+  followers = "";
   /**
    * The number of users this profile is following.
    *
    * @type {string}
    */
-  following = '';
+  following = "";
   /**
    * the id of the profile
    *
    * @type {string}
    */
-  id = '';
+  id = "";
   /**
    * this is the username of the profile
    *
    * @type {string}
    */
-  name = '';
+  name = "";
   /**
    * The set of tags associated to this profile
    *
@@ -56,7 +56,7 @@ class Profile {
    *
    * @type {string}
    */
-  profileImageUrl = '';
+  profileImageUrl = "";
   /**
    * User profile id.
    * This is the id of the user that owns the profile.
@@ -65,7 +65,7 @@ class Profile {
    *
    * @type {string}
    */
-  userProfileid = '';
+  userProfileid = "";
 
   bookmarks: Bookmark = Bookmark.create();
 

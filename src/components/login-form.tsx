@@ -8,20 +8,21 @@ import { persistentStorage } from "src/lib/persistent-storage";
 import { constants } from "src/constant/constants";
 import { routes } from "src/constant/routes";
 import { Label } from "@radix-ui/react-context-menu";
-import { buttonVariants } from "../ui/button";
-import { Input } from "../ui/input";
-import { Spinner } from "../spinner";
+import { Button, buttonVariants } from "./ui/button";
+import { Input } from "./ui/input";
+import { Spinner } from "./spinner";
 import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { AuthenticateRequest } from "src/types/request-response/authenticate-user";
-import HappyToast from "../Toast/HappyToast";
-import ToastWarning from "../Toast/ToastWarning";
+import { useToast } from "./ui/use-toast";
+import { ToastAction } from "./ui/toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [toast, setToast] = useState<React.ReactElement | null>(); 
+  const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -42,7 +43,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const navigateToRegisteration = () => {
     history(`${routes.REGISTRATION}`);
-  }
+  };
+
+  const navigateToRequestPasswordChange = () => {
+    history(`${routes.REQUEST_PASSWORD_CHANGE}`);
+  };
 
   async function onSubmit(data: { email: string; password: string }) {
     setIsLoading(true);
@@ -60,16 +65,19 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
       // Set the userID and userProfileID in browserCache
       persistentStorage.setItem(constants.JWT_TOKEN_KEY, record.token);
-      persistentStorage.setItem(
-        constants.USER_ID_KEY,
-        record.user_account.id 
-      );
+      persistentStorage.setItem(constants.USER_ID_KEY, record.user_account.id);
       persistentStorage.setItem(
         constants.USER_PROFILE_ID_KEY,
         record.user_profile.id
       );
-      persistentStorage.setItem(constants.USER_ACCOUNT_KEY, record.user_account);
-      persistentStorage.setItem(constants.USER_PROFILE_KEY, record.user_profile);
+      persistentStorage.setItem(
+        constants.USER_ACCOUNT_KEY,
+        record.user_account
+      );
+      persistentStorage.setItem(
+        constants.USER_PROFILE_KEY,
+        record.user_profile
+      );
       persistentStorage.setItem(constants.USER_FINANCIAL_PROFILE_KEY, profile);
       persistentStorage.setItem(
         constants.USER_FINANCIAL_CONTEXT_KEY,
@@ -79,25 +87,28 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       navigate(routes.HOME);
 
       setIsLoading(false);
-      setToast( <HappyToast 
-        show={true} 
-        message={" Login sucessful!"}
-        autoHideDuration={3000}
-      />)
+
+      toast({
+        title: "Successfully Logged in!",
+        action: (
+          <ToastAction altText="Goto schedule to undo">Success</ToastAction>
+        ),
+      });
     } catch (err) {
       setIsLoading(false);
-      setToast( <ToastWarning 
-        show={true} 
-        message={" Wrong email / password combination. Please try again"}
-        autoHideDuration={3000}
-      />)
+      toast({
+        title: "Wrong email / password combination. Please try again",
+        action: (
+          <ToastAction altText="Goto schedule to undo">
+            Please Try Again
+          </ToastAction>
+        ),
+      });
     }
-    
   }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      {toast}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid sm:gap-6 md:gap-8 lg:gap-10">
           <div className="grid gap-1">
@@ -141,12 +152,28 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </button>
         </div>
       </form>
-       <button onClick={() => {
-        navigateToRegisteration()
-      }} disabled={isLoading}>
-          {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin"/>}
+      <div className="grid grid-cols-2 gap-2">
+        <Button
+          onClick={() => {
+            navigateToRegisteration();
+          }}
+          disabled={isLoading}
+          className="rounded-2xl bg-white text-black"
+        >
+          {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
           Create a new account
-        </button>
+        </Button>
+        <Button
+          onClick={() => {
+            navigateToRequestPasswordChange();
+          }}
+          disabled={isLoading}
+          className="rounded-2xl bg-white text-black"
+        >
+          {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
+          Forgot password
+        </Button>
+      </div>
     </div>
   );
 }

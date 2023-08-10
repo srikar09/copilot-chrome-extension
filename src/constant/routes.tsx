@@ -46,6 +46,8 @@ export const routes: {
   INSIGHTS: string;
   INSIGHTSPORTAL: string;
   EMAILVERIFICATION: string;
+  REQUEST_PASSWORD_CHANGE: string;
+  RESET_PASSWORD: string;
 } = {
   REGISTRATION: "/registration",
   AUTHENTICATION: "/sign-in",
@@ -67,5 +69,7 @@ export const routes: {
   LANDING: "/",
   INSIGHTS: "/insights",
   INSIGHTSPORTAL: "/insights-portal",
-  EMAILVERIFICATION: "/email-verification"
+  EMAILVERIFICATION: "/email-verification",
+  REQUEST_PASSWORD_CHANGE: "/request-password-change",
+  RESET_PASSWORD: "/reset-password",
 };

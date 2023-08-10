@@ -2,9 +2,9 @@ import { ErrorResponse } from "../error/error";
 import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
 import { SocialProfile } from "../records/social-profile";
 import { IRequest } from "./IRequest";
-import { FinancialProfile } from "../user/financialProfile";
-import { Profile } from "../user/profile";
-import { UserAccount } from "../user/account";
+import { FinancialProfile } from "../user/financial-profile";
+import { Profile } from "../user/social-profile";
+import { UserAccount } from "../user/user-account";
 
 /**
  * @description The request to authenticate a user
@@ -41,7 +41,6 @@ type FinancialProfileResponse = {
   profile: FinancialProfile;
   financialContext: MelodyFinancialContext;
 };
-
 
 /**
  * @description The response when a user is authenticated
