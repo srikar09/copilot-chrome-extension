@@ -49,6 +49,7 @@ export const routes: {
   REQUEST_PASSWORD_CHANGE: string;
   RESET_PASSWORD: string;
   PAYMENT: string;
+  FEEDBACK_EXTERNAL_URL: string;
 } = {
   REGISTRATION: "/registration",
   AUTHENTICATION: "/sign-in",
@@ -74,4 +75,6 @@ export const routes: {
   REQUEST_PASSWORD_CHANGE: "/request-password-change",
   RESET_PASSWORD: "/reset-password",
   PAYMENT: "/payment",
+  FEEDBACK_EXTERNAL_URL:
+    "https://github.com/Melodi-Engineering/melodiy-feedback",
 };
