@@ -36,7 +36,6 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = (props) => {
   const [openTermsAndConditions, setOpenTermsAndConditions] =
     React.useState<boolean>(false);
   const [termType, setTermType] = React.useState<TermType>(TermType.Overview);
-  console.log(disableCheckbox);
   return (
     <>
       <Sheet>
