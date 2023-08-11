@@ -8,6 +8,10 @@ import { useCheckEmailExistsMutation } from "src/redux/mutations/check-email-exi
 import { useToast } from "./ui/use-toast";
 import { useRequestPasswordChangeMutation } from "src/redux/mutations/request-password-change";
 import { RequestPasswordResetRequest } from "../types/request-response/initiate-password-reset";
+import HappyToast from "./happy-toast";
+import Toast from "./warning-toast";
+import { Link } from "react-router-dom";
+import { routes } from "src/constant/routes";
 
 interface RequestPasswordResetFormProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,6 +22,8 @@ export function RequestPasswordResetForm({
   className,
   ...props
 }: RequestPasswordResetFormProps) {
+
+
   const {
     register,
     handleSubmit,
@@ -28,10 +34,9 @@ export function RequestPasswordResetForm({
     },
   });
 
-  const { toast } = useToast();
   const [checkEmailExists] = useCheckEmailExistsMutation();
   const [requestPasswordReset] = useRequestPasswordChangeMutation();
-
+  const [toast, setToast] = useState<React.ReactElement | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   async function onSubmit(data: { email: string }) {
     // check if the email exists
@@ -42,26 +47,32 @@ export function RequestPasswordResetForm({
         const passwordChangeResponse = await requestPasswordReset({
           email: data.email,
         }).unwrap();
-
-        if (passwordChangeResponse.success) {
-          toast({
-            title: `Password reset email sent to ${data.email}`,
-          });
-        }
+        setToast(<HappyToast 
+          show= {true} 
+          message={`Password reset email sent to ${data.email}`} 
+          autoHideDuration={3000}  />);
       } else {
-        toast({
-          title: `Email does not exist. Please provide a valid email`,
-        });
+        setToast(<Toast 
+          show= {true} 
+          message={`Email does not exist. Please provide a valid email`} 
+          autoHideDuration={3000}  
+          key= {Date.now().toString()}
+          />);
       }
     } catch (err) {
-      toast({
-        title: `Failed to reset password. Please try again later. err: ${err}`,
-      });
+      setToast(<Toast 
+        show= {true} 
+        message={`Failed to reset password. Please try again later. err: ${err}`} 
+        autoHideDuration={3000}  
+        key= {Date.now().toString()}
+        />);
     }
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+      <>
+    {toast}
+   <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid sm:gap-6 md:gap-8 lg:gap-10">
           <div className="grid gap-1">
@@ -88,6 +99,19 @@ export function RequestPasswordResetForm({
           </button>
         </div>
       </form>
+
+      <Link
+            to={routes.AUTHENTICATION}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "text-xl font-bold"
+            )
+          }
+          >
+            Login
+      </Link>
     </div>
+      </>
+   
   );
 }

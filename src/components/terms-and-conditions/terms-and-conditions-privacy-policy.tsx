@@ -11,8 +11,8 @@ const PrivacyPolicy: React.FC = () => {
 # Privacy Policy
 
 Protecting your private information is our priority. This Statement of Privacy applies to melodiy, and
-melodiy LLC and governs data collection and usage. For the purposes of this Privacy Policy, unless
-otherwise noted, all references to melodiy LLC include https://melodiy.app and melodiy. The melodiy
+simfiny, Inc and governs data collection and usage. For the purposes of this Privacy Policy, unless
+otherwise noted, all references to simfiny, Inc include https://melodiy.app and melodiy. The melodiy
 application is a budgeting and expense planning application. By using the melodiy application, you
 consent to the data practices described in this statement.
 
@@ -141,7 +141,7 @@ melodiy welcomes your questions or comments regarding this Statement of Privacy.
 that melodiy has not adhered to this Statement, please contact melodiy at:
 
 Email Address:
-support@melodiy.app
+admin@melodiy.io
 
 Telephone number:
 651 - 243 - 0035

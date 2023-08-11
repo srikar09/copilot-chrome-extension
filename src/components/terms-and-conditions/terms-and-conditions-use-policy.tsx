@@ -10,26 +10,26 @@ const UserAgreementPolicy: React.FC = () => {
             source={`
 # Terms and Conditions
 
-## Agreement between User and simfiny.app
+## Agreement between User and simfiny, Inc
 
-Welcome to simfiny.app. The simfiny.app website (the "Site") is comprised of various web pages operated by simfiny LLC
-("simfiny"). simfiny.app is offered to you conditioned on your acceptance without modification of the terms, conditions,
-and notices contained herein (the "Terms"). Your use of simfiny.app constitutes your agreement to all such Terms. Please
+Welcome to Melodiy.app. The Melodiy.app website (the "Site") is comprised of various web pages operated by simfiny, Inc
+("simfiny"). Melodiy.app is offered to you conditioned on your acceptance without modification of the terms, conditions,
+and notices contained herein (the "Terms"). Your use of Melodiy.app constitutes your agreement to all such Terms. Please
 read these terms carefully, and keep a copy of them for your reference.
 
-simfiny.app is a Financial Planning Software Site.
+Melodiy.app is a Financial Planning Software Site.
 
-simfiny is an open source financial planning application. simfiny.app is a hosted version of this application used to help
+simfiny is an open source financial planning application. Melodiy.app is a hosted version of this application used to help
 manage and budget for recurring or future expenses.
 
 ## Privacy
 
-Your use of simfiny.app is subject to simfiny's Privacy Policy. Please review our Privacy Policy, which also governs the
+Your use of Melodiy.app is subject to simfiny's Privacy Policy. Please review our Privacy Policy, which also governs the
 Site and informs users of our data collection practices.
 
 ## Electronic Communications
 
-Visiting simfiny.app or sending emails to simfiny constitutes electronic communications. You consent to receive electronic
+Visiting Melodiy.app or sending emails to simfiny constitutes electronic communications. You consent to receive electronic
 communications and you agree that all agreements, notices, disclosures and other communications that we provide to you
 electronically, via email and on the Site, satisfy any legal requirement that such communications be in writing.
 
@@ -45,7 +45,7 @@ accounts, or remove or edit content in our sole discretion.
 ## Children Under Thirteen
 
 simfiny does not knowingly collect, either online or offline, personal information from persons under the age of
-thirteen. If you are under 18, you may use simfiny.app only with permission of a parent or guardian.
+thirteen. If you are under 18, you may use Melodiy.app only with permission of a parent or guardian.
 
 ## Cancellation/Refund Policy
 
@@ -55,19 +55,19 @@ contact us at support@simfiny.com
 
 ## Links to Third Party Sites/Third Party Services
 
-simfiny.app may contain links to other websites ("Linked Sites"). The Linked Sites are not under the control of simfiny
+Melodiy.app may contain links to other websites ("Linked Sites"). The Linked Sites are not under the control of simfiny
 and simfiny is not responsible for the contents of any Linked Site, including without limitation any link contained in a
 Linked Site, or any changes or updates to a Linked Site. simfiny is providing these links to you only as a convenience,
 and the inclusion of any link does not imply endorsement by simfiny of the site or any association with its operators.
 
-Certain services made available via simfiny.app are delivered by third party sites and organizations. By using any
-product, service or functionality originating from the simfiny.app domain, you hereby acknowledge and consent that simfiny
+Certain services made available via Melodiy.app are delivered by third party sites and organizations. By using any
+product, service or functionality originating from the Melodiy.app domain, you hereby acknowledge and consent that simfiny
 may share such information and data with any third party with whom simfiny has a contractual relationship to provide the
-requested product, service or functionality on behalf of simfiny.app users and customers.
+requested product, service or functionality on behalf of Melodiy.app users and customers.
 
 ## No Unlawful or Prohibited Use/Intellectual Property
 
-You are granted a non-exclusive, non-transferable, revocable license to access and use simfiny.app strictly in accordance
+You are granted a non-exclusive, non-transferable, revocable license to access and use Melodiy.app strictly in accordance
 with these terms of use. As a condition of your use of the Site, you warrant to simfiny that you will not use the Site
 for any purpose that is unlawful or prohibited by these Terms. You may not use the Site in any manner which could
 damage, disable, overburden, or impair the Site or interfere with any other party's use and enjoyment of the Site. You
@@ -99,7 +99,7 @@ to be shared in this manner, do not use this feature.
 
 The Service is controlled, operated and administered by simfiny from our offices within the USA. If you access the
 Service from a location outside the USA, you are responsible for compliance with all local laws. You agree that you will
-not use the simfiny Content accessed through simfiny.app in any country or in any manner prohibited by any applicable
+not use the simfiny Content accessed through Melodiy.app in any country or in any manner prohibited by any applicable
 laws, restrictions or regulations.
 
 ## Indemnification
@@ -189,7 +189,7 @@ documents be written in English.
 
 ## Changes to Terms
 
-simfiny reserves the right, in its sole discretion, to change the Terms under which simfiny.app is offered. The most
+simfiny reserves the right, in its sole discretion, to change the Terms under which Melodiy.app is offered. The most
 current version of the Terms will supersede all previous versions. simfiny encourages you to periodically review the
 Terms to stay informed of our updates.
 
@@ -197,7 +197,7 @@ Terms to stay informed of our updates.
 
 simfiny welcomes your questions or comments regarding the Terms:
 
-Email Address: support@simfiny.app
+Email Address: admin@Melodiy.io
 Telephone number: (651) 243-0035
 
 Effective as of September 12, 2022
