@@ -2,6 +2,7 @@
 import mixpanel, { Dict, Mixpanel } from "mixpanel-browser";
 // Import environment configuration
 import { applicationEnvConfigs } from "src/env/client";
+import { eventNames } from "./MixPanelEvents";
 
 /**
  * Interface that defines the methods a TelemetryClient should implement
@@ -105,62 +106,62 @@ class MixPanelClient implements TelemetryClient {
   }
 
   trackRegistrationEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.REGISTRATION_EVENT;
+    const eventName: string = eventNames.REGISTRATION_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackLoginEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.LOGIN_EVENT;
+    const eventName: string = eventNames.LOGIN_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackNewPostEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.LOGIN_EVENT;
+    const eventName: string = eventNames.LOGIN_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackPostCreationEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.POST_CREATION_EVENT;
+    const eventName: string = eventNames.POST_CREATION_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackCommentCreationEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.ARTICLE_CREATION_EVENT;
+    const eventName: string = eventNames.ARTICLE_CREATION_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackArticleCreationEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.ARTICLE_ENGAGEMENT_EVENT;
+    const eventName: string = eventNames.ARTICLE_ENGAGEMENT_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackPostEngagementEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.POST_ENGAGEMENT_EVENT;
+    const eventName: string = eventNames.POST_ENGAGEMENT_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackCommentEngagementEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.COMMENT_ENGAGEMENT_EVENT;
+    const eventName: string = eventNames.COMMENT_ENGAGEMENT_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackCommunityEngagementEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.COMMUNITY_ENGAGEMENT_EVENT;
+    const eventName: string = eventNames.COMMUNITY_ENGAGEMENT_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackArticleEngagementEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.ARTICLE_ENGAGEMENT_EVENT;
+    const eventName: string = eventNames.ARTICLE_ENGAGEMENT_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackTopicCreationEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.TOPIC_CREATION_EVENT;
+    const eventName: string = eventNames.TOPIC_CREATION_EVENT;
     this.trackEvent(eventName, properties);
   }
 
   trackCommunityCreationEvent(properties?: Dict): void {
-    const eventName: string = this.eventNames.COMMUNITY_CREATION_EVENT;
+    const eventName: string = eventNames.COMMUNITY_CREATION_EVENT;
     this.trackEvent(eventName, properties);
   }
 

@@ -1,7 +1,6 @@
 import { useCheckEmailExistsMutation } from "src/redux/mutations/check-email-exists";
 import { useCheckUsernameExistsMutation } from "src/redux/mutations/check-username-exists";
-import { useToast } from "./ui/use-toast";
-import React from "react";
+import React, { useState } from "react";
 import { Tags } from "src/types/records/tags";
 import { AvalailabeTagSet } from "src/constant/tags";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +25,8 @@ import {
 import { Avatar } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { TermsAndConditions } from "./terms-and-conditions/terms-and-conditions";
+import HappyToast from "./happy-toast";
+import Toast from "./warning-toast";
 
 // generate a set of avatar urls to choose from
 const lowerbound = randomIntFromInterval(1, 100);
@@ -48,8 +49,7 @@ const RegistrationForm: React.FC = () => {
   const [checkIfEmailExists] = useCheckEmailExistsMutation();
   const [checkUsernameExists] = useCheckUsernameExistsMutation();
   const navigate = useNavigate();
-  const { toast } = useToast();
-
+  const [toast, setToast] = useState<React.ReactElement | null>();
   const [interest, setInterest] = React.useState<Tags[]>([]);
   const [selectedAvatar, setSelectedAvatar] = React.useState<string>("");
   const [termsApproved, setTermsApproved] = React.useState<boolean>(false);
@@ -132,7 +132,7 @@ const RegistrationForm: React.FC = () => {
       // const emailExists = await checkEmailExists({ email: email }).unwrap();
       const res = await checkIfEmailExists({ email: email }).unwrap();
       if (res.exists) {
-        throw new Error("Email already exists");
+        throw new Error("Email already exists. Please use another email or log in with the current email ! ");
       }
 
       // call the backend and check if the username already exists
@@ -162,7 +162,7 @@ const RegistrationForm: React.FC = () => {
         profileImage: selectedAvatar,
         communityIdsToFollow: req.communityIdsToFollow,
       });
-
+  
       // call the backend and register the user
       const newAcct = await createUserAccount({
         body: createAccountRequest,
@@ -170,28 +170,31 @@ const RegistrationForm: React.FC = () => {
 
       // increment a mixpanel registration event
       mixPanelClient.trackRegistrationEvent({
-        userID: `${newAcct.userID}`,
+        userID: `${newAcct.userId}`,
         time: new Date().toDateString(),
       });
-
-      toast({
-        title:
-          "Successfully created an account. Please check your inbox and verify your account ",
-      });
-
+      setToast(<HappyToast 
+        show= {true} 
+        message={"Account has been created! Check your email for a verification email"} 
+        autoHideDuration={3000}  />);
       reset();
 
       // route the person to the authentication page
       navigate(routes.AUTHENTICATION);
-    } catch (err) {
+    } catch (error:any) {
       // dispatch an error toast
-      toast({
-        title: `Failed to create an account. err: ${err}`,
-      });
+      setToast(<Toast 
+        show= {true} 
+        message={error.message} 
+        autoHideDuration={3000}  
+        key= {Date.now().toString()}
+        />);
     }
   };
 
   return (
+    <>
+    {toast}
     <div className="my-6 bg-white rounded-xl py-8 shadow sm:rounded-2xl sm:px-10">
       <form className="space-y-3 form" onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -258,6 +261,7 @@ const RegistrationForm: React.FC = () => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

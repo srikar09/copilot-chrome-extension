@@ -21,12 +21,6 @@ export class UserRegistrationAccountDetails {
    */
   email = "";
   /**
-   * the address associated with the user
-   * Validations:
-   * - can be empty
-   */
-  address: Address | undefined;
-  /**
    * simple description specific to account should be less than 200 characters
    * Validations:
    * - can be empty
@@ -87,10 +81,31 @@ export class UserRegistrationAccountDetails {
     if (data) {
       Object.assign(this, {
         ...data,
-        address: new Address(this.address),
       });
     }
   }
+
+
+  toJSON() {
+    return {
+      id: this.id,
+      email: this.email,
+      bio: this.bio,
+      headline: this.headline,
+      phoneNumber: this.phoneNumber,
+      tags: this.tags, // Assuming Tags array items also have a toJSON method
+      authnAccountId: this.authnAccountId,
+      isActive: this.isActive,
+      firstname: this.firstname,
+      lastname: this.lastname,
+      username: this.username,
+      isPrivate: this.isPrivate,
+      isEmailVerified: this.isEmailVerified,
+      createdAt: this.createdAt ? this.createdAt.toISOString() : undefined,
+      verifiedAt: this.verifiedAt ? this.verifiedAt.toISOString() : undefined,
+    };
+  }
+
 }
 
 /**
@@ -115,6 +130,14 @@ export class CreateAccountRequest implements IRequest {
     }
   }
 
+  toJSON() {
+    return {
+      account: this.account.toJSON(), // Assuming UserRegistrationAccountDetails class has a toJSON method
+      communityIdsToFollow: this.communityIdsToFollow,
+      profileImage: this.profileImage,
+      password: this.password, // Note: Be cautious about serializing sensitive data like passwords
+    };
+  }
   /*
    * Validate the create account request object
    *

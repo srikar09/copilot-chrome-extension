@@ -7,9 +7,9 @@ const CreateUserAccount = api.injectEndpoints({
       query: (params: { body: CreateAccountRequest }) => ({
         url: `/user/registration`,
         method: "POST",
-        body: params.body,
+        body: JSON.stringify(params.body),
       }),
-      transformResponse: (response: { userID: number }) => {
+      transformResponse: (response: { userId: number }) => {
         return response;
       },
     }),
