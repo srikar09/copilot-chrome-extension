@@ -15,13 +15,15 @@ import { MIXPANEL_EVENTS, mixPanelClient } from "src/lib/mixpanel";
 import { AuthenticateRequest } from "src/types/request-response/authenticate-user";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
+import HappyToast from "./happy-toast";
+import Toast from "./warning-toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const { toast } = useToast();
+  const [toast, setToast] = useState<React.ReactElement | null>();
 
   const {
     register,
@@ -106,27 +108,24 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       }
 
       setIsLoading(false);
-
-      toast({
-        title: "Successfully Logged in!",
-        action: (
-          <ToastAction altText="Goto schedule to undo">Success</ToastAction>
-        ),
-      });
+      setToast(<HappyToast 
+        show= {true} 
+        message={"Successfully Logged in!"} 
+        autoHideDuration={3000}  /> )
     } catch (err) {
       setIsLoading(false);
-      toast({
-        title: "Wrong email / password combination. Please try again",
-        action: (
-          <ToastAction altText="Goto schedule to undo">
-            Please Try Again
-          </ToastAction>
-        ),
-      });
+      setToast(<Toast 
+        show= {true} 
+        message={`Wrong email / password combination. Please try again`} 
+        autoHideDuration={3000}  
+        key= {Date.now().toString()}
+      />);
     }
   }
 
   return (
+    <>
+    {toast}
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid sm:gap-6 md:gap-8 lg:gap-10">
@@ -194,5 +193,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </Button>
       </div>
     </div>
+    </>
+    
   );
 }
