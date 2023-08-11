@@ -110,7 +110,7 @@ export const PaymentPage = () => {
                   </h3>
                   <div className="flex items-center md:hidden">
                     <div className="mr-1 text-xl font-extrabold text-gray-900 lg:text-5xl dark:text-white">
-                      $7.99
+                      $5
                     </div>
                     <span className="text-gray-500 dark:text-gray-400">
                       /month
@@ -123,7 +123,7 @@ export const PaymentPage = () => {
               </div>
               <div className="hidden md:block">
                 <div className="text-2xl font-extrabold text-gray-900 lg:text-5xl dark:text-white">
-                  $7.99
+                  $5
                 </div>
                 <span className="text-gray-500 dark:text-gray-400">
                   per month
