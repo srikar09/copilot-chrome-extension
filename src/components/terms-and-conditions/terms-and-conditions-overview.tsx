@@ -5,7 +5,7 @@ const TermsAndConditionsOverview: React.FC = (props) => {
     <div>
     <div className="overflow-auto rounded-xl p-2">
         <h4 className="text-md font-bold">
-            Welcome to our Simfiny. These terms and conditions govern your use of the app, and by
+            Welcome to Melodiy. These terms and conditions govern your use of the app, and by
             using the app, you accept these Terms in full
         </h4>
         <ul>
