@@ -175,12 +175,15 @@ const RegistrationForm: React.FC = () => {
       });
       setToast(<HappyToast 
         show= {true} 
-        message={"Account has been created! Check your email for a verification email"} 
+        message={"Account has been created! Check your email for a verification email :) "} 
         autoHideDuration={3000}  />);
       reset();
-
+      
       // route the person to the authentication page
-      navigate(routes.AUTHENTICATION);
+      setTimeout(function() {
+        navigate(routes.AUTHENTICATION);
+    }, 2000);
+    
     } catch (error:any) {
       // dispatch an error toast
       setToast(<Toast 
