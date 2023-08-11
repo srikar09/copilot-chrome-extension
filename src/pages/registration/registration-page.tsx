@@ -10,13 +10,14 @@ import { cn } from "src/lib/utils";
 export default function RegistrationPage() {
   return (
     <>
-      <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
           to={routes.AUTHENTICATION}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8 text-xl font-bold"
-          )}
+            " hidden sm:block absolute right-4 top-4  text-xl font-bold "
+          )
+        }
         >
           Login
         </Link>
@@ -60,6 +61,16 @@ export default function RegistrationPage() {
                 />
               </div>
             </p>
+            <Link
+            to={routes.AUTHENTICATION}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "text-xl font-bold md:hidden lg:hidden"
+            )
+          }
+          >
+            Login
+          </Link>
           </div>
         </div>
       </div>

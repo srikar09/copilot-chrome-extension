@@ -41,7 +41,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = (props) => {
       <Sheet>
         <div className="flex flex-row gap-2 py-5">
           {(disableCheckbox === false || disableCheckbox === undefined) && (
-            <div className="col-2">
+            <div className="col-2 ml-4">
               <Checkbox
                 onClick={() => {
                   if (callback !== undefined) {
@@ -60,7 +60,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = (props) => {
             }}
             onClick={() => setOpenTermsAndConditions(!openTermsAndConditions)}
           >
-            <SheetTrigger className={cn("text-sm font-bold", className)}>
+            <SheetTrigger className={cn("text-sm ml-2 font-bold", className)}>
               {title !== undefined
                 ? title
                 : "I agree to the terms and conditions "}

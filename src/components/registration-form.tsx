@@ -292,7 +292,7 @@ const TagsSelector: React.FC<{
       <AccordionItem value="item-1">
         <AccordionTrigger>
           {" "}
-          <Label color="dark" className="font-bold text-xs">
+          <Label color="dark" className="font-bold text-xs ml-3">
             <p className="text-xs font-semibold"> Pick 3 interests 😀</p>
           </Label>
         </AccordionTrigger>
@@ -344,7 +344,7 @@ const AvatarSelector: React.FC<{
       <AccordionItem value="item-1">
         <AccordionTrigger>
           {" "}
-          <Label color="dark" className="font-bold text-xs">
+          <Label color="dark" className="font-bold text-xs ml-3">
             <p className="text-xs font-semibold"> Select an avatar 😀</p>
           </Label>
         </AccordionTrigger>
