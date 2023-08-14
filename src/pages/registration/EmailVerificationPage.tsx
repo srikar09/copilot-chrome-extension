@@ -105,7 +105,6 @@ export const EmailVerificationPage:React.FC = () => {
     useEffect(() => {       
             if(response){
                 let {account} = response;
-                console.log("got here") 
                 if(account?.isEmailVerified){
                     setEmailVerified(true)
                     setToast( <HappyToast 

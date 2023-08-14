@@ -25,7 +25,7 @@ interface IContextPrompt {
  * It is a Singleton class that holds global financial context and user account.
  */
 class PromptContext implements IContextPrompt {
-  /**
+  /**a
    * A private instance of MelodyFinancialContext to hold the global context.
    */
   private _globalContext: MelodyFinancialContext =
