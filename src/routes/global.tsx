@@ -13,6 +13,7 @@ import { RequestPasswordResetPage } from "src/pages/password-reset/request-passw
 import RegistrationPage from "src/pages/registration/registration-page";
 import { PaymentPage } from "src/pages/onboarding/payment/payment";
 import { BankAccountConnectionPage } from "src/pages/onboarding/bankaccount-connection/bankaccount-connection";
+import { EmailVerificationPage } from "src/pages/registration/EmailVerificationPage";
 
 /**
  * Global Routes component to define the routing configuration for the application.
@@ -24,6 +25,7 @@ function GlobalRoutes() {
       <Routes>
         {/* Route for the authentication page */}
         <Route path={routes.AUTHENTICATION} element={<LoginPage />} />
+        <Route path={routes.EMAILVERIFICATION} element={<EmailVerificationPage />} />
 
         {/* Route for the verification page with a dynamic user ID */}
         <Route path="/verification/:userID" element={<VerificationPage />} />

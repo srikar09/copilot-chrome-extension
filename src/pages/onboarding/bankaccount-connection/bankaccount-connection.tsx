@@ -5,16 +5,17 @@ export const BankAccountConnectionPage = () => {
     <div className="p-10 lg:p-20">
       <section className="bg-white dark:bg-gray-900">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 xl:gap-16 lg:py-16 lg:px-6 ">
-          <div className="text-gray-500 sm:text-lg">
+          <div className="text-gray-500 sm:text-lg mb-6">
             <div className="grid grid-cols-2">
               <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 md:text-4xl dark:text-white">
-                Connect Your Bank Account
+                Connect Your financial Accounts
               </h2>
               <div>
                 <ConnectPlaidAccountButton title={`Connect Account`} />
               </div>
             </div>
-
+            <p className='font-light text-xl text-gray-700 dark:text-gray-700 mb-4'></p>
+            <p className='font-light text-xl text-gray-700 dark:text-gray-700 mb-4'>Connect all your financial accounts ranging from bank accounts to brokerages and experience a streamlined, holistic view of your financial world</p>
             <div className="grid gap-6 lg:grid-cols-1 dark:border-gray-700 sm:grid-cols-2">
               <div className="flex">
                 <div className="mr-4 shrink-0">
@@ -29,13 +30,10 @@ export const BankAccountConnectionPage = () => {
                 </div>
                 <div>
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-                    Personalized Financial Advice
+                  Safety & Security
                   </p>
                   <p className="font-light text-gray-500 dark:text-gray-400">
-                    By connecting your bank account, Melodiy can analyze your
-                    income, expenses, and savings habits. This enables it to
-                    provide advice tailored specifically to your financial
-                    situation.
+                  Your financial security is our top priority. We employ state-of-the-art encryption and security measures to ensure that your data is protected and remains confidential.
                   </p>
                 </div>
               </div>
@@ -111,8 +109,8 @@ export const BankAccountConnectionPage = () => {
             </div>
           </div>
           <img
-            className="hidden mx-auto mb-4 sm:flex border rounded-2xl"
-            src="https://images.unsplash.com/photo-1634696684126-462b1a767e22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=883&q=80"
+            className="mx-auto mb-4 sm:flex border rounded-2xl"
+            src="https://images.unsplash.com/photo-1589666564459-93cdd3ab856a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
             alt="table professor illustration"
           />
         </div>

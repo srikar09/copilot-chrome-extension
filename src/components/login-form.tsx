@@ -91,11 +91,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
       // if the financial profile has both a subscription and connected accounts, we need to push the user to the home page
       if (
-        profile.stripeSubscriptions !== undefined &&
-        profile.stripeSubscriptions !== null &&
-        profile.link.length > 0
+        !user_account.isEmailVerified
       ) {
-        navigate(routes.HOME);
+        navigate(routes.EMAILVERIFICATION);
       } else if (
         profile.stripeSubscriptions === undefined ||
         profile.stripeSubscriptions === null
@@ -105,6 +103,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       } else if (profile.link.length === 0) {
         // if the financial profile has no connected accounts, we need to put the user through the plaid onboarding flow
         navigate(routes.ONBOARDING);
+      } else if (
+        profile.stripeSubscriptions !== undefined &&
+        profile.stripeSubscriptions !== null &&
+        profile.link.length > 0
+      ) {
+        navigate(routes.HOME);
       }
 
       setIsLoading(false);
