@@ -51,10 +51,10 @@ const HoldingCard: React.FC<{
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            ${formatToTwoDecimalPoints(totalValue)}
+            Current value: $ {Account.currentFunds}
           </div>
           <p className="text-xs text-muted-foreground">
-            {formatToTwoDecimalPoints(totalProfitLoss)} Total P/L
+            { formatToTwoDecimalPoints(totalProfitLoss) } Total P/L
           </p>
         </CardContent>
 
@@ -79,7 +79,7 @@ const HoldingCard: React.FC<{
           <div className="flex flex-1 flex-wrap gap-3">
             <div className="flex flex-col text-xs text-muted-foreground">
               <p className="font-bold"> average cost basis </p>
-              <p>${formatToTwoDecimalPoints(averageCostBasis)}</p>
+              <p>$ {formatToTwoDecimalPoints(averageCostBasis)}</p>
             </div>
             <div className="text-xs text-muted-foreground">
               <p className="font-bold"> largest holding </p>

@@ -236,17 +236,17 @@ const OverviewPane: React.FC<{
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           <InvestmentAccountStatistic
             title={"Total Shares Held"}
-            value={totalNumberOfShares}
+            value={totalNumberOfShares.toString()}
             statisticDetails={""}
           />
           <InvestmentAccountStatistic
             title={"Securities"}
-            value={totalNumberOfSecurities}
+            value={totalNumberOfSecurities.toString()}
             statisticDetails={""}
           />
           <InvestmentAccountStatistic
             title={"Average Cost Basis"}
-            value={Number(averageCostBasis.toFixed(2))}
+            value={ "$ " + Number(averageCostBasis.toFixed(2)).toString() }
             statisticDetails={""}
           />
         </div>
@@ -273,7 +273,7 @@ const OverviewPane: React.FC<{
 
 const InvestmentAccountStatistic: React.FC<{
   title: string;
-  value: number;
+  value: string;
   statisticDetails: string;
 }> = ({ title, value, statisticDetails }) => {
   return (
