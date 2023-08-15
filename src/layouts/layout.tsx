@@ -2,7 +2,7 @@
 import { FC, ReactNode } from "react";
 import { Nav } from "src/components/nav";
 import { cn } from "src/lib/utils";
-import { selectAuthenticated } from "src/redux/slice/authentication/AuthenticationSelector";
+import { selectAuthenticated, selectOnboardingStatus } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 
 /**
@@ -19,10 +19,11 @@ const Layout: FC<{
 }> = ({ children, className }) => {
   // useSelector hook to extract data from Redux Store, checking if the user is authenticated from the authentication selector
   const isAuthenticated = useAppSelector(selectAuthenticated);
+  const isOnboarded = useAppSelector(selectOnboardingStatus);
 
   return (
     <div>
-      {isAuthenticated && <Nav />}
+      {isOnboarded && isAuthenticated && <Nav />}
       <div
         className={cn(
           "w-screen min-h-full min-w-full p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10",

@@ -58,3 +58,25 @@ export const selectUserFinancialProfile = (
 export const selectUserFinancialContext = (
   state: RootState
 ): MelodyFinancialContext => state.authentication.userFinancialContext;
+
+export const selectOnboardingStatus = (
+  state: RootState
+):  boolean =>{
+  const {userFinancialProfile, userAccount, } = state.authentication;
+  if(userAccount.isEmailVerified 
+    && userFinancialProfile.link.length>0 ){
+      return true
+    }
+  else {
+    return false;
+  }
+} 
+
+/*
+    && userFinancialProfile.stripeSubscriptions !== null 
+    && userFinancialProfile.stripeSubscriptions !== undefined
+
+    call financial profile upon visiting home screen , be sure to set the updated profile in storage
+
+    call updated user account , be sure to stash everything in storage
+*/

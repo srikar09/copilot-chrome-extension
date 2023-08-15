@@ -33,7 +33,7 @@ export const PaymentPage = () => {
                     Today
                   </h3>
                   <p className="font-light text-gray-500 dark:text-gray-400">
-                    Connect all your accounts and ask as may questions as you want. Start talking to your financial co-pilot today !
+                    Connect all your accounts and ask as many questions as you want. Start talking to your financial co-pilot today !
                   </p>
                 </div>
               </div>

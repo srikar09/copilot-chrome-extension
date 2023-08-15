@@ -78,5 +78,5 @@ export const routes: {
   PAYMENT: "/payment",
   CONNECT_BANK_ACCOUNT: "/connect-bank-account",
   FEEDBACK_EXTERNAL_URL:
-    "https://github.com/Melodi-Engineering/melodiy-feedback",
+    "https://docs.google.com/forms/d/e/1FAIpQLSdWdOJwdwVfvkhYul83xGAbyD0EGvlKAPvRXkwTjAWe7z7r9Q/viewform",
 };
