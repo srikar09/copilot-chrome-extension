@@ -4,6 +4,9 @@
  * @class Tag
  */
 class Tag {
+  static fromPartial(e: any): any {
+    throw new Error("Method not implemented.");
+  }
   id?: string;
   tagName?: string;
   tagDescription?: string;

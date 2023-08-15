@@ -128,7 +128,6 @@ const ConnectPlaidAccountButton: React.FC<{
         const response = await plaidExchangeToken(request).unwrap();
         toast({
           title: "Successfully connected bank account",
-          description: "Friday, February 10, 2023 at 5:57 PM",
           action: (
             <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
           ),
@@ -146,8 +145,7 @@ const ConnectPlaidAccountButton: React.FC<{
         });
       }
     }
-
-    history(`${routes.HOME}`);
+    history(`${routes.PAYMENT}`);
   };
 
   const onExit = async (

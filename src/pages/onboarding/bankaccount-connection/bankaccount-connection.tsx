@@ -1,8 +1,10 @@
+import { Logo } from "src/components/Logo";
 import { ConnectPlaidAccountButton } from "src/components/connect-plaid-account-button";
 
 export const BankAccountConnectionPage = () => {
   return (
     <div className="p-10 lg:p-20">
+      <Logo />
       <section className="bg-white dark:bg-gray-900">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 xl:gap-16 lg:py-16 lg:px-6 ">
           <div className="text-gray-500 sm:text-lg mb-6">

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import HappyToast from 'src/components/happy-toast';
 import ToastWarning from 'src/components/warning-toast';
+import { Logo } from "src/components/Logo";
 
 const useStyles = createStyles((theme: any) => ({
     wrapper: {
@@ -141,6 +142,7 @@ export const EmailVerificationPage:React.FC = () => {
             <>
             {toast} 
     <div className="p-10 lg:p-20">
+      <Logo />
       <section className="bg-white dark:bg-gray-900">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 xl:gap-16 lg:py-16 lg:px-6 ">
           <div className="text-gray-500 sm:text-lg my-3">
