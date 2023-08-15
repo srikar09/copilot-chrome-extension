@@ -225,7 +225,7 @@ const OverviewPane: React.FC<{
     <div className="m-4">
       <h2 className="ml-5 text-xl font-bold tracking-tight pb-5">
         {" "}
-        <span className="ml-1 text-4xl"> ${totalBalance}</span>
+        <span className="ml-1 text-4xl"> Total balance: ${totalBalance}</span>
       </h2>
       <AccountOverviewSummaryHeader
         title={"Investment Accounts"}
