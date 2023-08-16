@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import Balancer from "react-wrap-balancer";
+import { ChatGPTAgent } from "src/lib/stream";
 
 // wrap Balancer to remove type errors :( - @TODO - fix this ugly hack
 const BalancerWrapper = (props: any) => <Balancer {...props} />;
 
-type ChatGPTAgent = "user" | "system" | "assistant";
 
 export interface ChatGPTMessage {
   role: ChatGPTAgent;

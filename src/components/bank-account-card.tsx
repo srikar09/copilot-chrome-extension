@@ -15,9 +15,6 @@ import { Label } from "./ui/label";
 import { BankAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
-import { Sheet } from "lucide-react";
-import { SheetContent, SheetTrigger } from "./ui/sheet";
-import { BankAccountTransactions } from "./account-transactions";
 
 /**
  * Props interface for the BankAccountSummaryCard component.
@@ -92,7 +89,7 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
               </div>
               <div>
                 <Label className="text-2xl font-bold">
-                  ${formatToTwoDecimalPoints(account.balance)}
+                  ${formatToTwoDecimalPoints(account.currentFunds)}
                 </Label>
               </div>
             </div>

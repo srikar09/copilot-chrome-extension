@@ -73,13 +73,12 @@ class PromptContext implements IContextPrompt {
     }
 
     return `
-            Given this financial context 
+            Given this financial context
             ${JSON.stringify(
               this._globalContext
-            )}, act as a cool financial advisor 
-            and answer the following in a personal fashion for ${
+            )}, act as a cool financial advisor. Answer the following question : ${question} in a personal fashion for ${
               this._userAccount.username
-            }: ${question}
+            }. Be specefic and give actionable solutions. Refer to the users financial context. Be sure to show citations. 
             `;
   }
 }

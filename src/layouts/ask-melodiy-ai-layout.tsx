@@ -1,18 +1,11 @@
 import { BrainCircuit, BrainCog, PiggyBank } from "lucide-react";
 import { useState } from "react";
 import { handler } from "src/chat-stream/stream";
-import { InputMessage } from "src/components/chat";
 import {
   ChatGPTMessage,
   ChatLine,
   LoadingChatLine,
 } from "src/components/chat-line";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "src/components/ui/accordion";
 import { Card, CardTitle } from "src/components/ui/card";
 import { ScrollArea } from "src/components/ui/scroll-area";
 import {
@@ -35,6 +28,7 @@ import {
   selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
+import { Button } from "src/components/ui/button";
 
 /**
  * The initial message that the assistant will say.
@@ -46,6 +40,38 @@ const initialAnalyticMessage: ChatGPTMessage[] = [
   },
 ];
 
+function InputMessage ({ input, setInput, sendMessage }: any)  {
+  return (
+  <div className="mt-6 flex clear-both">
+    <input
+      type="text"
+      aria-label="chat input"
+      required
+      className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+      value={input}
+      placeholder="Ask Melodiy AI ..."
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          sendMessage(input);
+          setInput("");
+        }
+      }}
+      onChange={(e) => {
+        setInput(e.target.value);
+      }}
+    />
+    <Button
+      type="submit"
+      className="ml-4 flex-none"
+      onClick={() => {
+        sendMessage(input);
+        setInput("");
+      }}
+    >
+      Ask
+    </Button>
+  </div>
+)}
 /**
  * This is the main layout for the Analytic AI card.
  *

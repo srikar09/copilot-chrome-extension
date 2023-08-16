@@ -42,9 +42,7 @@ const BankAccountsOverviewSummary: React.FC<IProps> = (props) => {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {allBankAccounts.map((account, idx) => (
-            <SheetTrigger key={idx} onClick={() => setSelectedAccount(account)}>
               <BankAccountSummaryCard account={account} key={idx} />
-            </SheetTrigger>
           ))}
         </div>
         <SheetContent className="w-full h-[30%]" side={"bottom"}>

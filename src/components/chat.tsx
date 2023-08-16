@@ -15,11 +15,12 @@ import { PromptContext } from "src/lib/context-prompt";
 export const initialMessages: ChatGPTMessage[] = [
   {
     role: "assistant",
-    content: "Hi! I am Melodiy AI. Ask me anything!",
+    content: "Hi! I am Melodiy AI. Ask me anything related to your finances!",
   },
 ];
 
-const InputMessage = ({ input, setInput, sendMessage }: any) => (
+function InputMessage ({ input, setInput, sendMessage }: any)  {
+  return (
   <div className="mt-6 flex clear-both">
     <input
       type="text"
@@ -49,125 +50,64 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
       Ask
     </Button>
   </div>
-);
+)}
 
-const SendMessage = async (
-  message: string,
-  previousMessages: ChatGPTMessage[],
-  context: any,
-  userKey: string,
-  setMessagesState: React.Dispatch<React.SetStateAction<ChatGPTMessage[]>>,
-  setLoadingState: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  setLoadingState(true);
-  const financialContext = useAppSelector(selectUserFinancialContext);
-  const userAccount = useAppSelector(selectCurrentUserAccount);
-  const promptGenerator = new PromptContext(financialContext, userAccount);
 
-  const contextDrivenQuestion =
-    promptGenerator.getFinancialContextBasedPrompt(message);
 
-  const newMessages = [
-    ...previousMessages,
-    { role: "user", content: message } as ChatGPTMessage,
-  ];
-
-  setMessagesState(newMessages);
-  const last10messages = [
-    ...newMessages.slice(-2),
-    { role: "user", content: contextDrivenQuestion } as ChatGPTMessage,
-  ]; // remember last 2 messages
-
-  // TODO: wrap around a try catch block
-  const data = await handler({
-    last10messages: last10messages,
-    user: userKey,
-    financialContext: context,
-  });
-  const reader = data.getReader();
-  const decoder = new TextDecoder();
-  let done = false;
-
-  let lastMessage = "";
-
-  while (!done) {
-    const { value, done: doneReading } = await reader.read();
-    done = doneReading;
-    const chunkValue = decoder.decode(value);
-
-    lastMessage = lastMessage + chunkValue;
-
-    setMessagesState([
-      ...newMessages,
-      { role: "assistant", content: lastMessage } as ChatGPTMessage,
-    ]);
-
-    setLoadingState(false);
-  }
-};
-
-const Chat: React.FC<{
-  financialContext: MelodyFinancialContext;
-}> = (props) => {
+function Chat(financialContext: any) { // should convert any to an class type
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const profile = useAppSelector(selectCurrentSocialProfile);
   const [userKey] = useState(profile.name);
-  const { financialContext } = props;
+  const userAccount = useAppSelector(selectCurrentUserAccount);
 
-  // send message to API /api/chat endpoint
-  const sendMessage = async (message: string) => {
-    // increase the mixpanel metric for question asked
-    // mixPanelClient.trackEventOfType(MIXPANEL_EVENTS.QUESTION_ASKED);
-
+  const sendMessage = async (
+    message: string,
+  ) => {
     setLoading(true);
-    const financialContext = useAppSelector(selectUserFinancialContext);
-    const userAccount = useAppSelector(selectCurrentUserAccount);
     const promptGenerator = new PromptContext(financialContext, userAccount);
-
+  
     const contextDrivenQuestion =
       promptGenerator.getFinancialContextBasedPrompt(message);
-
+  
     const newMessages = [
-      ...messages,
       { role: "user", content: message } as ChatGPTMessage,
     ];
-
+  
     setMessages(newMessages);
     const last10messages = [
       ...newMessages.slice(-2),
       { role: "user", content: contextDrivenQuestion } as ChatGPTMessage,
     ]; // remember last 2 messages
-
+  
     // TODO: wrap around a try catch block
     const data = await handler({
       last10messages: last10messages,
       user: userKey,
       financialContext: financialContext,
     });
-    
     const reader = data.getReader();
     const decoder = new TextDecoder();
     let done = false;
-
+  
     let lastMessage = "";
-
+  
     while (!done) {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       const chunkValue = decoder.decode(value);
-
+  
       lastMessage = lastMessage + chunkValue;
-
+  
       setMessages([
         ...newMessages,
         { role: "assistant", content: lastMessage } as ChatGPTMessage,
       ]);
-
+  
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="rounded-2xl border-zinc-100  lg:border lg:p-6 w-fit  min-w-md max-w-xl">
@@ -189,6 +129,6 @@ const Chat: React.FC<{
       />
     </div>
   );
-};
+}
 
-export { InputMessage, Chat, SendMessage };
+export { InputMessage, Chat };
