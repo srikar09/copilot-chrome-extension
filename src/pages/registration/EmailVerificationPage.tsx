@@ -79,7 +79,7 @@ export const EmailVerificationPage:React.FC = () => {
                     </div>
                 </div>
             </div>
-            <p className='font-light text-xl text-gray-700 dark:text-gray-700 mb-4'>To verify, simply click on the link we have sent to your email address. If you do not see an email, check your spam folder! After you have verified your email, please click the button above</p>
+            <p className='font-light text-xl text-gray-700 dark:text-gray-200 mb-4'>To verify, simply click on the link we have sent to your email address. If you do not see an email, check your spam folder! After you have verified your email, please click the button above</p>
             <div className="grid gap-6 lg:grid-cols-1 dark:border-gray-700 sm:grid-cols-2">
               <div className="flex">
                 <div className="mr-4 shrink-0">
@@ -96,7 +96,7 @@ export const EmailVerificationPage:React.FC = () => {
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                   Security First
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="font-light text-gray-500 dark:text-gray-200">
                   Verifying your email ensures that your account is secure and that its really you joining our community.
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export const EmailVerificationPage:React.FC = () => {
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                   Smooth Experience
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="font-light text-gray-500 dark:text-gray-200">
                   A verified email ensures a seamless experience, especially if you ever need to recover your account or change settings.
                   </p>
                 </div>

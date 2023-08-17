@@ -6,6 +6,7 @@ import {
   ChatLine,
   LoadingChatLine,
 } from "src/components/chat-line";
+import { Button } from "src/components/ui/button";
 import { Card, CardTitle } from "src/components/ui/card";
 import { ScrollArea } from "src/components/ui/scroll-area";
 import {
@@ -28,7 +29,6 @@ import {
   selectUserFinancialContext,
 } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
-import { Button } from "src/components/ui/button";
 
 /**
  * The initial message that the assistant will say.
@@ -47,7 +47,7 @@ function InputMessage ({ input, setInput, sendMessage }: any)  {
       type="text"
       aria-label="chat input"
       required
-      className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+      className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:text-gray-600 sm:text-sm"
       value={input}
       placeholder="Ask Melodiy AI ..."
       onKeyDown={(e) => {
@@ -148,14 +148,15 @@ const AskMelodiyAILayout: React.FC<{
     const globalContext = JSON.stringify(financialContext).trim();
     const promptGenerator = new PromptContext(financialContext, userAccount);
     let contextDrivenQuestion: string = "";
-    if (enableGlobalFinancialContext) {
+    
+    if (enableGlobalFinancialContext) { // use financial context 
       contextDrivenQuestion = promptGenerator.getFinancialContextBasedPrompt(
         message,
-        questionContext
+        globalContext
       );
     } else {
       contextDrivenQuestion =
-        promptGenerator.getFinancialContextBasedPrompt(message);
+        promptGenerator.getFinancialContextBasedPrompt(message, questionContext);
     }
 
     const newMessages = [
@@ -218,7 +219,7 @@ const AskMelodiyAILayout: React.FC<{
                   {" "}
                   {initialAnalyticMessage.length < 2 && (
                     <>
-                      <span className="mx-auto flex flex-grow text-gray-600 clear-both">
+                      <span className="mx-auto flex flex-grow text-gray-600 dark:text-gray-300 clear-both">
                         Type a message to start the conversation
                       </span>
                       <div className="flex items-center space-x-2 py-3">

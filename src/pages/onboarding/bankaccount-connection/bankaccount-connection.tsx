@@ -16,8 +16,8 @@ export const BankAccountConnectionPage = () => {
                 <ConnectPlaidAccountButton title={`Connect Account`} />
               </div>
             </div>
-            <p className='font-light text-xl text-gray-700 dark:text-gray-700 mb-4'></p>
-            <p className='font-light text-xl text-gray-700 dark:text-gray-700 mb-4'>Connect all your financial accounts ranging from bank accounts to brokerages and experience a streamlined, holistic view of your financial world</p>
+            <p className='font-light text-xl text-gray-700 dark:text-gray-200 mb-4'></p>
+            <p className='font-light text-xl text-gray-700 dark:text-gray-200 mb-4'>Connect all your financial accounts ranging from bank accounts to brokerages and experience a streamlined, holistic view of your financial world</p>
             <div className="grid gap-6 lg:grid-cols-1 dark:border-gray-700 sm:grid-cols-2">
               <div className="flex">
                 <div className="mr-4 shrink-0">
@@ -34,7 +34,7 @@ export const BankAccountConnectionPage = () => {
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                   Safety & Security
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="font-light text-gray-500 dark:text-gray-200">
                   Your financial security is our top priority. We employ state-of-the-art encryption and security measures to ensure that your data is protected and remains confidential.
                   </p>
                 </div>
@@ -54,7 +54,7 @@ export const BankAccountConnectionPage = () => {
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                     Real-time Insights
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="font-light text-gray-500 dark:text-gray-200">
                     Rather than manually entering transactions or updating
                     balances, Melodiy can provide real-time insights based on
                     the latest data from your bank account. This ensures you
@@ -77,7 +77,7 @@ export const BankAccountConnectionPage = () => {
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                     Seamless Financial Planning
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="font-light text-gray-500 dark:text-gray-200">
                     Integrating your bank account allows Melodiy to factor in
                     your actual financial data when helping you set and achieve
                     financial goals, whether its saving for a big purchase,
@@ -100,7 +100,7 @@ export const BankAccountConnectionPage = () => {
                   <p className="mb-1 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                     Proactive Alerts
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="font-light text-gray-500 dark:text-gray-200">
                     With a connected bank account, Melodiy can proactively alert
                     you to potential issues such as upcoming bills, low
                     balances, or unusual spending activity, helping you avoid

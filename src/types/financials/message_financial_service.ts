@@ -560,6 +560,59 @@ export interface Link {
   shouldBeUpdated: boolean;
 }
 
+export interface RefinedLink {
+    /** id */
+    id: number;
+    plaidSync: PlaidSync | undefined;
+    linkStatus: LinkStatus;
+    plaidLink: PlaidLink | undefined;
+    plaidNewAccountsAvailable: boolean;
+    expirationDate: string;
+    institutionName: string;
+    customInstitutionName: string;
+    description: string;
+    lastManualSync: string;
+    lastSuccessfulUpdate: string;
+    /**
+     * token object witholds an access token which is a token used to make API requests related to a specific Item. You will typically obtain an access_token
+     * by calling /item/public_token/exchange. For more details, see the Token exchange flow. An access_token does not expire,
+     * although it may require updating, such as when a user changes their password, or when working with European institutions
+     * that comply with PSD2's 90-day consent window. For more information, see When to use update mode.
+     * Access tokens should always be stored securely, and associated with the user whose data they represent.
+     * If compromised, an access_token can be rotated via /item/access_token/invalidate. If no longer needed,
+     * it can be revoked via /item/remove.(gorm.field).has_one = {disable_association_autocreate: false disable_association_autoupdate: false preload: true}];
+     */
+    token:
+      | Token
+      | undefined;
+    /**
+     * a link event - or client login event can have many connected bank accounts
+     * for example a log in link against one instition like chase can have many account (checking and savings)
+     * it is important though to ensure that if a link against an instition already exists, we dont fascilitate duplicated
+     */
+    bankAccounts: BankAccount[];
+    /**
+     * a link event - or client login event can have many connected investment accounts
+     * for example a log in link against one instition like fidelity can have many accounts (401k and investment account)
+     * it is important though to ensure that if a link against an instition already exists, we dont fascilitate duplicated
+     */
+    investmentAccounts: InvestmentAccount[];
+    /** credit accounts tied to a user */
+    creditAccounts: RefinedCreditAccount[];
+    /** mortgage accounts tied to a user */
+    mortgageAccounts: MortgageAccount[];
+    /** student loan accounts tied to a link */
+    studentLoanAccounts: StudentLoanAccount[];
+    /** the id of the institution this link is tied to and against */
+    plaidInstitutionId: string;
+    /** the type of link this is ... can be either a manual or plaid link type */
+    linkType: LinkType;
+    errorCode: string;
+    updatedAt: string;
+    newAccountsAvailable: boolean;
+    shouldBeUpdated: boolean;
+}
+
 export interface PlaidSync {
   /** id */
   id: number;
@@ -646,6 +699,51 @@ export interface CreditAccount {
   type: string;
   /** the bank account balance */
   balance: number;
+  /** current funds on the account */
+  currentFunds: number;
+  /** balance limit */
+  balanceLimit: number;
+  /** plaid account id mapped to this bank account */
+  plaidAccountId: string;
+  /** accoint subtype */
+  subtype: string;
+  /** wether the account is overdue */
+  isOverdue: boolean;
+  /** the last payment amount */
+  lastPaymentAmount: number;
+  /** the last payment date */
+  lastPaymentDate: string;
+  /** the last statement issue date */
+  lastStatementIssueDate: string;
+  /** the minimum amount due date */
+  minimumAmountDueDate: number;
+  /** the next payment date */
+  nextPaymentDate: string;
+  /** the aprs */
+  aprs: Apr[];
+  /** the last statement balance */
+  lastStatementBalance: number;
+  /** the minimum payment amount */
+  minimumPaymentAmount: number;
+  /** the next payment due date */
+  nextPaymentDueDate: string;
+}
+
+/*
+  A type to represent the credit account types that get passed to gpt prompt
+  The transformed version of credit account
+*/ 
+export interface RefinedCreditAccount {
+  /** id */
+  id: number;
+  /** the user id to which this bank account is tied to */
+  userId: number;
+  /** the account name */
+  name: string;
+  /** the bank account number */
+  number: string;
+  /** the bank account type */
+  type: string;
   /** current funds on the account */
   currentFunds: number;
   /** balance limit */

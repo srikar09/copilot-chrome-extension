@@ -20,11 +20,16 @@ import { Label } from "./ui/label";
 import { CreditAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
+import { transformBaseFinancialProfile } from "./chat";
+import { useAppSelector } from "src/redux/store/hooks";
+import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 
 interface IProps {
   account: CreditAccount;
   institutionName: string;
 }
+
+
 
 const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
   const { account, institutionName } = props;
@@ -35,12 +40,13 @@ const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
     "How is my credit utilization ratio calculated?",
   ];
 
+  const financialProfile = transformBaseFinancialProfile(useAppSelector(selectUserFinancialProfile));
   return (
-    <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
+    <AskMelodiyAILayout context={financialProfile} sampleQuestions={samplQuestions}>
       <Card>
         <CardHeader className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 space-y-0">
           <div className="space-y-1">
-            <CardTitle className="text-xs text-gray-600 font-bold">
+            <CardTitle className="text-xs text-gray-600 dark:text-gray-200 font-bold">
               ${formatToTwoDecimalPoints(account.currentFunds)}
             </CardTitle>
             <CardTitle
@@ -73,13 +79,13 @@ const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
             </div>
             <div>
               <div className="flex gap-1">
-                <span className="text-xs text-gray-600">Account Number: </span>
+                <span className="text-xs text-gray-600 dark:text-gray-200">Account Number: </span>
                 <span className="text-xs font-bold">{account.number}</span>
               </div>
             </div>
             <div className="flex flex-col gap-1">
               <Label className="text-2xl font-bold">
-                ${formatToTwoDecimalPoints(account.balance)}
+                Currently owe: ${formatToTwoDecimalPoints(account.currentFunds)}
               </Label>
               <p
                 style={{
@@ -87,7 +93,7 @@ const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
                 }}
                 className="font-bold"
               >
-                Currently owe ${formatToTwoDecimalPoints(account.currentFunds)}
+                Card balance limit ${account.balanceLimit}
               </p>
               <p
                 style={{

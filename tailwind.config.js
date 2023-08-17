@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable max-len */
 module.exports = {
+    darkMode: false, // or 'media' or 'class'
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "../node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
@@ -92,6 +93,11 @@ module.exports = {
         "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
         "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
       },
+      textColor: {
+        // ... other text colors
+        'dark-default': '#D1D5DB', // This is light gray, adjust as needed
+      },
+  
     },
   },
   safelist: [

@@ -1,5 +1,5 @@
 import { Any } from "./any";
-import { BankAccount, InvestmentAccount, CreditAccount, MortgageAccount, StudentLoanAccount } from "./message_financial_service";
+import { BankAccount, InvestmentAccount, CreditAccount, MortgageAccount, StudentLoanAccount, RefinedCreditAccount } from "./message_financial_service";
 import { Timestamp } from "./timestamp";
 
 export const protobufPackage = "financial_integration_service_api.v1";
@@ -651,6 +651,25 @@ export interface MelodyFinancialContext {
   bankAccounts: BankAccount[];
   investmentAccounts: InvestmentAccount[];
   creditAccounts: CreditAccount[];
+  mortgageLoanAccounts: MortgageAccount[];
+  studentLoanAccounts: StudentLoanAccount[];
+}
+
+/**
+ * MelodyFinancialContext represents the financial context of a user.
+ * This message is used to represent the refined 
+ * financial context of a user that is passed into gpt models.
+ */
+export interface RefinedMelodyFinancialContext {
+  categories: CategoryMetricsFinancialSubProfile[];
+  expenses: ExpenseMetricsFinancialSubProfileMetrics[];
+  income: IncomeMetricsFinancialSubProfile[];
+  locations: LocationFinancialSubProfile[];
+  merchants: MerchantMetricsFinancialSubProfile[];
+  paymentChannels: PaymentChannelMetricsFinancialSubProfile[];
+  bankAccounts: BankAccount[];
+  investmentAccounts: InvestmentAccount[];
+  creditAccounts: RefinedCreditAccount[];
   mortgageLoanAccounts: MortgageAccount[];
   studentLoanAccounts: StudentLoanAccount[];
 }
