@@ -39,11 +39,7 @@ interface IProps {
  */
 const BankAccountSummaryCard: React.FC<IProps> = (props) => {
   const financialProfile = transformBaseFinancialProfile(useAppSelector(selectUserFinancialProfile));
-  console.log("financialProfile")
-  console.log(financialProfile)
-
   const { account } = props;
-
   // get number of pockets
   const numberOfPockets = account.pockets.length;
   // get number of goals
