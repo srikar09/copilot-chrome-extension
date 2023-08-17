@@ -16,8 +16,7 @@ export default function RegistrationPage() {
           className={cn(
             buttonVariants({ variant: "ghost" }),
             " hidden sm:block absolute right-4 top-4  text-xl font-bold "
-          )
-        }
+          )}
         >
           Login
         </Link>
@@ -62,15 +61,14 @@ export default function RegistrationPage() {
               </div>
             </p>
             <Link
-            to={routes.AUTHENTICATION}
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "text-xl font-bold md:hidden lg:hidden"
-            )
-          }
-          >
-            Login
-          </Link>
+              to={routes.AUTHENTICATION}
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "text-xl font-bold md:hidden lg:hidden"
+              )}
+            >
+              Login
+            </Link>
           </div>
         </div>
       </div>
