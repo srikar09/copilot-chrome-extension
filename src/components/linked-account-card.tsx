@@ -8,16 +8,9 @@ const LinkedAccountCard: React.FC<{
   const { plaidLink } = link;
   // compute the sum of all bank accounts under this linked account
   const totalBankAccountBalance = link.bankAccounts.reduce((acc, account) => {
-    return acc + account.balance;
+    return acc + account.currentFunds;
   }, 0);
 
-  // compute the same for all credit cards
-  const totalCreditCardBalance = link.creditAccounts.reduce((acc, card) => {
-    return acc + card.currentFunds;
-  }, 0);
-
-  // compute the total balance
-  const totalBalance = totalBankAccountBalance + totalCreditCardBalance;
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -38,7 +31,7 @@ const LinkedAccountCard: React.FC<{
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">${totalBalance}</div>
+        <div className="text-2xl font-bold"> Total cash balance for {plaidLink?.institutionName} : ${totalBankAccountBalance}</div>
         {/* <p className="text-xs text-muted-foreground">+20.1% from last month</p> */}
       </CardContent>
     </Card>

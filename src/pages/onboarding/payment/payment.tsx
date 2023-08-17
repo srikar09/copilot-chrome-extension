@@ -35,7 +35,7 @@ export const PaymentPage = () => {
               <div className="flex">
                 <div className="flex justify-center items-center mr-4 w-12 h-12 bg-white rounded shadow shrink-0 dark:bg-gray-700">
                   <svg
-                    className="w-7 h-7 text-gray-900 dark:text-gray-400"
+                    className="w-7 h-7 text-gray-900 dark:text-gray-200"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -47,16 +47,15 @@ export const PaymentPage = () => {
                   <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
                     Today
                   </h3>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
-                    Connect all your accounts and ask as many questions as you
-                    want. Start talking to your financial co-pilot today !
+                  <p className="font-light text-gray-500 dark:text-gray-200">
+                    Connect all your accounts and ask as many questions as you want. Start talking to your financial co-pilot today !
                   </p>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex justify-center items-center mr-4 w-12 h-12 bg-white rounded shadow shrink-0 dark:bg-gray-700">
                   <svg
-                    className="w-7 h-7 text-gray-900 dark:text-gray-400"
+                    className="w-7 h-7 text-gray-900 dark:text-gray-200"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -68,16 +67,15 @@ export const PaymentPage = () => {
                   <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
                     In 3 days
                   </h3>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
-                    Your subscription starts in 3 days unless you have cancelled
-                    during the trial period
+                  <p className="font-light text-gray-500 dark:text-gray-200">
+                    Your subscription starts in 3 days unless you have cancelled during the trial period
                   </p>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex justify-center items-center mr-4 w-12 h-12 bg-white rounded shadow shrink-0 dark:bg-gray-700">
                   <svg
-                    className="w-7 h-7 text-gray-900 dark:text-gray-400"
+                    className="w-7 h-7 text-gray-900 dark:text-gray-200"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -89,9 +87,8 @@ export const PaymentPage = () => {
                   <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
                     You are in control
                   </h3>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
-                    Be a part of melodiy for however long you want. Cancel
-                    anytime you want in just 15 seconds !
+                  <p className="font-light text-gray-500 dark:text-gray-200">
+                    Be a part of melodiy for however long you want. Cancel anytime you want in just 15 seconds !
                   </p>
                 </div>
               </div>
@@ -115,7 +112,7 @@ export const PaymentPage = () => {
                     <div className="mr-1 text-xl font-extrabold text-gray-900 lg:text-5xl dark:text-white">
                       $7.99
                     </div>
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <span className="text-gray-500 dark:text-gray-200">
                       /month
                     </span>
                   </div>
@@ -125,7 +122,7 @@ export const PaymentPage = () => {
                 <div className="text-2xl font-extrabold text-gray-900 lg:text-5xl dark:text-white">
                   $7.99
                 </div>
-                <span className="text-gray-500 dark:text-gray-400">
+                <span className="text-gray-500 dark:text-gray-200">
                   per month
                 </span>
               </div>
@@ -148,7 +145,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Tailored Recommendations
                   </span>
                 </li>
@@ -161,7 +158,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Smart Spending Strategies
                   </span>
                 </li>
@@ -174,7 +171,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Optimized Investments
                   </span>
                 </li>
@@ -187,7 +184,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Effective Debt Management
                   </span>
                 </li>
@@ -203,7 +200,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Conversational Layer On Your Finances
                   </span>
                 </li>
@@ -216,7 +213,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Security & Privacy
                   </span>
                 </li>
@@ -229,7 +226,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     Actionable Insights
                   </span>
                 </li>
@@ -242,7 +239,7 @@ export const PaymentPage = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
                   </svg>
-                  <span className="font-light leading-tight text-gray-500 dark:text-gray-400">
+                  <span className="font-light leading-tight text-gray-500 dark:text-gray-200">
                     AI Copilot
                   </span>
                 </li>

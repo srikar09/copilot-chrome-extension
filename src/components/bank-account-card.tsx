@@ -15,6 +15,10 @@ import { Label } from "./ui/label";
 import { BankAccount } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
+import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import { useAppSelector } from "src/redux/store/hooks";
+import { FinancialProfile } from "src/types/user/financial-profile";
+import { transformBaseFinancialProfile } from "./chat";
 
 /**
  * Props interface for the BankAccountSummaryCard component.
@@ -34,6 +38,10 @@ interface IProps {
  * @returns A React functional component.
  */
 const BankAccountSummaryCard: React.FC<IProps> = (props) => {
+  const financialProfile = transformBaseFinancialProfile(useAppSelector(selectUserFinancialProfile));
+  console.log("financialProfile")
+  console.log(financialProfile)
+
   const { account } = props;
 
   // get number of pockets
@@ -52,11 +60,11 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
 
   return (
     <>
-      <AskMelodiyAILayout context={account} sampleQuestions={samplQuestions}>
+      <AskMelodiyAILayout context={financialProfile} sampleQuestions={samplQuestions}>
         <Card>
           <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
             <div className="space-y-1 text-left">
-              <CardTitle className="text-xs text-gray-900 font-bold">
+              <CardTitle className="text-xs text-gray-900 dark:text-gray-200 font-bold">
                 ${formatToTwoDecimalPoints(account.currentFunds)}
               </CardTitle>
               <CardTitle
@@ -81,7 +89,7 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
               </div>
               <div>
                 <div className="flex gap-1">
-                  <span className="text-xs text-gray-600">
+                  <span className="text-xs text-gray-600 dark:text-gray-200">
                     Account Number:{" "}
                   </span>
                   <span className="text-xs font-bold">{account.number}</span>
@@ -172,3 +180,5 @@ function formatPocketNameString(input: string): string {
 }
 
 export { BankAccountSummaryCard };
+
+
