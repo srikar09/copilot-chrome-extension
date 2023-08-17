@@ -13,6 +13,15 @@ export const PaymentPage = () => {
 
   const { stripeCustomerId } = currentFinancialProfile;
   const { email } = currentUserAccount;
+  let targetUrl = "";
+  if (stripeCustomerId && email) {
+    targetUrl = `https://checkout.melodiy.co/b/8wMbMm0kdecY3hScMP?prefilled_email=${email}&client_reference_id=${stripeCustomerId}`;
+  } else if (email) {
+    targetUrl = `https://checkout.melodiy.co/b/8wMbMm0kdecY3hScMP?prefilled_email=${email}`;
+  } else {
+    targetUrl = `https://checkout.melodiy.co/b/8wMbMm0kdecY3hScMP`;
+  }
+
   return (
     <div className="p-10 lg:p-20">
       <Logo />
@@ -94,9 +103,7 @@ export const PaymentPage = () => {
               <div>
                 <div className="pt-5">
                   <div className="border rounded-2xl p-4 flex justify-center max-w-[200px] bg-black text-white">
-                    <Link
-                      to={`https://checkout.melodiy.co/b/8wMbMm0kdecY3hScMP?prefilled_email=${email}&client_reference_id=${stripeCustomerId}`}
-                    >
+                    <Link to={`${targetUrl}`}>
                       <p className="text-2xl font-bold rounded-2xl">
                         Start your free trial!{" "}
                       </p>
