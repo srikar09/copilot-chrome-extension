@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 import { Logo } from "src/components/Logo";
 import { Layout } from "src/layouts/layout";
-import { selectCurrentUserAccount } from "src/redux/slice/authentication/AuthenticationSelector";
+import {
+  selectCurrentUserAccount,
+  selectUserFinancialProfile,
+} from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 
 export const PaymentPage = () => {
   const currentUserAccount = useAppSelector(selectCurrentUserAccount);
+  const currentFinancialProfile = useAppSelector(selectUserFinancialProfile);
+
+  const { stripeCustomerId } = currentFinancialProfile;
   const { email } = currentUserAccount;
   return (
     <div className="p-10 lg:p-20">
@@ -33,7 +39,8 @@ export const PaymentPage = () => {
                     Today
                   </h3>
                   <p className="font-light text-gray-500 dark:text-gray-400">
-                    Connect all your accounts and ask as many questions as you want. Start talking to your financial co-pilot today !
+                    Connect all your accounts and ask as many questions as you
+                    want. Start talking to your financial co-pilot today !
                   </p>
                 </div>
               </div>
@@ -50,10 +57,11 @@ export const PaymentPage = () => {
                 </div>
                 <div>
                   <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
-                    In 3 days 
+                    In 3 days
                   </h3>
                   <p className="font-light text-gray-500 dark:text-gray-400">
-                    Your subscription starts in 3 days unless you have cancelled during the trial period
+                    Your subscription starts in 3 days unless you have cancelled
+                    during the trial period
                   </p>
                 </div>
               </div>
@@ -73,25 +81,25 @@ export const PaymentPage = () => {
                     You are in control
                   </h3>
                   <p className="font-light text-gray-500 dark:text-gray-400">
-                    Be a part of melodiy for however long you want. Cancel anytime you want in just 15 seconds !
+                    Be a part of melodiy for however long you want. Cancel
+                    anytime you want in just 15 seconds !
                   </p>
                 </div>
               </div>
-              <div className="flex">
-               
-            
-              </div>
+              <div className="flex"></div>
             </div>
           </div>
           <div className="flex flex-col p-6 bg-white rounded-lg shadow xl:p-8 dark:bg-gray-800">
             <div className="justify-between items-center md:flex">
               <div>
-                  <div className="pt-5">
+                <div className="pt-5">
                   <div className="border rounded-2xl p-4 flex justify-center max-w-[200px] bg-black text-white">
                     <Link
-                      to={`https://checkout.melodiy.co/b/8wMbMm0kdecY3hScMP?prefilled_email=${email}`}
+                      to={`https://checkout.melodiy.co/b/8wMbMm0kdecY3hScMP?prefilled_email=${email}&client_reference_id=${stripeCustomerId}`}
                     >
-                      <p className="text-2xl font-bold rounded-2xl">Start your free trial!  </p>
+                      <p className="text-2xl font-bold rounded-2xl">
+                        Start your free trial!{" "}
+                      </p>
                     </Link>
                   </div>
                 </div>
@@ -105,7 +113,6 @@ export const PaymentPage = () => {
                     </span>
                   </div>
                 </div>
-                
               </div>
               <div className="hidden md:block">
                 <div className="text-2xl font-extrabold text-gray-900 lg:text-5xl dark:text-white">
@@ -116,7 +123,7 @@ export const PaymentPage = () => {
                 </span>
               </div>
             </div>
-           
+
             <a
               href="#"
               className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-5 lg:my-8 dark:focus:ring-primary-900"
