@@ -93,19 +93,22 @@ const initialAnalyticMessage: ChatGPTMessage[] = [
   Base chat component that accepts financial context and sample questions
   should convert any to a class type that all contexts can inherit from 
 */
-function Chat({baseContext, sampleQuestions}: ChatProps) {
+function Chat({baseContext, sampleQuestions, secondaryContext}: ChatProps) {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const profile = useAppSelector(selectCurrentSocialProfile);
   const [userKey] = useState(profile.name);
   const userAccount = useAppSelector(selectCurrentUserAccount);
+  const [context, setContext] = useState(baseContext);
+  console.log("context:")
+  console.log(context)
 
   const sendMessage = async (
     message: string,
   ) => {
     setLoading(true);
-    const promptGenerator = new PromptContext(baseContext, userAccount);
+    const promptGenerator = new PromptContext(context, userAccount);
   
     const contextDrivenQuestion =
       promptGenerator.getFinancialContextBasedPrompt(message);
@@ -150,7 +153,7 @@ function Chat({baseContext, sampleQuestions}: ChatProps) {
   }
 
   return (
-    <div>
+    <div className="max-w-screen">
        <ScrollArea>
                 {messages.map(({ content, role }, index) => (
                   <ChatLine key={index} role={role} content={content} />
@@ -164,53 +167,31 @@ function Chat({baseContext, sampleQuestions}: ChatProps) {
                       <span className="mx-auto flex flex-grow text-gray-600 dark:text-gray-300 clear-both">
                         Type a message to start the conversation
                       </span>
-                      <div className="flex items-center space-x-2 py-3">
-                        <Switch
-                          id="terms"
-                          className="rounded-full"
-                          onClick={() => {
-                            
-                          }}
-                        />
-                        <label
-                          htmlFor="terms"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Enable investments context 
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-2 py-3">
-                        <Switch
-                          id="terms"
-                          className="rounded-full"
-                          onClick={() => {
-                            
-                          }}
-                        />
-                        <label
-                          htmlFor="terms"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Inquire about my general accounts
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-2 py-3">
-                        <Switch
-                          id="terms"
-                          className="rounded-full"
-                          onClick={() => {
-                            
-                          }}
-                        />
-                        <label
-                          htmlFor="terms"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Enable Financial Global Context
-                        </label>
-                      </div>
                     </>
                   )}
+                  { secondaryContext?.map((secondaryContext)=>(
+                     <div key={secondaryContext.contextName} className="flex items-center space-x-2 py-3">
+                     <Switch
+                       id="terms"
+                       className="rounded-full"
+                       onClick={() => {
+                          if(context===secondaryContext){
+                            setContext(baseContext)
+                          }
+                          else{
+                            setContext(secondaryContext)
+                          }
+                       }}
+                     />
+                     <label
+                       htmlFor="terms"
+                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                     >
+                       Ask questions against {secondaryContext.contextName}
+                     </label>
+                   </div>
+                  ) 
+                ) }
                 </SelectLabel>
                 </SelectGroup>
                 <div className="grid grid-cols-2 gap-2">
@@ -231,13 +212,12 @@ function Chat({baseContext, sampleQuestions}: ChatProps) {
                     </Card>
                   ))}
                 </div>
-              </ScrollArea>
-
-              <InputMessage
-                input={input}
+        </ScrollArea>
+        <InputMessage
+          input={input}
                 setInput={setInput}
-                sendMessage={sendMessage}
-              />
+          sendMessage={sendMessage}
+        />
     </div>
   );
 }
@@ -248,29 +228,29 @@ function Chat({baseContext, sampleQuestions}: ChatProps) {
     1) Removes the balance fields from credit accounts to prevent open AI models from getting confused
 */
 function transformBaseFinancialContext(financialContext: MelodyFinancialContext): RefinedMelodyFinancialContext{
-  const refinedCreditAccounts = financialContext.creditAccounts.map((creditAccount):RefinedCreditAccount=>{
-    return{
-      id:creditAccount.id,
-      userId: creditAccount.userId,
-      name: creditAccount.name,
-      number: creditAccount.number,
-      type: creditAccount.type,
-      currentFunds: creditAccount.currentFunds,
-      balanceLimit: creditAccount.balanceLimit,
-      plaidAccountId: creditAccount.plaidAccountId,
-      subtype: creditAccount.subtype,
-      isOverdue: creditAccount.isOverdue,
-      lastPaymentAmount: creditAccount.lastPaymentAmount,
-      lastPaymentDate: creditAccount.lastPaymentDate,
-      lastStatementIssueDate: creditAccount.lastStatementIssueDate,
-      minimumAmountDueDate: creditAccount.minimumAmountDueDate,
-      nextPaymentDate: creditAccount.nextPaymentDate,
-      aprs: creditAccount.aprs,
-      lastStatementBalance: creditAccount.lastStatementBalance,
-      minimumPaymentAmount: creditAccount.minimumPaymentAmount,
-      nextPaymentDueDate: creditAccount.nextPaymentDueDate
+    const refinedCreditAccounts = financialContext.creditAccounts.map((creditAccount):RefinedCreditAccount=>{
+      return{
+        id:creditAccount.id,
+        userId: creditAccount.userId,
+        name: creditAccount.name,
+        number: creditAccount.number,
+        type: creditAccount.type,
+        currentFunds: creditAccount.currentFunds,
+        balanceLimit: creditAccount.balanceLimit,
+        plaidAccountId: creditAccount.plaidAccountId,
+        subtype: creditAccount.subtype,
+        isOverdue: creditAccount.isOverdue,
+        lastPaymentAmount: creditAccount.lastPaymentAmount,
+        lastPaymentDate: creditAccount.lastPaymentDate,
+        lastStatementIssueDate: creditAccount.lastStatementIssueDate,
+        minimumAmountDueDate: creditAccount.minimumAmountDueDate,
+        nextPaymentDate: creditAccount.nextPaymentDate,
+        aprs: creditAccount.aprs,
+        lastStatementBalance: creditAccount.lastStatementBalance,
+        minimumPaymentAmount: creditAccount.minimumPaymentAmount,
+        nextPaymentDueDate: creditAccount.nextPaymentDueDate
+      }
     }
-  }
   )
   const refinedFinancialContext:RefinedMelodyFinancialContext = {...financialContext}; 
   refinedFinancialContext.creditAccounts= refinedCreditAccounts
