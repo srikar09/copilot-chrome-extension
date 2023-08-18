@@ -32,6 +32,8 @@ import { useAppSelector } from "src/redux/store/hooks";
 
 /**
  * The initial message that the assistant will say.
+ * TODO: CONSOLIDATE THIS AND THE OTHER MELODIY CHAT COMPONENT. 
+ * USE THE MELODIY CHAT COMPONENT HERE. WE HAVE REPLICATED CODE RN
  */
 const initialAnalyticMessage: ChatGPTMessage[] = [
   {
