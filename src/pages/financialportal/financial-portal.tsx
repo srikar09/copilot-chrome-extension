@@ -157,7 +157,7 @@ const FinancialPortal: React.FC = () => {
           </TabsContent>
         </Tabs>
       </div>
-      <div className="mb-2 md:hidden lg:hidden" >
+      <div className="mb-2 md:hidden block lg:hidden" >
         <select 
           value={selectedAccountType}
           onChange={(e) => setSelectedAccountType(e.target.value as SelectedAccountType)}

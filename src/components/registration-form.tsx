@@ -304,8 +304,8 @@ const TagsSelector: React.FC<{
                   onClick={() => onSelectTags(item.tagName)}
                   className={
                     selectedTags.includes(item)
-                      ? "bg-black text-white font-bold"
-                      : "bg-white text-blue-600 font-bold"
+                      ? "bg-black text-white font-bold dark:bg-blue-400"
+                      : "bg-white text-blue-600 font-bold dark:bg-black dark:text-white"
                   }
                   key={idx}
                 >
