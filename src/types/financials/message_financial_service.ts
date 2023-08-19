@@ -596,7 +596,7 @@ export interface RefinedLink {
      * for example a log in link against one instition like fidelity can have many accounts (401k and investment account)
      * it is important though to ensure that if a link against an instition already exists, we dont fascilitate duplicated
      */
-    investmentAccounts: InvestmentAccount[];
+    investmentAccounts: RefinedInvestmentAccount[];
     /** credit accounts tied to a user */
     creditAccounts: RefinedCreditAccount[];
     /** mortgage accounts tied to a user */
@@ -731,7 +731,7 @@ export interface CreditAccount {
 
 /*
   A type to represent the credit account types that get passed to gpt prompt
-  The transformed version of credit account
+  The transformed version of credit account. Needs to be refined for token length reasons and also to name the fields properly
 */ 
 export interface RefinedCreditAccount {
   /** id */
@@ -833,6 +833,32 @@ export interface InvestmentAccount {
   /** the set of securities this account witholds */
   securities: InvestmentSecurity[];
 }
+
+export interface RefinedInvestmentAccount {
+  /** id */
+  id: number;
+  /** the user id to which this bank account is tied to */
+  userId: number;
+  /** the account name */
+  name: string;
+  /** the bank account number */
+  number: string;
+  /** the bank account type */
+  type: string;
+
+  currentFunds: number;
+  balanceLimit: number;
+  /** plaid account id mapped to this bank account */
+  plaidAccountId: string;
+  /** accoint subtype */
+  subtype: string;
+  /** invesment holding is the set of securities this account witholds */
+  holdings: RefinedInvesmentHolding[];
+  /** the set of securities this account witholds */
+  securities: RefinedInvestmentSecurity[];
+}
+
+
 
 export interface BankAccount {
   /** id */
@@ -1038,6 +1064,14 @@ export interface InvesmentHolding {
   unofficialCurrencyCode: string;
 }
 
+export interface RefinedInvesmentHolding{
+  costBasis: number;
+  institutionPrice: number;
+  institutionPriceAsOf: string;
+  isoCurrencyCode: string;
+  quantity: number;
+}
+
 export interface InvestmentSecurity {
   /** id */
   id: number;
@@ -1057,6 +1091,17 @@ export interface InvestmentSecurity {
   type: string;
   unofficialCurrencyCode: string;
   updateDatetime: string;
+}
+
+export interface RefinedInvestmentSecurity{
+  tickerSymbol: string,
+  type: string, 
+  closePrice: number;
+  closePriceAsOf: string;
+  cusip: string; 
+  isCashEquivalent:boolean,
+  isoCurrencyCode: string,
+  name: string
 }
 
 export interface Apr {

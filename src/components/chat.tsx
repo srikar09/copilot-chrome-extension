@@ -18,7 +18,7 @@ import { handler } from "src/chat-stream/stream";
 import { MelodyFinancialContext, RefinedMelodyFinancialContext } from "src/types/financials/clickhouse_financial_service";
 import { PromptContext } from "src/lib/context-prompt";
 import { FinancialProfile, RefinedFinancialProfile } from "src/types/user/financial-profile";
-import { RefinedCreditAccount, RefinedLink } from "src/types/financials/message_financial_service";
+import { RefinedCreditAccount, RefinedInvesmentHolding, RefinedInvestmentAccount, RefinedInvestmentSecurity, RefinedLink } from "src/types/financials/message_financial_service";
 import { ScrollArea } from "src/components/ui/scroll-area";
 
 // default first message to display in UI (not necessary to define the prompt)
@@ -101,8 +101,6 @@ function Chat({baseContext, sampleQuestions, secondaryContext}: ChatProps) {
   const [userKey] = useState(profile.name);
   const userAccount = useAppSelector(selectCurrentUserAccount);
   const [context, setContext] = useState(baseContext);
-  console.log("context:")
-  console.log(context)
 
   const sendMessage = async (
     message: string,
@@ -153,7 +151,7 @@ function Chat({baseContext, sampleQuestions, secondaryContext}: ChatProps) {
   }
 
   return (
-    <div className="max-w-screen">
+    <div className="max-w-screen px-2 flex flex-col ">
        <ScrollArea>
                 {messages.map(({ content, role }, index) => (
                   <ChatLine key={index} role={role} content={content} />
@@ -164,8 +162,8 @@ function Chat({baseContext, sampleQuestions, secondaryContext}: ChatProps) {
                   {" "}
                   {initialAnalyticMessage.length < 2 && (
                     <>
-                      <span className="mx-auto flex flex-grow text-gray-600 dark:text-gray-300 clear-both">
-                        Type a message to start the conversation
+                      <span className="mx-auto flex flex-grow text-gray-600 dark:text-gray-600 clear-both">
+                        If you dont pick an option below, you can ask quesitons regarding your overall finances!
                       </span>
                     </>
                   )}
@@ -260,8 +258,13 @@ function transformBaseFinancialContext(financialContext: MelodyFinancialContext)
 /*
   This function transforms the base financial profile 
   to improve the quality of responses coming out of chat gpt
+  
   Current functionality: 
-    1) Removes the balance fields from credit accounts
+    credit Accounts: 
+      1) Removes the balance fields from credit accounts
+    Investments: 
+      1) Reduces holdings object size. Maps holdings to refined holdings
+      2) Reduces securities object size. Maps securities to refined securities
 */
 function transformBaseFinancialProfile(financialProfile: FinancialProfile):RefinedFinancialProfile{
   const refinedLinkAccounts = financialProfile.link.map((link):RefinedLink=> {
@@ -289,8 +292,48 @@ function transformBaseFinancialProfile(financialProfile: FinancialProfile):Refin
       }
     }
     )
+    const refinedInvestmentAccounts:RefinedInvestmentAccount[] = link.investmentAccounts.map((investmentAccount)=>{
+      
+      const refinedHoldings: RefinedInvesmentHolding[] = investmentAccount.holdings.map((holding): RefinedInvesmentHolding=> {
+        return{
+          costBasis: holding.costBasis,
+          institutionPrice: holding.institutionPrice,
+          institutionPriceAsOf: holding.institutionPriceAsOf,
+          isoCurrencyCode: holding.isoCurrencyCode,
+          quantity: holding.quantity
+        }
+      })
+
+      const refinedSecurities:RefinedInvestmentSecurity[] =  investmentAccount.securities.map((security)=> {
+        return {
+          tickerSymbol: security.tickerSymbol,
+          type: security.type, 
+          closePrice: security.closePrice,
+          closePriceAsOf: security.closePriceAsOf,
+          cusip: security.cusip, 
+          isCashEquivalent:security.isCashEquivalent,
+          isoCurrencyCode: security.isoCurrencyCode,
+          name: security.name
+        }
+      })
+
+      return{
+        id:investmentAccount.id,
+        userId:investmentAccount.userId,
+        name:investmentAccount.name,
+        number:investmentAccount.number,
+        type: investmentAccount.type,
+        currentFunds: investmentAccount.currentFunds,
+        balanceLimit: investmentAccount.balanceLimit,
+        plaidAccountId: investmentAccount.plaidAccountId,
+        subtype: investmentAccount.subtype,
+        holdings: refinedHoldings,
+        securities: refinedSecurities
+      }
+    })
     const refinedLinkAccount:RefinedLink = {...link}
     refinedLinkAccount.creditAccounts = refinedCreditAccounts
+    refinedLinkAccount.investmentAccounts=refinedInvestmentAccounts
     return refinedLinkAccount;
   } )
 
