@@ -51,6 +51,7 @@ export const routes: {
   PAYMENT: string;
   CONNECT_BANK_ACCOUNT: string;
   FEEDBACK_EXTERNAL_URL: string;
+  PLAID: string;
 } = {
   REGISTRATION: "/registration",
   AUTHENTICATION: "/sign-in",
@@ -77,6 +78,7 @@ export const routes: {
   RESET_PASSWORD: "/reset-password",
   PAYMENT: "/payment",
   CONNECT_BANK_ACCOUNT: "/connect-bank-account",
+  PLAID: "/connect-plaid-account",
   FEEDBACK_EXTERNAL_URL:
     "https://docs.google.com/forms/d/e/1FAIpQLSdWdOJwdwVfvkhYul83xGAbyD0EGvlKAPvRXkwTjAWe7z7r9Q/viewform",
 };

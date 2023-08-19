@@ -129,4 +129,4 @@ const AccountSheet: React.FC<{
   );
 };
 
-export { AccountOverviewSummaryHeader };
+export { AccountOverviewSummaryHeader, AccountSheet };

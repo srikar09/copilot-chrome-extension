@@ -14,6 +14,7 @@ import RegistrationPage from "src/pages/registration/registration-page";
 import { PaymentPage } from "src/pages/onboarding/payment/payment";
 import { BankAccountConnectionPage } from "src/pages/onboarding/bankaccount-connection/bankaccount-connection";
 import { EmailVerificationPage } from "src/pages/registration/EmailVerificationPage";
+import { ConnectPlaidAccountButton } from "src/components/connect-plaid-account-button";
 
 /**
  * Global Routes component to define the routing configuration for the application.
@@ -26,6 +27,7 @@ function GlobalRoutes() {
         {/* Route for the authentication page */}
         <Route path={routes.AUTHENTICATION} element={<LoginPage />} />
         <Route path={routes.EMAILVERIFICATION} element={<EmailVerificationPage />} />
+        <Route path={routes.PLAID} element={<ConnectPlaidAccountButton title={"Connect a new account"} />} />
 
         {/* Route for the verification page with a dynamic user ID */}
         <Route path="/verification/:userID" element={<VerificationPage />} />
