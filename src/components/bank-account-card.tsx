@@ -12,12 +12,11 @@ import {
 import { formatToTwoDecimalPoints } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import { BankAccount } from "src/types/financials/message_financial_service";
+import { BankAccount, RefinedLink } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
-import { FinancialProfile } from "src/types/user/financial-profile";
 import { transformBaseFinancialProfile } from "./chat";
 
 /**
@@ -39,6 +38,13 @@ interface IProps {
  */
 const BankAccountSummaryCard: React.FC<IProps> = (props) => {
   const financialProfile = transformBaseFinancialProfile(useAppSelector(selectUserFinancialProfile));
+  let bankAccounts:BankAccount[]=[];
+  financialProfile.link.reduce((acc: BankAccount[], current: RefinedLink) => {
+    const {bankAccounts} = current
+    acc.push(...bankAccounts)
+    return acc
+  },bankAccounts)
+
   const { account } = props;
   // get number of pockets
   const numberOfPockets = account.pockets.length;
@@ -56,7 +62,7 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
 
   return (
     <>
-      <AskMelodiyAILayout context={financialProfile} sampleQuestions={samplQuestions}>
+      <AskMelodiyAILayout context={bankAccounts} sampleQuestions={samplQuestions}>
         <Card>
           <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
             <div className="space-y-1 text-left">

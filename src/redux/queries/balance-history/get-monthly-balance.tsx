@@ -16,7 +16,7 @@ const GetMonthlyBalance = api.injectEndpoints({
         return response;
       },
       providesTags: (result, error, arg) => {
-        if (!result || !result.monthlyBalances) {
+        if (!result?.monthlyBalances || !result.monthlyBalances) {
           return ["MONTHLY_ACCOUNT_BALANCE"];
         }
 

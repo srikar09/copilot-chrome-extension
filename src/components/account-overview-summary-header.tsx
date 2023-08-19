@@ -57,7 +57,7 @@ const AccountOverviewSummaryHeader: React.FC<IProps> = (props) => {
  * @param props - The props for the component.
  * @returns A React functional component.
  */
-const AccountSheet: React.FC<{ 
+const AccountSheet: React.FC<{
   buttonTitle: string;
 }> = (props) => {
   const { buttonTitle } = props;

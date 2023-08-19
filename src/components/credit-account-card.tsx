@@ -17,7 +17,7 @@ import {
 } from "src/lib/utils";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import { CreditAccount } from "src/types/financials/message_financial_service";
+import { CreditAccount, RefinedCreditAccount, RefinedLink } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 import { transformBaseFinancialProfile } from "./chat";
@@ -41,8 +41,16 @@ const CreditAccountSummaryCard: React.FC<IProps> = (props) => {
   ];
 
   const financialProfile = transformBaseFinancialProfile(useAppSelector(selectUserFinancialProfile));
+  let creditAccounts:[]=[];
+  
+  financialProfile.link.reduce((acc: RefinedCreditAccount[], current: RefinedLink) => {
+    const {creditAccounts} = current
+    acc.push(...creditAccounts)
+    return acc
+  },creditAccounts)
+  
   return (
-    <AskMelodiyAILayout context={financialProfile} sampleQuestions={samplQuestions}>
+    <AskMelodiyAILayout context={creditAccounts} sampleQuestions={samplQuestions}>
       <Card>
         <CardHeader className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 space-y-0">
           <div className="space-y-1">

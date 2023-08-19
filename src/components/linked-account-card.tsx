@@ -11,6 +11,10 @@ const LinkedAccountCard: React.FC<{
     return acc + account.currentFunds;
   }, 0);
 
+  function roundUpToTwoDecimalPlaces(num: number): number {
+    return Math.ceil(num * 100) / 100;
+  }
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -31,7 +35,7 @@ const LinkedAccountCard: React.FC<{
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold"> Total cash balance for {plaidLink?.institutionName} : ${totalBankAccountBalance}</div>
+        <div className="text-2xl font-bold"> Total cash balance for {plaidLink?.institutionName} : ${roundUpToTwoDecimalPlaces(totalBankAccountBalance)}</div>
         {/* <p className="text-xs text-muted-foreground">+20.1% from last month</p> */}
       </CardContent>
     </Card>
