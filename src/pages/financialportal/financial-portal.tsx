@@ -91,10 +91,9 @@ const FinancialPortal: React.FC = () => {
   // compute the sum of all bank accounts under this linked account
   // compute the same for all credit cards
   // compute the total balance
-
   return (
     <>
-      <div>
+      <div className="sm:block hidden">
         <h2 className="ml-5 text-xl font-bold tracking-tight">
           Overview{" "}
           <span className="ml-1 text-xs"> ({linkedBankAccounts.length})</span>
@@ -157,6 +156,35 @@ const FinancialPortal: React.FC = () => {
             <RecurringTransactionOverview />
           </TabsContent>
         </Tabs>
+      </div>
+      <div className="mb-2 md:hidden lg:hidden" >
+        <select 
+          value={selectedAccountType}
+          onChange={(e) => setSelectedAccountType(e.target.value as SelectedAccountType)}
+          className="m-1 bg-black py-2 text-white"
+        >
+          <option value={SelectedAccountType.BANK_ACCOUNT}>Bank Account</option>
+          <option value={SelectedAccountType.CREDIT_CARD}>Credit Account</option>
+          <option value={SelectedAccountType.INVESTMENT_ACCOUNT}>Investment Account</option>
+          <option value={SelectedAccountType.TRANSACTIONS}>Transactions</option>
+          <option value={SelectedAccountType.SUBSCRIPTIONS}>Subscriptions</option>
+        </select>
+
+        {selectedAccountType === SelectedAccountType.BANK_ACCOUNT && (
+          <BankAccountsOverviewSummary allBankAccounts={allBankAccounts} />
+        )}
+        {selectedAccountType === SelectedAccountType.CREDIT_CARD && (
+          <CreditAccountsOverviewSummary creditCardToInstitutionNameMap={creditCardToInstitutionNameMap} />
+        )}
+        {selectedAccountType === SelectedAccountType.INVESTMENT_ACCOUNT && (
+          <InvestmentAccountsView investment_accounts={allInvestmentAccounts} />
+        )}
+        {selectedAccountType === SelectedAccountType.TRANSACTIONS && (
+          <TransactionOverview />
+        )}
+        {selectedAccountType === SelectedAccountType.SUBSCRIPTIONS && (
+          <RecurringTransactionOverview />
+        )}
       </div>
     </>
   );

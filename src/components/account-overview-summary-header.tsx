@@ -42,8 +42,11 @@ const AccountOverviewSummaryHeader: React.FC<IProps> = (props) => {
 
   return (
     <div className="flex flex-row justify-between">
-      <h2 className="ml-5 text-xl font-bold tracking-tight pb-5">
-        {title} <span className="ml-1 text-xs"> ({count})</span>
+      <h2 className="ml-2 text-xl font-bold tracking-tight pb-5">
+        {title} <span className="ml-5 text-xs"> ({count})</span>
+      </h2>
+      <h2>
+        {count === 0 ? <span className="sm:block hidden mx-6 sm:text-xl md:text-s font-bold">Please connect {title}. If you have already connected your accounts, we are fetching your data ! Hang tight :)</span> : null}
       </h2>
       <AccountSheet buttonTitle={buttonTitle} />
     </div>
@@ -129,4 +132,4 @@ const AccountSheet: React.FC<{
   );
 };
 
-export { AccountOverviewSummaryHeader, AccountSheet };
+export { AccountOverviewSummaryHeader };
