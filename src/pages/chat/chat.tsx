@@ -67,7 +67,12 @@ const ChatPage: React.FC = () => {
     acc.push(...studentLoanAccounts)
     return acc
   }, studentLoanAccounts)
-
+  
+  const baseContext:ContextTypes = {
+    contextName: "default - general finances",
+    context: transformBaseFinancialContext(financialContext)
+  }
+  
   const secondaryContexts: ContextTypes[] = [
     {
       contextName: "your investments",
@@ -96,7 +101,7 @@ const ChatPage: React.FC = () => {
       <div className="flex flex-col gap-12 justify-center items-center min-h-screen rounded-2xl border bg-gray-100">
         <div className="flex flex-col justify-end border rounded-2xl m-4 p-5 min-h-[700px] bg-white">
           <section className="flex flex-col gap-3">
-            <Chat baseContext={transformBaseFinancialContext(financialContext)} sampleQuestions={samplQuestions} secondaryContext={secondaryContexts} />
+            <Chat baseContext={baseContext} sampleQuestions={samplQuestions} secondaryContext={secondaryContexts} />
           </section>
         </div>
       </div>
