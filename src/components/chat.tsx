@@ -337,7 +337,8 @@ function transformBaseFinancialProfile(financialProfile: FinancialProfile): Refi
           institutionPrice: holding.institutionPrice,
           institutionPriceAsOf: holding.institutionPriceAsOf,
           isoCurrencyCode: holding.isoCurrencyCode,
-          quantity: holding.quantity
+          quantity: holding.quantity,
+          currentValue: holding.institutionValue
         }
       })
 
@@ -368,14 +369,16 @@ function transformBaseFinancialProfile(financialProfile: FinancialProfile): Refi
         securities: refinedSecurities
       }
     })
-    const refinedLinkAccount: RefinedLink = { ...link }
-    refinedLinkAccount.creditAccounts = refinedCreditAccounts
-    refinedLinkAccount.investmentAccounts = refinedInvestmentAccounts
+    const refinedLinkAccount: RefinedLink = { ...link, 
+      creditAccounts: refinedCreditAccounts,
+      investmentAccounts:refinedInvestmentAccounts,
+    }
     return refinedLinkAccount;
   })
 
-  const refinedFinancialProfile: RefinedFinancialProfile = { ...financialProfile }
-  refinedFinancialProfile.link = refinedLinkAccounts
+  const refinedFinancialProfile: RefinedFinancialProfile = { ...financialProfile,
+  link: refinedLinkAccounts
+  }
   return refinedFinancialProfile;
 }
 

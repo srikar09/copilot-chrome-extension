@@ -53,7 +53,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true);
 
     const formattedRequest = new AuthenticateRequest({
-      Username: data.email.trim(),
+      Username: data.email.trim().toLowerCase(),
       Password: data.password.trim(),
     });
     try {

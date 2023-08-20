@@ -1070,6 +1070,7 @@ export interface RefinedInvesmentHolding{
   institutionPriceAsOf: string;
   isoCurrencyCode: string;
   quantity: number;
+  currentValue: number;
 }
 
 export interface InvestmentSecurity {
