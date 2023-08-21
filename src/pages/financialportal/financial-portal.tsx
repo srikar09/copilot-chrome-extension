@@ -43,7 +43,7 @@ const FinancialAnalyticsPortal: React.FC = () => {
       <Tabs defaultValue={OPTIONS.OVERVIEW} className="space-y-4">
         <TabsList className="m-1 py-2 bg-black">
           <TabsTrigger value={OPTIONS.OVERVIEW}>Summary</TabsTrigger>
-          <TabsTrigger value={OPTIONS.ANALYTICS}>Analytics</TabsTrigger>
+          {/* <TabsTrigger value={OPTIONS.ANALYTICS}>Analytics</TabsTrigger> */}
         </TabsList>
         <TabsContent value={OPTIONS.OVERVIEW} className="space-y-4">
           <FinancialPortal />

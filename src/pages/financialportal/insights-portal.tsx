@@ -37,28 +37,22 @@ export default function InsightsPortal() {
         <Avatar className="hidden dark:block" />
       </div>
       <div className="hidden md:block">
-        <Menu />
+        {/* <Menu /> */}
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
-              <Sidebar className="hidden lg:block" />
+              {/* <Sidebar className="hidden lg:block" /> */}
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
                   <Tabs defaultValue="music" className="h-full space-y-6">
-                    <div className="space-between flex items-center">
+                    {/* <div className="space-between flex items-center">
                       <TabsList>
                         <TabsTrigger value="music" className="relative">
                           Insights
-                        </TabsTrigger>
-                        <TabsTrigger value="podcasts">Metrics</TabsTrigger>
+                        </TabsTrigger> 
+                         <TabsTrigger value="podcasts">Metrics</TabsTrigger>
                       </TabsList>
-                      <div className="ml-auto mr-4">
-                        <Button>
-                          <PlusCircledIcon className="mr-2 h-4 w-4" />
-                          Connect Bank Account
-                        </Button>
-                      </div>
-                    </div>
+                    </div> */}
                     <TabsContent
                       value="music"
                       className="border-none p-0 outline-none"
