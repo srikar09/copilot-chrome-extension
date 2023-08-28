@@ -1,5 +1,5 @@
+import { AccountBalanceHistory } from "melodiy-component-library";
 import { ErrorResponse } from "../error/error";
-import { AccountBalanceHistory } from "../financials/clickhouse_financial_service";
 
 /**
  * Represents the response for getting user account balance history.
@@ -8,7 +8,7 @@ export class GetUserAccountBalanceHistoryResponse extends ErrorResponse {
   /**
    * List of account balance history records.
    */
-  accountBalanceHistory: AccountBalanceHistory[] = [];
+  historicalAccountBalance: AccountBalanceHistory[] = [];
 
   constructor(data: Partial<GetUserAccountBalanceHistoryResponse>) {
     super();
@@ -32,12 +32,7 @@ export class GetUserAccountBalanceHistoryRequest {
   /**
    * The page number of the requested data.
    */
-  pageNumber: number;
-
-  /**
-   * Number of items to return per page.
-   */
-  pageSize: number;
+  plaidAccountId: string;
 
   /**
    * Creates a new instance of GetUserAccountBalanceHistoryRequest.
@@ -47,7 +42,6 @@ export class GetUserAccountBalanceHistoryRequest {
    */
   constructor(partialRequest: Partial<GetUserAccountBalanceHistoryRequest>) {
     this.userId = partialRequest.userId || 0;
-    this.pageNumber = partialRequest.pageNumber || 1;
-    this.pageSize = partialRequest.pageSize || 10;
+    this.plaidAccountId = partialRequest.plaidAccountId || "";
   }
 }

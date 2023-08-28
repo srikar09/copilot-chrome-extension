@@ -24,7 +24,7 @@ const GetAllConnectedAccountsBalanceHistory = api.injectEndpoints({
        * @property {number} pageSize - The page size for pagination.
        */
       query: (req: GetUserAccountBalanceHistoryRequest) => ({
-        url: `/service/financials/analytics/balance-history/user/${req.userId}/pagenumber/${req.pageNumber}/pagesize/${req.pageSize}`,
+        url: `/service/financials/analytics/historical-account-balance/user/${req.userId}/plaidAccountId/${req.plaidAccountId}`,
       }),
       /**
        * Function to transform the API response.
@@ -39,17 +39,22 @@ const GetAllConnectedAccountsBalanceHistory = api.injectEndpoints({
          * @property {any} other_data - Other data returned by the API.
          */
         processErrorIfPresent(response.error_message);
+        console.log(response.historicalAccountBalance);
+        response.historicalAccountBalance.map((accountBalance) => {
+          accountBalance.time = new Date(accountBalance.time!);
+        });
+
         return response;
       },
       providesTags: (result, error, arg) => {
-        if (!result || !result.accountBalanceHistory) {
+        if (!result || !result.historicalAccountBalance) {
           return ["ACCOUNT_BALANCE_HISTORY"];
         }
 
         return [
           {
             type: "ACCOUNT_BALANCE_HISTORY",
-            id: `user:${arg.userId} page:${arg.pageNumber} size:${arg.pageSize}`,
+            id: `user:${arg.userId} accountId:${arg.plaidAccountId}`,
           },
         ];
       },

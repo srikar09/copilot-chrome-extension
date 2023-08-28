@@ -1,4 +1,5 @@
 import { Timestamp } from "./timestamp";
+import { BankAccount as MelodiyBankAccount } from "melodiy-component-library";
 
 export const protobufPackage = "financial_integration_service_api.v1";
 
@@ -590,7 +591,7 @@ export interface RefinedLink {
      * for example a log in link against one instition like chase can have many account (checking and savings)
      * it is important though to ensure that if a link against an instition already exists, we dont fascilitate duplicated
      */
-    bankAccounts: BankAccount[];
+    bankAccounts: MelodiyBankAccount[];
     /**
      * a link event - or client login event can have many connected investment accounts
      * for example a log in link against one instition like fidelity can have many accounts (401k and investment account)
