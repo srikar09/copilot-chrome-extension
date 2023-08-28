@@ -12,7 +12,7 @@ import { Logo } from "src/components/Logo";
 import { ConnectPlaidAccountButton } from "./connect-plaid-account-button";
 
 const navigation = [
-  // { name: "Financial Portal", href: routes.FINANCIALPORTAL },
+  { name: "Financial Portal", href: routes.FINANCIALPORTAL },
   { name: "Ask Melodiy", href: routes.HOME },
   { name: "Leave Us Some Feedback", href: routes.FEEDBACK_EXTERNAL_URL },
 ];
