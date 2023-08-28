@@ -76,3 +76,5 @@ export { GetAccountBalanceHistory };
  * @returns {ReturnType<typeof GetAccountBalanceHistory>} - The result of the getAccountBalanceHistory query.
  */
 export const { useGetAccountBalanceHistoryQuery } = GetAccountBalanceHistory;
+
+// /v1/gateway/service/financials/analytics/historical-account-balance/user/{user_id}/plaidAccountId/{plaid_account_id}

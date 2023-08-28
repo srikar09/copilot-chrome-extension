@@ -32,12 +32,7 @@ export class GetUserAccountBalanceHistoryRequest {
   /**
    * The page number of the requested data.
    */
-  pageNumber: number;
-
-  /**
-   * Number of items to return per page.
-   */
-  pageSize: number;
+  plaidAccountId: string;
 
   /**
    * Creates a new instance of GetUserAccountBalanceHistoryRequest.
@@ -47,7 +42,6 @@ export class GetUserAccountBalanceHistoryRequest {
    */
   constructor(partialRequest: Partial<GetUserAccountBalanceHistoryRequest>) {
     this.userId = partialRequest.userId || 0;
-    this.pageNumber = partialRequest.pageNumber || 1;
-    this.pageSize = partialRequest.pageSize || 10;
+    this.plaidAccountId = partialRequest.plaidAccountId || "";
   }
 }

@@ -15,7 +15,10 @@ import { Label } from "./ui/label";
 import { RefinedLink } from "src/types/financials/message_financial_service";
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
-import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
+import {
+  selectCurrentUserID,
+  selectUserFinancialProfile,
+} from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { transformBaseFinancialProfile } from "./chat";
 import {
@@ -28,6 +31,8 @@ import {
   useGetAccountBalanceHistoryQuery,
 } from "src/redux/queries/balance-history/get-user-account-balance-history";
 import { Spinner } from "./spinner";
+import { useGetAllConnectedAccountsBalanceHistoryQuery } from "src/redux/queries/balance-history/get-balance-history";
+import { GetUserAccountBalanceHistoryRequest } from "src/types/request-response/get-user-account-balance-history";
 
 /**
  * Props interface for the BankAccountSummaryCard component.
@@ -57,6 +62,8 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
     return acc;
   }, bankAccounts);
 
+  const currentUserId = useAppSelector(selectCurrentUserID);
+
   const { account } = props;
   // get number of pockets
   const numberOfPockets = account.pockets.length;
@@ -73,10 +80,9 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
   ];
 
   // call the backend and obtain the historical account balance for this
-  const req = new GetAccountBalanceHistoryRequest({
+  const req = new GetUserAccountBalanceHistoryRequest({
+    userId: Number(currentUserId),
     plaidAccountId: account.plaidAccountId,
-    pageNumber: 1,
-    pageSize: 100,
   });
 
   const {
@@ -85,7 +91,7 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
     isSuccess,
     isError,
     error,
-  } = useGetAccountBalanceHistoryQuery(req);
+  } = useGetAllConnectedAccountsBalanceHistoryQuery(req);
 
   let accountHistoricalBalance;
   let spinner = <Spinner className={"w-8 h-8 mt-3 ml-3"} />;
