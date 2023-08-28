@@ -1,5 +1,5 @@
+import { Transaction } from "melodiy-component-library";
 import { ErrorResponse } from "../error/error";
-import { Transaction } from "../financials/clickhouse_financial_service";
 
 /**
  * GetTransactionsRequest class

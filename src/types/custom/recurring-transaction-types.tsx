@@ -1,5 +1,5 @@
+import { ReOccuringTransaction } from "melodiy-component-library";
 import { SubscriptionsSidebarOption } from "..";
-import { ReOccuringTransaction } from "../financials/clickhouse_financial_service";
 type UpcomingRecurringTransactions = {
   nextTransactionDate: string;
   transaction: ReOccuringTransaction;

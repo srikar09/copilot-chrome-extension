@@ -5,11 +5,7 @@ import { LinkedAccountCard } from "src/components/linked-account-card";
 import { OPTIONS, PortalLayout } from "src/layouts/portal-layout";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
-import {
-  BankAccount,
-  CreditAccount,
-  InvestmentAccount,
-} from "src/types/financials/message_financial_service";
+
 import { AnalyticsPortal } from "./analytics-portal";
 import {
   Tabs,
@@ -21,6 +17,11 @@ import { InvestmentsSummaryCard } from "src/components/investments-summary-card"
 import { TransactionOverview } from "src/components/transaction-overview";
 import { RecurringTransactionOverview } from "src/components/recurring-transaction-component";
 import { InvestmentAccountsView } from "../investments/investments-view";
+import {
+  BankAccount,
+  CreditAccount,
+  InvestmentAccount,
+} from "melodiy-component-library";
 
 /**
  * Enum representing different types of selected account types in the portal.
@@ -157,24 +158,34 @@ const FinancialPortal: React.FC = () => {
           </TabsContent>
         </Tabs>
       </div>
-      <div className="mb-2 md:hidden block lg:hidden" >
-        <select 
+      <div className="mb-2 md:hidden block lg:hidden">
+        <select
           value={selectedAccountType}
-          onChange={(e) => setSelectedAccountType(e.target.value as SelectedAccountType)}
+          onChange={(e) =>
+            setSelectedAccountType(e.target.value as SelectedAccountType)
+          }
           className="m-1 bg-black py-2 text-white"
         >
           <option value={SelectedAccountType.BANK_ACCOUNT}>Bank Account</option>
-          <option value={SelectedAccountType.CREDIT_CARD}>Credit Account</option>
-          <option value={SelectedAccountType.INVESTMENT_ACCOUNT}>Investment Account</option>
+          <option value={SelectedAccountType.CREDIT_CARD}>
+            Credit Account
+          </option>
+          <option value={SelectedAccountType.INVESTMENT_ACCOUNT}>
+            Investment Account
+          </option>
           <option value={SelectedAccountType.TRANSACTIONS}>Transactions</option>
-          <option value={SelectedAccountType.SUBSCRIPTIONS}>Subscriptions</option>
+          <option value={SelectedAccountType.SUBSCRIPTIONS}>
+            Subscriptions
+          </option>
         </select>
 
         {selectedAccountType === SelectedAccountType.BANK_ACCOUNT && (
           <BankAccountsOverviewSummary allBankAccounts={allBankAccounts} />
         )}
         {selectedAccountType === SelectedAccountType.CREDIT_CARD && (
-          <CreditAccountsOverviewSummary creditCardToInstitutionNameMap={creditCardToInstitutionNameMap} />
+          <CreditAccountsOverviewSummary
+            creditCardToInstitutionNameMap={creditCardToInstitutionNameMap}
+          />
         )}
         {selectedAccountType === SelectedAccountType.INVESTMENT_ACCOUNT && (
           <InvestmentAccountsView investment_accounts={allInvestmentAccounts} />

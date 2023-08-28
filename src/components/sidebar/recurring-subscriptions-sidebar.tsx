@@ -80,16 +80,6 @@ const SubscriptionSidebar: React.FC<ISubscriptionSidebarProps> = ({
               <ArrowUpNarrowWide className="mr-2 h-4 w-4" />
               Upcoming
             </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => {
-                setSelectedOption("DRILLDOWN");
-              }}
-            >
-              <Rocket className="mr-2 h-4 w-4" />
-              Drill Down
-            </Button>
           </div>
         </div>
       </div>

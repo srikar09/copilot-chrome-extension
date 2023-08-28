@@ -1,9 +1,10 @@
-import { BankAccount } from "src/types/financials/message_financial_service";
+// import { BankAccount } from "src/types/financials/message_financial_service";
 import { BankAccountSummaryCard } from "./bank-account-card";
 import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useState } from "react";
 import { BankAccountTransactions } from "./account-transactions";
+import { BankAccountCard, BankAccount } from "melodiy-component-library";
 
 /**
  * Props interface for the BankAccountsOverviewSummary component.
@@ -42,7 +43,9 @@ const BankAccountsOverviewSummary: React.FC<IProps> = (props) => {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {allBankAccounts.map((account, idx) => (
+            <>
               <BankAccountSummaryCard account={account} key={idx} />
+            </>
           ))}
         </div>
         <SheetContent className="w-full h-[30%]" side={"bottom"}>
