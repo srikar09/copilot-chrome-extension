@@ -10,6 +10,7 @@ import { AccountOverviewSummaryHeader } from "src/components/account-overview-su
 import { HoldingCard } from "src/components/holding-card";
 import { InvestmentViewSidebar } from "src/components/sidebar/investments-view-sidebar";
 import { Avatar } from "src/components/ui/avatar";
+import { Badge } from "src/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -326,22 +327,31 @@ const InvestmentAccountsSection: React.FC<IIInvestmentAccountsSectionProps> = (
   return (
     <Sheet>
       <AskMelodiyAILayout context={accounts} sampleQuestions={samplQuestions}>
-        <SheetTrigger className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div className="flex flex-wrap gap-1">
           {accounts.map((account, idx) => (
-            <Card
-              className={cn(
-                "p-5",
-                account.id === selectedAccount?.id ? "border border-black" : ""
-              )}
-              key={idx}
-              // onClick={() => setSelectedAccount(account)}
-            >
-              <InvestmentAccountCard
-                investmentAccount={new InvestmentAccount(account)}
-              />
-            </Card>
+            <div key={idx} className="flex flex-col">
+              <AskMelodiyAILayout
+                className={cn("p-2")}
+                key={idx}
+                context={account}
+                sampleQuestions={[
+                  "What is the current value of this account? ",
+                  "Across the investments in this account, what is the sector distribution?",
+                  "Across what industries should l diversify this account to reduce risk?",
+                  "What should l consider in relation to the investments in this account?",
+                ]}
+                // onClick={() => setSelectedAccount(account)}
+              >
+                <SheetTrigger>
+                  <Badge className="m-2">View More</Badge>
+                </SheetTrigger>
+                <InvestmentAccountCard
+                  investmentAccount={new InvestmentAccount(account)}
+                />
+              </AskMelodiyAILayout>
+            </div>
           ))}
-        </SheetTrigger>
+        </div>
       </AskMelodiyAILayout>
       <SheetContent className="w-[500px] sm:w-[540px]">
         <SheetHeader>

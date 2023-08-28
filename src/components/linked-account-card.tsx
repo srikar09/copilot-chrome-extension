@@ -18,7 +18,7 @@ const LinkedAccountCard: React.FC<{
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
+        <CardTitle className="text-sm font-bold">
           {plaidLink?.institutionName}
         </CardTitle>
         <svg
@@ -35,7 +35,13 @@ const LinkedAccountCard: React.FC<{
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold"> Total cash balance for {plaidLink?.institutionName} : ${roundUpToTwoDecimalPlaces(totalBankAccountBalance)}</div>
+        <div className="text-lg">
+          {" "}
+          Cash Balance{" "}
+          <span className="font-bold">
+            ${roundUpToTwoDecimalPlaces(totalBankAccountBalance)}{" "}
+          </span>
+        </div>
         {/* <p className="text-xs text-muted-foreground">+20.1% from last month</p> */}
       </CardContent>
     </Card>

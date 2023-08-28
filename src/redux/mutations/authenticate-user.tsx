@@ -44,6 +44,7 @@ const AuthenticateUser = api.injectEndpoints({
       }),
       // Pick out data and prevent nested properties in a hook or selector
       transformResponse: (response: AuthenticationResponse) => {
+        console.log(response);
         processErrorIfPresent(response.error_message);
         return response;
       },

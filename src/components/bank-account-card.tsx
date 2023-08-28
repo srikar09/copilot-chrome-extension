@@ -18,7 +18,16 @@ import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 import { selectUserFinancialProfile } from "src/redux/slice/authentication/AuthenticationSelector";
 import { useAppSelector } from "src/redux/store/hooks";
 import { transformBaseFinancialProfile } from "./chat";
-import { BankAccount, BankAccountCard } from "melodiy-component-library";
+import {
+  BankAccount,
+  BankAccountCard,
+  GetAccountBalanceHistoryRequest,
+} from "melodiy-component-library";
+import {
+  GetAccountBalanceHistory,
+  useGetAccountBalanceHistoryQuery,
+} from "src/redux/queries/balance-history/get-user-account-balance-history";
+import { Spinner } from "./spinner";
 
 /**
  * Props interface for the BankAccountSummaryCard component.
@@ -63,6 +72,45 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
     "How can l optimize my spending on this account?",
   ];
 
+  // call the backend and obtain the historical account balance for this
+  const req = new GetAccountBalanceHistoryRequest({
+    plaidAccountId: account.plaidAccountId,
+    pageNumber: 1,
+    pageSize: 100,
+  });
+
+  const {
+    data: response,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetAccountBalanceHistoryQuery(req);
+
+  let accountHistoricalBalance;
+  let spinner = <Spinner className={"w-8 h-8 mt-3 ml-3"} />;
+
+  if (isSuccess && response.accountBalanceHistory) {
+    accountHistoricalBalance = response.accountBalanceHistory;
+  } else if (isLoading) {
+    spinner = <Spinner className={"w-8 h-8 mt-3 ml-3"} />;
+  } else if (
+    isSuccess &&
+    (response.accountBalanceHistory?.length == 0 ||
+      response.accountBalanceHistory == undefined)
+  ) {
+    spinner = (
+      <Card className="py-2">
+        <CardHeader>
+          <CardTitle>We are still pulling in your data!</CardTitle>
+          <p>Sit tight and relax. We are still pulling in your data </p>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  console.log(account);
+
   return (
     <>
       <AskMelodiyAILayout
@@ -73,6 +121,7 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
           bankAccount={new BankAccount(account)}
           className="bg-white"
           enableDemoMode={false}
+          historicalAccountBalance={accountHistoricalBalance ?? []}
         />
       </AskMelodiyAILayout>
     </>

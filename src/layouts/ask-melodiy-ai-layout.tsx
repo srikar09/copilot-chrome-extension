@@ -32,7 +32,7 @@ import { useAppSelector } from "src/redux/store/hooks";
 
 /**
  * The initial message that the assistant will say.
- * TODO: CONSOLIDATE THIS AND THE OTHER MELODIY CHAT COMPONENT. 
+ * TODO: CONSOLIDATE THIS AND THE OTHER MELODIY CHAT COMPONENT.
  * USE THE MELODIY CHAT COMPONENT HERE. WE HAVE REPLICATED CODE RN
  */
 const initialAnalyticMessage: ChatGPTMessage[] = [
@@ -42,38 +42,39 @@ const initialAnalyticMessage: ChatGPTMessage[] = [
   },
 ];
 
-function InputMessage ({ input, setInput, sendMessage }: any)  {
+function InputMessage({ input, setInput, sendMessage }: any) {
   return (
-  <div className="mt-6 flex clear-both">
-    <input
-      type="text"
-      aria-label="chat input"
-      required
-      className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:text-gray-600 sm:text-sm"
-      value={input}
-      placeholder="Ask Melodiy AI ..."
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
+    <div className="mt-6 flex clear-both">
+      <input
+        type="text"
+        aria-label="chat input"
+        required
+        className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:text-gray-600 sm:text-sm"
+        value={input}
+        placeholder="Ask Melodiy AI ..."
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            sendMessage(input);
+            setInput("");
+          }
+        }}
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
+      />
+      <Button
+        type="submit"
+        className="ml-4 flex-none"
+        onClick={() => {
           sendMessage(input);
           setInput("");
-        }
-      }}
-      onChange={(e) => {
-        setInput(e.target.value);
-      }}
-    />
-    <Button
-      type="submit"
-      className="ml-4 flex-none"
-      onClick={() => {
-        sendMessage(input);
-        setInput("");
-      }}
-    >
-      Ask
-    </Button>
-  </div>
-)}
+        }}
+      >
+        Ask
+      </Button>
+    </div>
+  );
+}
 /**
  * This is the main layout for the Analytic AI card.
  *
@@ -150,15 +151,18 @@ const AskMelodiyAILayout: React.FC<{
     const globalContext = JSON.stringify(financialContext).trim();
     const promptGenerator = new PromptContext(financialContext, userAccount);
     let contextDrivenQuestion: string = "";
-    
-    if (enableGlobalFinancialContext) { // use financial context 
+
+    if (enableGlobalFinancialContext) {
+      // use financial context
       contextDrivenQuestion = promptGenerator.getFinancialContextBasedPrompt(
         message,
         globalContext
       );
     } else {
-      contextDrivenQuestion =
-        promptGenerator.getFinancialContextBasedPrompt(message, questionContext);
+      contextDrivenQuestion = promptGenerator.getFinancialContextBasedPrompt(
+        message,
+        questionContext
+      );
     }
 
     const newMessages = [
@@ -202,15 +206,19 @@ const AskMelodiyAILayout: React.FC<{
   };
 
   return (
-    <div className={cn("bg-gray-200 rounded-2xl p-3", className)}>
-      <div className="flex justify-end pb-2">
+    <div className={cn("bg-gray-100 rounded-2xl p-3", className)}>
+      <div className="flex justify-end pb-1">
         <Select>
           <SelectTrigger
-            className={cn("w-fit rounded-full font-bold bg-white", className)}
+            className={cn(
+              "w-fit rounded-lg font-bold bg-white flex flex-row gap-2",
+              className
+            )}
           >
+            <BrainCircuit className="h-6 w-6 bg-white text-black font-bold rounded-md p-1" />
             <SelectValue placeholder="Ask Melodiy" />
           </SelectTrigger>
-          <SelectContent className="p-1 min-h-[400px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:max-h-[700px] rounded-2xl bg-gray-50 border-4 border-gray-300 shadow-md">
+          <SelectContent className="relative p-1 h-[400px] min-w-[300px] max-w-[350px] md:min-w-[500px] md:max-w-md lg:h-[400px] rounded-2xl bg-gray-50 border-4 border-gray-300 shadow-md overflow-auto">
             <SelectGroup className="p-2">
               <ScrollArea>
                 {messages.map(({ content, role }, index) => (

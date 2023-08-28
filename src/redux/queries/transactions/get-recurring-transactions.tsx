@@ -1,17 +1,15 @@
+import {
+  GetReCurringTransactionsRequest,
+  GetReCurringTransactionsResponse,
+  ReCurringFlow,
+  ReOccuringTransaction,
+  ReOccuringTransactionsFrequency,
+} from "melodiy-component-library";
 import { api } from "src/redux/api/api";
 import {
   RecurringTransactionAggregate,
   UpcomingRecurringTransactions,
 } from "src/types/custom/recurring-transaction-types";
-import {
-  ReCurringFlow,
-  ReOccuringTransaction,
-  ReOccuringTransactionsFrequency,
-} from "src/types/financials/clickhouse_financial_service";
-import {
-  GetReCurringTransactionsRequest,
-  GetReCurringTransactionsResponse,
-} from "src/types/request-response/get-recurring-transactions";
 
 /**
  * `GetRecurringTransactions` is a function defined within the `api` object's `injectEndpoints` method.

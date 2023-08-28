@@ -1,5 +1,4 @@
 import React from "react";
-import { RecurrinTransactionCard } from "src/components/recurring-transaction-card";
 import { SubscriptionSidebar } from "src/components/sidebar/recurring-subscriptions-sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "src/components/ui/avatar";
 import { Calendar } from "src/components/ui/calendar";
@@ -22,13 +21,15 @@ import {
   SubscriptionsSidebarOption,
   UpcomingRecurringTransactions,
 } from "src/types/custom/recurring-transaction-types";
+
+import { replaceUnderscoreWithSpace } from "src/lib/utils";
+import { RecurringTransactionDatatable } from "src/components/recurring-transaction-data-table";
 import {
   ReOccuringTransaction,
   ReOccuringTransactionsFrequency,
   ReOccuringTransactionsStatus,
-} from "src/types/financials/clickhouse_financial_service";
-import { replaceUnderscoreWithSpace } from "src/lib/utils";
-import { RecurringTransactionDatatable } from "src/components/recurring-transaction-data-table";
+  RecurringTransactionCard,
+} from "melodiy-component-library";
 
 interface IRecurringTransactionProps {
   recurring_transactions: ReOccuringTransaction[];
@@ -307,7 +308,7 @@ class SubscriptionsView extends React.Component<
     // make sure the transaction id list is empty
     const result = topOutflow.map((transaction) => {
       // we dont copy everything over in order to keep the context small
-      const updatedTransaction = ReOccuringTransaction.create({
+      const updatedTransaction = new ReOccuringTransaction({
         merchantName: transaction.merchantName,
         personalFinanceCategoryPrimary:
           transaction.personalFinanceCategoryPrimary,
@@ -443,7 +444,7 @@ const OverviewComponent: React.FC<IOverviewProps> = (props) => {
       };
     }, [])
     .sort((a, b) => b.amount - a.amount)
-    .slice(0, 5)
+    .slice(0, 10)
     .map((transaction) => transaction.transaction);
   return (
     <div className="m-2 grid grid-cols-1 gap-y-2">
@@ -544,9 +545,11 @@ const OverviewComponent: React.FC<IOverviewProps> = (props) => {
           <CardContent>
             <div className="text-2xl font-bold">
               $
-              {outflowTransactions.reduce((acc, transaction) => {
-                return acc + Number(transaction.lastAmount);
-              }, 0)}
+              {outflowTransactions
+                .reduce((acc, transaction) => {
+                  return acc + Number(transaction.lastAmount);
+                }, 0)
+                .toFixed(2)}
             </div>
             <p className="text-xs text-muted-foreground">
               {outflowTransactions.length} total subscriptions marked as
@@ -587,23 +590,48 @@ const OverviewComponent: React.FC<IOverviewProps> = (props) => {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Subscription Details</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview data={allRecursiveTransactions} dateKey={"lastAmount"} />
-          </CardContent>
+          <AskMelodiyAILayout
+            context={allRecursiveTransactions
+              .map((transaction) => {
+                return {
+                  merchantName: transaction.merchantName,
+                  lastAmount: transaction.lastAmount,
+                  lastDate: transaction.lastDate,
+                };
+              })
+              .splice(0, 5)}
+            className="m-3 bg-white"
+            sampleQuestions={[`Tell me everything l need to know about this?`]}
+          >
+            <CardHeader>
+              <CardTitle>Subscription Details</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <Overview
+                data={allRecursiveTransactions}
+                dateKey={"lastAmount"}
+              />
+            </CardContent>
+          </AskMelodiyAILayout>
         </Card>
         <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Top Subscriptions</CardTitle>
-            <CardDescription>
-              You have {allRecursiveTransactions.length} active subscriptions.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <TopSubscriptionsCard recurringTransactions={sortedSubscriptions} />
-          </CardContent>
+          <AskMelodiyAILayout
+            context={sortedSubscriptions.splice(0, 3)}
+            className="m-3 bg-white"
+            sampleQuestions={[`Tell me everything l need to know about this?`]}
+          >
+            <CardHeader>
+              <CardTitle>Top Subscriptions</CardTitle>
+              <CardDescription>
+                You have {allRecursiveTransactions.length} active subscriptions.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <TopSubscriptionsCard
+                recurringTransactions={sortedSubscriptions}
+              />
+            </CardContent>
+          </AskMelodiyAILayout>
         </Card>
       </div>
       <div>
@@ -705,13 +733,25 @@ const RecurringTransactionsFlowComponent: React.FC<
         <p className="m-2 text-3xl font-bold">{title}</p>
         <p className="m-6 text-xs font-bold">{description}</p>
       </div>
-      <div className="p-1 grid grid-cols-1 md:grid-cols-3 gap-2">
+      <div className="p-1 flex flex-wrap gap-2">
         {recurringTransactions.map((transaction, index) => (
-          <RecurrinTransactionCard
-            transaction={transaction}
+          <AskMelodiyAILayout
+            context={transaction}
+            className="m-2"
+            sampleQuestions={[
+              `Should l terminate the ${transaction.merchantName} subscription?`,
+              `What do you think about this subscription melodiy?`,
+              `Would you consider this subscription essential melodiy?`,
+              `Tell me everything l need to know about this subscription melodiy?`,
+            ]}
             key={index}
-            enableDetailedDisplay={true}
-          />
+          >
+            <RecurringTransactionCard
+              recurringTransaction={transaction}
+              enableDetailedDisplay={true}
+              className="bg-white relative w-full h-full overflow-hidden m-4"
+            />
+          </AskMelodiyAILayout>
         ))}
       </div>
     </AskMelodiyAILayout>
@@ -829,7 +869,7 @@ const UpcomingRecurringTransactionsComponent: React.FC<
                   <Calendar
                     mode="multiple"
                     selected={upcomingTransactionNextPaymentDates}
-                    className="rounded-md border shadow w-fit"
+                    className="rounded-md border shadow w-full"
                     footer={
                       <p className="pt-4 text-xs font-bold">
                         Upcoming recurring transactions
@@ -840,16 +880,17 @@ const UpcomingRecurringTransactionsComponent: React.FC<
               </div>
             </CardHeader>
           </Card>
-          {/** Here we display the various bills that are upcoming */}
-          <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-2">
+          <Card className="flex flex-1 flex-wrap gap-2">
+            {/** Here we display the various bills that are upcoming */}
             {upcomingTransactions.map((upcomingTransaction, index) => (
-              <RecurrinTransactionCard
-                transaction={upcomingTransaction.transaction}
+              <RecurringTransactionCard
+                recurringTransaction={upcomingTransaction.transaction}
                 nextTransactionDate={upcomingTransaction.nextTransactionDate}
                 key={index}
+                className="bg-white w-full h-full m-4"
               />
             ))}
-          </div>
+          </Card>
         </TabsContent>
         <TabsContent
           value={UpcomingTransactionOptions.CALENDAR_VIEW}

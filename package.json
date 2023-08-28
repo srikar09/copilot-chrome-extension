@@ -57,7 +57,7 @@
     "i": "^0.3.7",
     "jwt-decode": "^3.1.2",
     "lucide-react": "^0.263.1",
-    "melodiy-component-library": "^3.4.1",
+    "melodiy-component-library": "^3.4.4",
     "mixpanel-browser": "^2.47.0",
     "next": "^13.4.12",
     "npm": "^9.8.1",

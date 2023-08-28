@@ -1,9 +1,11 @@
 import { ErrorResponse } from "../error/error";
-import { MelodyFinancialContext } from "../financials/clickhouse_financial_service";
 import { SocialProfile } from "../records/social-profile";
 import { IRequest } from "./IRequest";
-import { FinancialProfile } from "../user/financial-profile";
 import { UserAccount } from "../user/user-account";
+import {
+  FinancialProfile,
+  MelodyFinancialContext,
+} from "melodiy-component-library";
 
 /**
  * @description The request to authenticate a user
@@ -56,7 +58,7 @@ export class AuthenticationResponse extends ErrorResponse {
   user_profile: SocialProfile = new SocialProfile();
   user_financial_profile: FinancialProfileResponse = {
     profile: new FinancialProfile(),
-    financialContext: MelodyFinancialContext.create({}),
+    financialContext: new MelodyFinancialContext({}),
   };
 
   constructor(data?: Partial<AuthenticationResponse>) {
@@ -68,8 +70,8 @@ export class AuthenticationResponse extends ErrorResponse {
         user_profile: new SocialProfile(data?.user_profile),
         user_financial_profile: {
           profile: new FinancialProfile(data?.user_financial_profile?.profile),
-          financialContext: MelodyFinancialContext.create(
-            data?.user_financial_profile?.financialContext
+          financialContext: new MelodyFinancialContext(
+            data?.user_financial_profile?.financialContext ?? {}
           ),
         },
       });
