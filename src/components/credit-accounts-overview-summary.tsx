@@ -1,6 +1,6 @@
-import { CreditAccount } from "src/types/financials/message_financial_service";
 import { CreditAccountSummaryCard } from "./credit-account-card";
 import { AccountOverviewSummaryHeader } from "./account-overview-summary-header";
+import { CreditAccount } from "melodiy-component-library";
 
 interface IProps {
   creditCardToInstitutionNameMap: {

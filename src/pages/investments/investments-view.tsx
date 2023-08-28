@@ -1,4 +1,9 @@
 import { PiggyBankIcon } from "lucide-react";
+import {
+  InvestmentAccount,
+  InvestmentAccountCard,
+  InvestmentSecurity,
+} from "melodiy-component-library";
 import React from "react";
 
 import { AccountOverviewSummaryHeader } from "src/components/account-overview-summary-header";
@@ -32,10 +37,6 @@ import { GlobalStockScreenerWidget } from "src/components/widgets/stock-screener
 import { AskMelodiyAILayout } from "src/layouts/ask-melodiy-ai-layout";
 import { cn } from "src/lib/utils";
 import { InvestmentSidebarOption } from "src/types";
-import {
-  InvestmentAccount,
-  InvestmentSecurity,
-} from "src/types/financials/message_financial_service";
 
 interface IInvestmentProps {
   investment_accounts: InvestmentAccount[];
@@ -240,13 +241,13 @@ const OverviewPane: React.FC<{
             statisticDetails={""}
           />
           <InvestmentAccountStatistic
-            title={"Securities"}
+            title={"Securities Across All Accounts"}
             value={totalNumberOfSecurities.toString()}
             statisticDetails={""}
           />
           <InvestmentAccountStatistic
             title={"Average Cost Basis"}
-            value={ "$ " + Number(averageCostBasis.toFixed(2)).toString() }
+            value={"$ " + Number(averageCostBasis.toFixed(2)).toString()}
             statisticDetails={""}
           />
         </div>
@@ -325,7 +326,7 @@ const InvestmentAccountsSection: React.FC<IIInvestmentAccountsSectionProps> = (
   return (
     <Sheet>
       <AskMelodiyAILayout context={accounts} sampleQuestions={samplQuestions}>
-        <SheetTrigger className="grid grid-cols-2 gap-5 justify-start">
+        <SheetTrigger className="grid grid-cols-2 md:grid-cols-4 gap-2">
           {accounts.map((account, idx) => (
             <Card
               className={cn(
@@ -333,48 +334,11 @@ const InvestmentAccountsSection: React.FC<IIInvestmentAccountsSectionProps> = (
                 account.id === selectedAccount?.id ? "border border-black" : ""
               )}
               key={idx}
-              onClick={() => setSelectedAccount(account)}
+              // onClick={() => setSelectedAccount(account)}
             >
-              <CardHeader>
-                <div className="max-w-sm flex flex-row justify-between">
-                  <div className="flex flex-row gap-2">
-                    <div className="flex flex-col ">
-                      <div className="border p-2 rounded-lg border-black">
-                        <PiggyBankIcon className="w-8 h-8" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col">
-                      <p className="text-lg font-bold ">{account.name}</p>
-                      <p className="text-xs font-bold">{account.number}</p>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-col">
-                    <p className="text-xs font-bold">Account Type</p>
-                    <p className="text-xs">{account.type}</p>
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-xs font-bold">Account Subtype</p>
-                    <p className="text-xs">{account.subtype}</p>
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-xs font-bold">Account Number</p>
-                    <p className="text-xs">{account.number}</p>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <div className="flex flex-col">
-                  <p className="text-2xl font-bold">
-                    ${account.currentFunds}
-                    <span className="ml-1 text-xs">(current funds)</span>
-                  </p>
-                </div>
-              </CardFooter>
+              <InvestmentAccountCard
+                investmentAccount={new InvestmentAccount(account)}
+              />
             </Card>
           ))}
         </SheetTrigger>
@@ -390,61 +354,6 @@ const InvestmentAccountsSection: React.FC<IIInvestmentAccountsSectionProps> = (
         </SheetHeader>
       </SheetContent>
     </Sheet>
-  );
-};
-
-interface IInvestmentAccountCardProps {
-  account: InvestmentAccount;
-}
-
-const InvestmentAccountCard: React.FC<IInvestmentAccountCardProps> = (
-  props
-) => {
-  const { account } = props;
-
-  return (
-    <Card className="p-5">
-      <CardHeader>
-        <div className="max-w-sm flex flex-row justify-between">
-          <div className="flex flex-row gap-2">
-            <div className="flex flex-col ">
-              <div className="border p-2 rounded-lg border-black">
-                <PiggyBankIcon className="w-8 h-8" />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <p className="text-lg font-bold ">{account.name}</p>
-              <p className="text-xs font-bold">{account.number}</p>
-            </div>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent>
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-col">
-            <p className="text-xs font-bold">Account Type</p>
-            <p className="text-xs">{account.type}</p>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-xs font-bold">Account Subtype</p>
-            <p className="text-xs">{account.subtype}</p>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-xs font-bold">Account Number</p>
-            <p className="text-xs">{account.number}</p>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <div className="flex flex-col">
-          <p className="text-2xl font-bold">
-            ${account.currentFunds}
-            <span className="ml-1 text-xs">(current funds)</span>
-          </p>
-        </div>
-      </CardFooter>
-    </Card>
   );
 };
 
