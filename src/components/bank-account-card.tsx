@@ -121,7 +121,6 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
         context={bankAccounts}
         sampleQuestions={samplQuestions}
       >
-        {accountHistoricalBalance.length}
         <BankAccountCard
           bankAccount={new BankAccount(account)}
           className="bg-white"
