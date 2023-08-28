@@ -1,5 +1,5 @@
+import { AccountBalanceHistory } from "melodiy-component-library";
 import { ErrorResponse } from "../error/error";
-import { AccountBalanceHistory } from "../financials/clickhouse_financial_service";
 
 /**
  * Represents the response for getting user account balance history.
@@ -8,7 +8,7 @@ export class GetUserAccountBalanceHistoryResponse extends ErrorResponse {
   /**
    * List of account balance history records.
    */
-  accountBalanceHistory: AccountBalanceHistory[] = [];
+  historicalAccountBalance: AccountBalanceHistory[] = [];
 
   constructor(data: Partial<GetUserAccountBalanceHistoryResponse>) {
     super();

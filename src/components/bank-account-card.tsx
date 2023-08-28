@@ -22,9 +22,11 @@ import {
 import { useAppSelector } from "src/redux/store/hooks";
 import { transformBaseFinancialProfile } from "./chat";
 import {
+  AccountBalanceHistory,
   BankAccount,
   BankAccountCard,
   GetAccountBalanceHistoryRequest,
+  Link,
 } from "melodiy-component-library";
 import {
   GetAccountBalanceHistory,
@@ -52,11 +54,9 @@ interface IProps {
  * @returns A React functional component.
  */
 const BankAccountSummaryCard: React.FC<IProps> = (props) => {
-  const financialProfile = transformBaseFinancialProfile(
-    useAppSelector(selectUserFinancialProfile)
-  );
+  const financialProfile = useAppSelector(selectUserFinancialProfile);
   let bankAccounts: BankAccount[] = [];
-  financialProfile.link.reduce((acc: BankAccount[], current: RefinedLink) => {
+  financialProfile.link.reduce((acc: BankAccount[], current: Link) => {
     const { bankAccounts } = current;
     acc.push(...bankAccounts);
     return acc;
@@ -93,17 +93,17 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
     error,
   } = useGetAllConnectedAccountsBalanceHistoryQuery(req);
 
-  let accountHistoricalBalance;
+  let accountHistoricalBalance: AccountBalanceHistory[] = [];
   let spinner = <Spinner className={"w-8 h-8 mt-3 ml-3"} />;
 
-  if (isSuccess && response.accountBalanceHistory) {
-    accountHistoricalBalance = response.accountBalanceHistory;
+  if (isSuccess && response.historicalAccountBalance) {
+    accountHistoricalBalance = response.historicalAccountBalance;
   } else if (isLoading) {
     spinner = <Spinner className={"w-8 h-8 mt-3 ml-3"} />;
   } else if (
     isSuccess &&
-    (response.accountBalanceHistory?.length == 0 ||
-      response.accountBalanceHistory == undefined)
+    (response.historicalAccountBalance?.length == 0 ||
+      response.historicalAccountBalance == undefined)
   ) {
     spinner = (
       <Card className="py-2">
@@ -121,11 +121,13 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
         context={bankAccounts}
         sampleQuestions={samplQuestions}
       >
+        {accountHistoricalBalance.length}
         <BankAccountCard
           bankAccount={new BankAccount(account)}
           className="bg-white"
           enableDemoMode={false}
-          historicalAccountBalance={accountHistoricalBalance ?? []}
+          historicalAccountBalance={accountHistoricalBalance}
+          financialProfile={financialProfile}
         />
       </AskMelodiyAILayout>
     </>

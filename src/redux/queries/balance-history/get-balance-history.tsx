@@ -39,10 +39,15 @@ const GetAllConnectedAccountsBalanceHistory = api.injectEndpoints({
          * @property {any} other_data - Other data returned by the API.
          */
         processErrorIfPresent(response.error_message);
+        console.log(response.historicalAccountBalance);
+        response.historicalAccountBalance.map((accountBalance) => {
+          accountBalance.time = new Date(accountBalance.time!);
+        });
+
         return response;
       },
       providesTags: (result, error, arg) => {
-        if (!result || !result.accountBalanceHistory) {
+        if (!result || !result.historicalAccountBalance) {
           return ["ACCOUNT_BALANCE_HISTORY"];
         }
 
