@@ -115,8 +115,6 @@ const BankAccountSummaryCard: React.FC<IProps> = (props) => {
     );
   }
 
-  console.log(account);
-
   return (
     <>
       <AskMelodiyAILayout
