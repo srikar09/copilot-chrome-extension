@@ -15,6 +15,7 @@ import {
   TransactionAnalyticsByMonth,
   TransactionDataTable,
 } from "melodiy-component-library";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const TransactionOverview: React.FC = () => {
   // we first get the user id
@@ -54,11 +55,21 @@ const TransactionsComponent: React.FC = () => {
     // spinner should be null
     txnComponent = (
       <>
-        <TransactionDataTable transactions={response.transactions} />
-        <TransactionAnalyticsByMonth
-          transactions={response.transactions}
-          className="bg-white"
-        />
+        <Tabs defaultValue="transactions" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="transactions">Transaction Summary</TabsTrigger>
+            <TabsTrigger value="breakdown">Breakdown</TabsTrigger>
+          </TabsList>
+          <TabsContent value="transactions">
+            <TransactionDataTable transactions={response.transactions} />
+          </TabsContent>
+          <TabsContent value="breakdown">
+            <TransactionAnalyticsByMonth
+              transactions={response.transactions}
+              className="bg-white"
+            />
+          </TabsContent>
+        </Tabs>
       </>
     );
 
